@@ -1,0 +1,180 @@
+\subsection{Calculus $\pi$}
+The first-order pi-calculus (notation $\pi$) of Milner, Parrow and Walker \cite{MPW92} is one of the most developed process calculi in the literature. Here we use a lightweight variant \cite{EN86a}\cite{EN00}, in which names (ranged over by $m,n,u,v,w$) are classified into two categories: name constants (ranged over by $a,b,c,d,e$) and name variables (ranged over by $x,y,z$). Below is the grammar whose constructs have their standard meaning. We use guarded replication instead of general replication without loss of expressiveness \cite{San98}\cite{FL09a}.
+\[P,Q := 0 \,\Big{|}\, m(x).P \,\Big{|}\, \overline{m}n.P \,\Big{|}\,  (c)P \,\Big{|}\, P\para Q \,\Big{|}\, !m(x).P \,\Big{|}\, !\overline{m}n.P
+\]
+A name constant $a$ is bound (local or restricted) in $(a)P$, otherwise it is free (global). A name variable $x$ is bound in $a(x).P$ and free otherwise.
+We use respectively $fn(\cdot), bn(\cdot), n(\cdot), fv(\cdot), bv(\cdot), v(\cdot)$ to denote free constants, bound constants, constants, free variables, bound variables, and variables in a set of processes. A name is fresh if it does not appear in any of the processes under consideration. A process $P$ is closed if $fv(P){=}\emptyset$. We consider closed processes by default. We have a few derived operators: $\overline{a}(d).P \DEF (d)\overline{a}d.P$, $a.P \DEF  a(x).P \;(x\notin fv(P))$, $\overline{a}.P \DEF \overline{a}(d).P\;(d\notin fn(P))$. A trailing $0$ process is usually trimmed. We use a tilde to stand for tuples. For $\ve{n}$, $\size{\ve{n}}$ stands for its length; $m\in \ve{n}$ means $m$ is its element; $m\ve{n}$ abbreviates adding $m$ to the tuple; $(c_1)(c_2)\cdots (c_k)E$ is written as $(c_1c_2\cdots c_k)E$ or simply $(\ve{c})E$. Substitution $\fosub{n}{m}$, used in postfix form $P\fosub{n}{m}$, means a mapping that replaces $m$ with $n$ (in $P$) while keeping the others intact. %are ranged over by $\sigma$. 
+Sometimes substituting a constant for another is called renaming, and assignment if for a variable. A context $C$ is a process with some subprocess replaced by the hole $[\cdot]$; then $C[A]$ is the process resulting from filling in the hole by process $A$.
+%The LTS is recalled in appendix \ref{appendix:semantics}.
+The LTS (Labelled Transition System) comprises the rules as below (symmetric rules are skipped).
+\[
+\begin{array}{lll}
+\infer{a(x).P\st{a(b)} P\fosub{b}{x}}{} \quad &
+\infer{\overline{a}b.P\st{\overline{a}b} P}{} \quad &
+\infer[{\scriptstyle bn(\lambda)\cap fn(Q)=\emptyset}]{P\para Q\st{\lambda} P'\para Q}{P\st{\lambda} P'}
+\end{array}
+\]
+\[
+\begin{array}{lll}
+\infer{P\para Q\st{\tau}P'\para Q'}{P\st{a(b)}P', Q\st{\overline{a}b} Q'}\quad &
+\infer{P\para Q\st{\tau}(b)(P'\para Q')}{P\st{a(b)} P', Q\st{\overline{a}(b)} Q'} \quad&
+\infer[{\scriptstyle c\not\in n(\lambda)}]{(c)P\st{\lambda} P'}{P\st{\lambda} P'}
+\end{array}
+\]
+\[
+\begin{array}{lll}
+\infer[{\scriptstyle c\neq a}]{(c)P\st{\overline{a}(c)} P'}{P\st{\overline{a}c} P'} \quad &
+\infer{!a(x).P \st{a(b)} P\fosub{b}{x}\para !a(x).P}{}\quad  &
+\infer{!\overline{a}b.P \st{\overline{a}b} P\para !\overline{a}b.P}{}
+\end{array}
+\]
+%\[Structural:
+%\begin{array}{c}
+%\frac{\displaystyle Q\equiv P,\; P\st{\lambda} P', \; P'\equiv Q'}{\displaystyle Q\st{\lambda} Q'}
+%\end{array}
+%\]
+Actions (ranged over by $\lambda$) include $\tau$, and visible ones: input ($a(b)$), output ($\overline{a}b$) and bound output ($\overline{a}(c)$) which occur on constant names, and the outputted name is a constant (i.e. no variable can be transmitted).
+%Define $\overline{\lambda}$ as $\overline{a}b$ if $\lambda$ is $a(b)$, $a(b)$ if $\lambda$ is $\overline{a}b \mbox{ or } \overline{a}(b)$, and $\tau$ if $\lambda$ is $\tau$.
+As usual, $\equiv$ denotes the standard structural congruence \cite{MPW92}\cite{SW01a}, which is the smallest relation satisfying the monoid laws for parallel composition, commutative laws for both composition and restriction, and a distributive law $(c)(P\para Q) \SE (c)P\para Q$ (if $c\notin fn(Q)$).
+We write $\wt{}$ for the reflexive transitive closure of $\st{\tau}$, and $\wt{\lambda}$ for $\wt{}\st{\lambda}\wt{}$; then $\wt{\widehat{\lambda}}$ is $\wt{\lambda}$ if $\lambda$ is not $\tau$, and $\wt{}$ otherwise. A process $P$ is divergent, denoted $\diverge{P}$, if it has an infinite computation (i.e. $\tau$ sequence). \strs{A relation $\R$ is divergence-sensitive if whenever $P\,\R\, Q$ then $\diverge{Q}$ implies $\diverge{P}$}.
+%Let $\equiv$ denote the standard structural congruence, as defined below.
+%\[
+%\begin{array}{l}
+%P\equiv Q, \mbox{ if they are $\alpha$-convertible to each other} \\
+%P\para 0 \equiv P, \, P\para (Q\para R) \equiv (P\para Q)\para R, \, P \para Q  \equiv Q\para P \\
+%(c)(d)P \equiv (d)(c)P, \,(c)0\equiv 0 \\
+% (c)(P\para Q) \equiv (c)P\para Q \mbox{ whenever } c\notin fn(Q) %\\
+%\end{array}
+%\]
+In the standard way, the bisimulation on $\pi$ is defined as below and is a congruence relation \cite{MPW92}\cite{EN00}. %\cite{FZ09}.
+\begin{definition}[Bisimulation]\label{ex-w-bisi}
+Weak bisimilarity $\AEFOPi$ is the largest symmetric bisimulation relation $\mathcal{R}$ on $\pi$ processes such that whenever $P \,\mathcal{R}\, Q$ and $P\st{\lambda} P'$ then $Q\wt{\widehat{\lambda}} Q'$ and $P' \,\mathcal{R}\, Q'$.
+\end{definition}
+We use $\SAEFOPi$ to denote the strong version of the bisimulation (i.e., the one obtained by replacing $\wt{\widehat{\lambda}}$ with  $\st{\lambda}$ in the definition). Notice that an alternative way to define weak bisimulation %(similar for other bisimulation relations) 
+is to use $\wt{\lambda}$ instead of $\st{\lambda}$ in Definition \ref{ex-w-bisi} (see \cite{Mil89, SW01a}).
+
+The local bisimilarity ($\EWLB$) characterizes weak bisimilarity, i.e. $\EWLB$ coincides with $\AEFOPi$ (see \cite{Fu05b} for a proof), and will be used when discussing the encodings. 
+\begin{definition}\label{ext-local-bisi}
+Local bisimilarity $\EWLB$ is the largest symmetric local bisimulation relation $\mathcal{R}$ on $\pi$ processes such that:
+\begin{itemize}
+\item if $P\st{\lambda} P'$, $\lambda$ is not bound output, then $Q\wt{\widehat{\lambda}} Q'$ and $P'\,\mathcal{R}\, Q'$;
+\item if $P\st{\overline{a}(b)} P'$, then $Q\wt{\overline{a}(b)} Q'$, and for every $R$, $(b)(P'\para R)\,\mathcal{R}\, (b)(Q'\para R)$.
+\end{itemize}
+\end{definition}
+% $\EWLB$ indeed characterizes $\AEFOPi$ (see \cite{Fu05b} for a proof).
+% \begin{lemma}\label{ext-local-bisi-prop}
+% $\EWLB$ coincides with $\AEFOPi$.
+% \end{lemma}
+
+
+%---------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+\subsection{Calculus $\Pi$}}
+ $\Pi$ processes, denoted by uppercase letters ($T,P,Q,R,A,B,E,F...$), are defined by the following grammar. Lowercase letters stand for channel names. Letters $X,Y,Z$ represent process variables.
+We use $\Pi_{seg}$ for convenience.
+\[
+\begin{array}{l}
+\Pi_{seg} ::= 0 \;|\; X \;|\;  u(X).T \;|\; \overline{u}T'.T \;|\; T\para T' \;|\; (c)T  
+\end{array}
+\]
+ The operators are: prefix:$u(X).T, \overline{u}T'.T$; composition: $T\para T'$; restriction: $(c)T$ in which $c$ is bound. 
+  Parallel composition has the least precedence.
+ As usual some notations are: $a$ for $a(X).0$; $\overline{a}$ for $\overline{a}0.0$; $\overline{m}A$ for $\overline{m}A.0$; $\tau.P$ for $(a)(a.P\para \overline{a})$; sometimes $\overline{a}[A].T$ for $\overline{a}A.T$; $\ve{\cdot}$ for a finite sequence of something.
+ By standard definition, $fn(\ve{T})$, $bn(\ve{T})$, $n(\ve{T})$; $fv(\ve{T})$, $bv(\ve{T})$,
+ $v(\ve{T})$ respectively denote free names, bound names, all names; free variables, bound variables and all variables in $\ve{T}$.
+  Closed processes contain no free variables.
+  A fresh name or variable is one that does not occur in the processes under consideration.
+ Name substitution $T\fosub{\ve{n}}{\ve{m}}$ and higher-order substitution $T\hosub{\ve{A}}{\ve{X}}$ are defined structurally in a standard way.
+$E[\ve{X}]$ denotes $E$ with (at most) variables $\ve{X}$, and $E[\ve{A}]$ stands for $E\hosub{\ve{A}}{\ve{X}}$.
+We work up-to $\alpha$-conversion and always assume no capture.
+We use input-guarded replication as a derived operator \cite{Tho93,LPSS08}:
+$ !\phi.P \DEF (c)(Q_{\scriptscriptstyle c,\phi,P} \para \overline{c}Q_{\scriptscriptstyle c,\phi,P})$,
+  $Q_{\scriptscriptstyle c,\phi,P} \DEF c(X).(\phi.(X\para P) \para \overline{c}X)$, where $\phi$ is a prefix.
+
+The operational semantics is given in Figure \ref{lts-Pi}. Symmetric rules are omitted.
+The rules are mostly self-explanatory. For instance,
+in higher-order input $a(A)$, the received process $A$ becomes part of the receiving environment through a substitution.
+ $\alpha,\beta,\lambda,...$ denote action, whose subject indicates the channel name on which it happens.
+Operations $fn(), bn(), n()$ can be similarly defined on actions.
+$\wt{}$ is the reflexive transitive closure of internal actions $\tau$, and $\wt{\lambda}$ is $\wt{}\xrightarrow{\lambda}\wt{}$.  $\wt{\hat{\lambda}}$ is $\wt{}$ when $\lambda$ is $\tau$ and $\wt{\lambda}$ otherwise. $\st{\tau}_k$ means $k$ consecutive $\tau$'s.
+``$P\wt{\hat{\lambda}} P'$" abbreviates ``there is a process $P'$ such that $P\wt{\hat{\lambda}} P'$".
+ $P\wt{}\cdot \mathcal{R}\, Q$ means $P\wt{} Q'$ and $Q' \,\mathcal{R}\, Q$ (i.e. $(Q',Q)\in \mathcal{R}$), where $\mathcal{R}$ is a binary relation.
+We say relation $\mathcal{R}$ is closed under (variable) substitution if $(E\hosub{A}{X},F\hosub{A}{X})\in \mathcal{R}$ for any $A$ whenever $(E,F)\in \mathcal{R}$. 
+A process diverges if it can perform an infinite $\tau$ sequence.
+%*************************
+%\vspace*{-.9cm}
+%*************************
+\begin{figure}[htbp]
+\[\begin{array}{llll}
+\frac{\displaystyle }{\displaystyle a(X).T\st{a(A)} T\hosub{A}{X}}  &    
+ \frac{}{\displaystyle \overline{a}A.T\st{\overline{a}A} T}  &      
+\frac{\displaystyle T\st{\lambda} T'}{\displaystyle (c)T\st{\lambda} (c)T'}{\scriptstyle c\not\in n(\lambda)} &
+\frac{\displaystyle T\st{\lambda} T'}{\displaystyle T\para T_1\st{\lambda} T'\para T_1} {\scriptstyle bn(\lambda)\cap fn(T_1)=\emptyset}
+\end{array}
+\]
+\[\begin{array}{ll}
+\frac{\displaystyle T\st{(\ve{c})\overline{a}[A]} T'}{\displaystyle (d)T\st{(d)(\ve{c})\overline{a}[A]} T'} {\scriptstyle d \in fn(A){-}\{\ve{c},a\}} \quad &
+ \frac{\displaystyle T_1\st{a(A)} T_1', T_2\st{(\ve{c})\overline{a}[A]} T_2'}{\displaystyle T_1\para T_2 \st{\tau}(\ve{c})(T_1'\,|\,T_2')}~ {\scriptstyle \ve{c}\cap fn(T_1) = \emptyset}
+\end{array}
+\]
+%*************************
+%\vspace*{-.5cm}
+%*************************
+\caption{Semantics of $\Pi$}\label{lts-Pi}
+\end{figure}
+
+
+
+%---------------------------------------------------------------------------------------------------------------------------------------------------------------
+\subsection{Calculi $\Pi^D_n$ and $\Pi^d_n$}}
+
+Parameterization extends $\Pi$ with the syntax and semantics in Figure \ref{PiDn}.
+$\lrangle{\vect{U}} T$ is n-ary parameterization where $\vect{U}$ are the formal parameters to be instantiated by the n-ary  application $T\lrangle{\vect{K}}$ where the parameters are instantiated by concrete objects $\vect{K}$.
+In the rule, $\size{\ve{U}}{=}\size{\ve{K}}{=}n$ requires the parameters and the instantiating objects should be equally sized (equal to $n$). It also expresses that the parameterized process can do an action only after the application happens.
+Calculus $\Pi^D_n$, which has process parameterization (or higher-order abstraction),
+  is defined by taking $\ve{U},\ve{K}$ as $\ve{X},\ve{T'}$ respectively.
+Calculus $\Pi^d_n$, which has name parameterization (or first-order abstraction),  is defined by taking $\ve{U},\ve{K}$ as $\ve{x},\ve{u}$ respectively.
+For convenience, names (ranged over by $u,v,w$) are handled dichotomically: name constants (ranged over by $a,b,c,...,m,n$); name variables (ranged over by $x,y,z$).
+%*************************
+%\vspace*{-.4cm}
+%*************************
+\begin{figure}[htbp]
+\[\begin{array}{l}
+T::= \Pi_{seg}  \;|\; \lrangle{\vect{U}} T \;|\;  T\lrangle{\vect{K}}  \\ 
+\frac{\displaystyle T\hosub{\ve{K}}{\ve{U}} \stackrel{\lambda}{\longrightarrow } T'}{\displaystyle F\lrangle{\ve{K}}\stackrel{\lambda}{\longrightarrow } T'}\;\;\mbox{ if } F\DEF \lrangle{\ve{U}}T \;\;(\size{\ve{U}}=\size{\ve{K}}=n)
+\end{array}
+\]
+%*************************
+%\vspace*{-.5cm}
+%*************************
+\caption{$\Pi$ with parameterization}\label{PiDn}
+\end{figure}
+%*************************
+%\vspace*{-.3cm}
+%*************************
+
+
+
+
+%remark  about the calculi
+
+Process expressions (or terms) of the form $\lrangle{\ve{X}} P$ or $\lrangle{\ve{x}} P$, in which $\ve{X}$ or $\ve{x}$ is not empty, are \emph{parameterized processes}. 
+Terms without outmost parameterization are \emph{non-parameterized processes}, or simply processes. 
+We mainly focus on processes in the encodings to be presented. Sometimes related notations are slightly abused if no confusion is caused.
+Only free  variables can be effectively parameterized; they become \emph{bound} after parameterization. In the syntax, null-parameterizations, for example $\lrangle{X_1,X_2}P$ in which $X_2\notin fv(P)$, are allowed.
+A $\Pi^D_n$($n\geq 1$) process is definable in $\Pi^D_{n+1}$ (similar for $\Pi^d_n$) by making use of fresh dummy variable. 
+The semantics of parameterization renders it somewhat natural to deem application as extra rule of structural congruence,
+denoted by $\equiv$, which is defined in the standard way \cite{Mil92,San94}. In addition to the standard rules (e.g. monoid rules for composition), it includes the application rules:
+$(\lrangle{\ve{X}}P)\lrangle{\ve{A}}\equiv P\hosub{\ve{A}}{\ve{X}}$ and $(\lrangle{\ve{x}}P)\lrangle{\ve{u}}\equiv P\fosub{\ve{u}}{\ve{x}}$.
+
+Type systems for $\Pi^D_n$ and $\Pi^d_n$ (also $\Pi^{D,d}_n$) can be routinely defined in a similar way to that in \cite{San92}, where the concept of \emph{order} is also formalized.
+As mentioned, here we require that only second-order processes be admitted. 
+So parameterizing does not occur on parameterized processes, and application does not use parameterized processes as instance.
+That is, we stipulate that in $\lrangle{\ve{U}}T'$ and $T\lrangle{\ve{T'}}$, $T'$ are not parameterized processes.
+This prohibits processes such as $\lrangle{X}(\lrangle{Y}T)$ and $(\lrangle{X}(X\lrangle{A}))\lrangle{B}$ in which $B\equiv \lrangle{Y}Y$; instead, in the former one could use $\lrangle{X,Y}T$, and in the latter the instance $A$ could be sent to a service containing $B$ before retrieving the result.
+The main reason we restrict to second-order processes is that it serves well in related study (e.g. the encodings in this paper and work from \cite{San92}) and can also simplify type consistency in programming. Technically this rules out a trivial encoding in section \ref{hierarchy} (some more remark is given in its end), simplifies the encoding in section \ref{relationship-ho-fo-abstraction} because it is currently not obvious how to extend to the general case.
+
+
+
+
+

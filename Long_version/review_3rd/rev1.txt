@@ -1,0 +1,110 @@
+*****************
+REPORTS :
+
+Report from Referee 1: 
+
+Report 1: 
+This paper presents and studies two compositional encodings of the π calculus in a higher-order π calculus with name and process parameterization. In addition, a normal bisimilarity for the parameterized calculus is introduced and shown to coincide with context bisimilarity.
+
+The approach is interesting, but there are two significant technical issues that must be addressed before publication. The most crucial one is the absence of the proof that working up-to context is correct. In particular, I do not understand why the proof of Lemma 4 could not be reused to show that the encoding is sound (which would be problematic as a counter example is given). I suspect up-to context cannot be used for every context. The second issue is the absence of the proof that normal bisimilarity is a congruence.
+
+Regarding related work, why is there no reference to "On Parameterization of Higher-Order Processes" published in the International Journal of Computer Mathematics, Volume 94, 2017? I think it is strongly related to this paper.
+
+Best regards,
+
+Alan Schmitt
+
+- Page 1, "These results demonstrate more essence of the parameterization method in the higher-order paradigm toward expressiveness and behavioural equivalence." I do not understand what these results demonstrate.
+
+- Page 3, "In that effort, which somewhat precipitates the work here, we construct an encoding that harnesses the idea of Thomsen’s encoding and show that it is complete." and "Is there an encoding of first-order processes by the higher-order processes with the capability of parameterization?" It seems that the question you ask has already been answered by your previous paper. You need to explain why it is not the case.
+
+- Page 4, diagram for factorization (bottom of page). It might be easier to understand if m was fresh instead of put under restriction. It's not obvious one is allowed to remove restrictions *in the middle of a process* as part of congruence.
+
+- Page 6, "its relatively a bit" can be removed.
+
+- Page 7, "guarded input replication is used instead of general replication". Why not also have guarded output replication, as for the higher-order version?
+
+- Page 7, semantics of π. You need to define n() and bn() for labels. In particular, what is bn(a(b))? If it is ∅, then how do you avoid capture for communication of a bound name. If it is {b}, then how do you allow the reception of b if it is not restricted but present in parallel. More precisely, how do you deal with these two reductions?
+
+  a(x).P | a̅b | a̅b → P{b/x} | a̅b
+  a(x).b̅x | (b)(a̅b) → (c)b̅c (right now (b)b̅b seems allowed)
+
+- Page 7, semancis of π. You define structural congruence but do not use it in the semantics. Why?
+
+- Page 8, top of page. Do you mean α conversion should not result in name capture, or that you use α to always prevent name capture?
+
+- Page 8, Definition 1. Why use α instead of λ for labels here? And you do not need to list the labels if you include all of them.
+
+- Page 8, Definition 2. Can R have b free?
+
+- Page 9, top of page. You use the same notation E[P] and C[P] for two different notions: contexts can capture names in π, but substitution neither capture names nor variables in the higher-order version. This should be clarified and reflected in the notation.
+
+- Page 9, "and this shall not raise confusion under specific context" can be removed
+
+- Page 9, extension of semantics with structural congrunce. The structural congruence rule should come before, or you could delay introducing structural congruence till this point.
+
+- Page 9, "This application is modelled by an extensional rule". In what sense the rule is "extensional"? Do you mean "additional"?
+
+- Page 10, "For convenience, names are sometimes handled in a similar way as that in π (so are the related notations)". What does this mean? Please give examples.
+
+- Page 10, Definition 3, "B that is of the same type as A". Do you allow A to be <X>0 and B to be <X>(<Y>0)? They are both process abstractions. If you do not allow them, then the notion of types become crucial and should be given. Also the X in context E should have the same type.
+
+- Page 10, "to bear the same kind". Please define "kind". Is it "type"?
+
+- Page 10, "and abstractions is defined in the expected way" Abstractions are part of the syntax, so it is strange that you need to extend the definition of bisimulation. This should be part of definition 3 (where P can be an abstraction).
+
+- Page 11, "P' ≡ C[P'], Q' ≡ C[Q'']". Can this context capture names or variables? In other word, is it a different kind of context than the E ones?
+
+- Page 11, bottom of page. Nitpick: the up to context is already combined with structural congruence, as it is a congruence (so you can apply it in depth to P'' and Q'' when you build C[P''] and C[Q'']).
+
+- Page 12, Theorem 1. This theorem needs to be proven, as none of the referenced work use parameterization. I'm convinced the theorem is true for up to strong bisimilarity and up to structural congruence, but I'm sceptical regarding up to context.
+
+- Page 12, "up-to some structural congruence". Which?
+
+- Page 12, Section 2.3. If you don't need this additional structual congruence, please don't introduce it.
+
+- Page 12, Definition 6. Do you require completeness? It is not clear here.
+
+- Page 12, after definition 6. The definition of ≈̇₂ is not clear. The initial text seems to suggest that it is ≈₂ ∩ [|P₁|], but this seems to suggest it is a congruence where restricted sets of contexts may be considered. This needs to be clarified.
+
+- Page 13, last paragraph of Section 2. I do not understand the point being made, especially since it is said at the end it does not matter. This paragraph could be removed.
+
+- Page 14, Section 3.2, "Apparently". "Apparently" means "It seems that", typically to later say it is not the case. I'm not sure this is what you want to say here.
+
+- Page 14, "Literally in the meanwhile" can be removed.
+
+- Page 14, before Lemma 2, "(clause (2))". Say of which lemma or definition.
+
+- Page 14, "In Lemma 2 and Lemma 3, the input cases are not stated for an input". This only matters for Lemma 3.
+
+- Page 14, proof of Lemma 1, "Also the encoding is divergence-reflecting, for the reason that it does not bring about any divergence". This seems to need Lemmas 2 and 3 to be shown, so it should be moved to a new lemma after those are proven (since Lemmas 2 and 3 need Lemma 1 for renaming)
+
+- Page 17, Input case (at the top of the page). Please do not reuse T for different processes in the same subcase. Also, I don't understand how you go from "(m)(m̅[<x>[|P₁|]] | !m(Y).Y<b>)" to "(m)(!m(Y).Y<b> | [|P₁|]{b/x})". You do a communication? If so you should highlight it.
+
+- Page 18, end of proof. Same as before, is a communication happening here?
+
+- Page 19, example of soundness failure. You could give the intuition of why the particular example fails: it is possible to capture the process corresponding to b̅ then to duplicate it. This is similar to some behaviors that can be seen in presence of passivation (see [16], end of Section 2.3)
+
+- Page 19, mention of ≈̇ct. This was not formally defined, and it should be. The restriction is not only on processes to consider, but on the context E used for output.
+
+- Page 20, proof of Lemma 4, bound output case. There is something very wrong here: what prevents you from using E to create something like the process T of page 18 (assuming you were proving adequacy)? In other words, couldn't you use the same proof to show that the translation is sound (which you showed is not). Is the problem in the application of up-to context in some cases?
+
+- Page 20, "In terms of the notion of encoding, this is a more desired result." can be removed.
+
+- Page 21, argument that the label must be "a̅[<Z>(Z<b>)]". This should be made more formal (it should be its own lemma). Same thing for bound output.
+
+- Page 21, bottom of page. What if R mentions b? This seems to break the property as b cannot be free in E.
+
+- Page 22, "folliwng" → "following"
+
+- Page 23, Lemma 6, case 1. Why do you need bisimilarity here, and not simply structural congruence?
+
+- Page 25, "w.o.l.g." → "wlog"
+
+- Page 39. I did not check the proofs of the appendix.
+
+
+Report from Referee 2: 
+
+Report 1: 
+See enclosed file: itaxianxu.txt

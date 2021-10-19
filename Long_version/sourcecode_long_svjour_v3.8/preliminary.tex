@@ -1,0 +1,534 @@
+\section{Preliminary}\label{s:preliminary}  %\nts{------FROM HERE------}\\
+In this section, we give the definitions and notations used in this work. %\psepvs{.2}
+
+%\subsection{Calculus \FOPi}
+\subsection{\FOPi-calculus}
+%\noindent\textbf{\large 2.1~ Calculus \FOPi}
+%Use name dichotomy \cite{EN86a, EN00, Fu15}. \\
+%\stress{\scriptsize In output: Is bound output sufficient? (i.e., remove free output? seems unnecessary now); (maybe helpful in discussing the encoding).}
+
+%\stress{\large see ``[ref]pi\_PiDs\_defs.tex" in the root folder; or REFER TO``GIT/hp\_comcan\_gl (\cite{XYL15})"; }
+
+%\FROMHERE
+
+The first-order (name-passing) pi-calculus, \FOPi, is proposed by Milner et al. \cite{MPW92}. For the sake of simplicity, throughout the paper, names (ranged over by $m,n,u,v,w$) are divided into two classes: name constants (ranged over by $a,b,c,d,e,f,g,h$) and name variables (ranged over by $x,y,z$) \cite{EN86a,EN00,Fu15}. The grammar is as below with the constructs having their standard meaning. We note that guarded input replication is used instead of general replication, and this does not sacrifice expressiveness \cite{San98,FL09a}. \nsepvs{.2}
+\[P,Q := 0 \,\Big{|}\, m(x).P \,\Big{|}\, \overline{m}n.P \,\Big{|}\,  (c)P \,\Big{|}\, P\para Q \,\Big{|}\, !m(x).P %\,\Big{|}\, !\overline{m}n.P
+\]
+
+A name constant $a$ is bound (or local) in $(a)P$ and free (or global) otherwise. A name variable $x$ is bound in $m(x).P$ and free otherwise.
+Respectively $\fn{\cdot}, \bn{\cdot}, \n{\cdot}, \fnv{\cdot}, \bnv{\cdot}, \nv{\cdot}$ denote free name constants, bound name constants, names, free name variables, bound name variables, and name variables in a set of processes or actions (to be defined shortly). A name is fresh if it does not appear in any process under discussion. 
+%Usually closed processes are considered by default, i.e., those having no free variables.
+\xxx{
+Processes having no free variables are closed. Usually for convenience, closed processes are considered by default.	
+}
+In the standard way, here are a few derived operators: $\overline{m}(d).P \DEF (d)\overline{m}d.P$, $m.P \DEF  m(x).P \;(x\notin \fnv{P})$, $\overline{m}.P \DEF \overline{m}(d).P\;(d\notin \fn{P})$; $\tau.P\DEF (a)(a.P\para \overline{a}.0)$ ($a$ fresh). A trailing $0$ process is often omitted.
+We denote tuples by a tilde. For tuple $\ve{n}$, $\size{\ve{n}}$ denotes its length and %$m\in \ve{n}$ means $m$ is its element;
+$m\ve{n}$ denotes incorporating $m$. Multiple restriction $(c_1)(c_2)\cdots (c_k)E$ is abbreviated as $(\ve{c})E$.
+Substitution $\fosub{n}{m}$, ranged over by $\sigma$ and used in the form $P\fosub{n}{m}$, is a mapping that replaces free $m$ with $n$ in $P$ while keeping the rest unchanged. %are ranged over by $\sigma$.
+%Sometimes substituting a constant for another is called renaming, and assignment if for a variable.
+For tuples, notation $P\fosub{\ve{n}}{\ve{m}}$ stands for pairwise substitutions.
+A context $C$ is a process with some subprocess replaced by the hole $[\cdot]$, and $C[A]$ is the process obtained by filling in the hole with $A$.
+%The LTS is recalled in appendix \ref{appendix:semantics}.
+
+The semantics of \FOPi\ is defined by the standard LTS (Labelled Transition System) below. \nsepvs{.2} %(symmetric rules are skipped).
+\[
+\begin{array}{lll}
+\infer{a(x).P\st{a(b)} P\fosub{b}{x}}{} \quad &
+\infer{\overline{a}b.P\st{\overline{a}b} P}{} \quad &
+\infer{!a(x).P \st{a(b)} P\fosub{b}{x}\para !a(x).P}{} \quad \\ %& \infer{!\overline{a}b.P \st{\overline{a}b} P\para !\overline{a}b.P}{}
+\infer[{\scriptstyle c\not\in \n{\lambda}}]{(c)P\st{\lambda} (c)P'}{P\st{\lambda} P'} \quad &
+\infer[{\scriptstyle c\neq a}]{(c)P\st{\overline{a}(c)} P'}{P\st{\overline{a}c} P'} \quad &
+\infer[{\scriptstyle \bn{\lambda}\cap \fn{Q}=\emptyset}]{P\para Q\st{\lambda} P'\para Q}{P\st{\lambda} P'} \quad \\
+\infer{P\para Q\st{\tau}P'\para Q'}{P\st{a(b)}P' \quad Q\st{\overline{a}b} Q'}\quad & &
+\infer[\xxxx{b\notin \fn{P}}]{P\para Q\st{\tau}(b)(P'\para Q')}{P\st{a(b)} P'\quad Q\st{\overline{a}(b)} Q'} \quad
+\end{array}
+\]
+% \[
+% \begin{array}{ll}
+
+% \end{array}
+% \]
+%\[
+%\begin{array}{ll}
+%\end{array}
+%\]
+%\[Structural:
+%\begin{array}{c}
+%\frac{\displaystyle Q\equiv P,\; P\st{\lambda} P', \; P'\equiv Q'}{\displaystyle Q\st{\lambda} Q'}
+%\end{array}
+%\]
+Actions, ranged over by $\lambda,\alpha$, comprise invisible internal move $\tau$, and visible ones: input ($a(b)$), output ($\overline{a}b$) and bound output ($\overline{a}(c)$ in which $c$ is bound; \xxxx{every name elsewhere in a label is free}). We note that actions occur only on name constants, and a communicated name is also a constant. % (i.e. no variable can be transmitted).
+%Define $\overline{\lambda}$ as $\overline{a}b$ if $\lambda$ is $a(b)$, $a(b)$ if $\lambda$ is $\overline{a}b \mbox{ or } \overline{a}(b)$, and $\tau$ if $\lambda$ is $\tau$.
+We denote by $\equiv$ the standard structural congruence \cite{MPW92}\cite{SW01a}, which is the smallest relation satisfying $\alpha$-convertibility, the monoid laws for parallel composition, commutative laws for both composition and restriction, and a distributive law $(c)(P\para Q) \SE (c)P\para Q$ (if $c\notin \fn{Q}$).
+\xxxx{The structural congruence is not part of the semantics, and we use it only as some structural manipulation method.}
+\xxxx{With the help of $\alpha$-conversion, we always assume no name capture (which means that a free name falls into the scope of a same bound name). }
+We use $\wt{}$ for the reflexive transitive closure of $\st{\tau}$, $\wt{\lambda}$ for $\wt{}\st{\lambda}\wt{}$, and $\wt{\widehat{\lambda}}$ for $\wt{\lambda}$ if $\lambda$ is not $\tau$, and $\wt{}$ otherwise. A process $P$ is divergent, written $\diverge{P}$, if it has an infinite sequence of $\tau$ actions.
+%\strs{A relation $\R$ is divergence-sensitive if whenever $P\,\R\, Q$ then $\diverge{Q}$ implies $\diverge{P}$}.
+%Let $\equiv$ denote the standard structural congruence, as defined below.
+%\[
+%\begin{array}{l}
+%P\equiv Q, \mbox{ if they are $\alpha$-convertible to each other} \\
+%P\para 0 \equiv P, \, P\para (Q\para R) \equiv (P\para Q)\para R, \, P \para Q  \equiv Q\para P \\
+%(c)(d)P \equiv (d)(c)P, \,(c)0\equiv 0 \\
+% (c)(P\para Q) \equiv (c)P\para Q \mbox{ whenever } c\notin fn(Q) %\\
+%\end{array}
+%\]
+
+Throughout the paper, we use the following standard notion of bisimulation \cite{MPW92,EN00,SW01a}. %; it coincides with the ground bisimulation (hence the name) \cite{MPW92,EN00,SW01a}.  %In the standard way, the bisimulation on $\pi$ is defined as below and is a congruence relation \cite{MPW92}\cite{EN00}. %\cite{FZ09}.
+\begin{definition}\label{d:ground-bisi}
+A \ground bisimulation is a symmetric relation $\mathcal{R}$ on \FOPi\ processes s.t. whenever $P\,\mathcal{R}\, Q$ the following property holds:
+%\begin{itemize}
+% If $P\st{\alpha} P'$ where $\alpha$ is $a(b)$, $\overline{a}b$, $\overline{a}(b)$, or $\tau$, then $Q\wt{\hat{\alpha}} Q'$ for some $Q'$ and $P'\,\mathcal{R}\, Q'$.
+If $P\st{\lambda} P'$, %where $\lambda$ is $a(b)$, $\overline{a}b$, $\overline{a}(b)$, or $\tau$, 
+then $Q\wt{\hat{\lambda}} Q'$ for some $Q'$ and $P'\,\mathcal{R}\, Q'$.
+%\end{itemize}
+\Ground Bisimilarity, $\WGB$, is the largest \ground bisimulation.
+\end{definition}
+%\begin{definition}[Bisimulation]\label{ex-w-bisi}
+%Weak bisimilarity $\WGB$ is the largest symmetric bisimulation relation $\mathcal{R}$ on $\pi$ processes such that whenever $P \,\mathcal{R}\, Q$ and $P\st{\lambda} P'$ then $Q\wt{\widehat{\lambda}} Q'$ and $P' \,\mathcal{R}\, Q'$.
+%\end{definition}
+The subscript `g' in $\WGB$ is used to differentiate from other notions of bisimulation in this work. % and also stands for ``ground" 
+%%>>may be restored sometime --> (it actually coincides with the standard notion of ground bisimulation \cite{EN00,SW01a,Fu05b}).
+We denote by $\SGB$ the strong \ground bisimilarity (i.e., replacing $\wt{\widehat{\alpha}}$ with  $\st{\alpha}$ in the definition). 
+\xxx{
+Sometimes when it causes no confusion, we will use bisimulation instead of bisimilarity so as to allow more flexibility in some paraphrasing. 	
+}
+It is well-known that $\WGB$ is a congruence \cite{EN00,SW01a}, and coincides with the so-called local bisimilarity as defined below \cite{Fu05b,Xu12}.
+%Notice that an alternative way to define weak bisimulation %(similar for other bisimulation relations)
+%is to use $\wt{\lambda}$ instead of $\st{\lambda}$ in Definition \ref{ex-w-bisi} (see \cite{Mil89, SW01a}).
+%The local bisimilarity ($\EWLB$) characterizes weak bisimilarity, i.e. $\EWLB$ coincides with $\WGB$ (see \cite{Fu05b} for a proof), and will be used when discussing the encodings.
+\begin{definition}\label{ext-local-bisi}
+Local bisimilarity $\EWLB$ is the largest symmetric local bisimulation relation $\mathcal{R}$ on $\pi$ processes such that:
+%\begin{itemize}
+%\item
+(1) if $P\st{\lambda} P'$, $\lambda$ is not bound output, then $Q\wt{\widehat{\lambda}} Q'$ and $P'\,\mathcal{R}\, Q'$;
+%\item
+(2) if $P\st{\overline{a}(b)} P'$, then $Q\wt{\overline{a}(b)} Q'$, and for every $R$, $(b)(P'\para R)\,\mathcal{R}\, (b)(Q'\para R)$.
+%\end{itemize}
+\end{definition}
+% $\EWLB$ indeed characterizes $\AEFOPi$ (see \cite{Fu05b} for a proof).
+% \begin{lemma}\label{ext-local-bisi-prop}
+% $\EWLB$ coincides with $\AEFOPi$.
+% \end{lemma}
+
+%\subsubsection{Ground bisimulation}
+%\begin{definition}
+%A \ground bisimulation is a symmetric relation $\mathcal{R}$ on \FOPi\ processes s.t. whenever $P\,\mathcal{R}\, Q$ the following property holds.
+%\begin{itemize}
+%\item If $P\st{\alpha}$ where $\alpha$ is $a(b)$, $\overline{a}b$, $\overline{a}(b)$, or $\tau$, then $Q\wt{\hat{\alpha}} Q'$ for some $Q'$ and $P'\,\mathcal{R}\, Q'$.
+%\end{itemize}
+%Ground bisimilarity, $\WGB$, is the largest \ground bisimulation.
+%\end{definition}
+
+Definitions \ref{d:ground-bisi},\ref{ext-local-bisi} can be extended to open processes. Taking $\WGB$ as the example, this is defined as follows: suppose $\ve{x}\subseteq \fnv{P,Q}$, then $P\WGB Q$ iff $P\fosub{\ve{a}}{\ve{x}}\WGB Q\fosub{\ve{a}}{\ve{x}}$ for all $\ve{a}$.
+
+
+
+\subsection{Calculus \HOPiDd} %\HOPiD, \HOPid,
+%\psepvs{.2}
+%\noindent\textbf{\large 2.2 ~Calculus \HOPiDd}
+%\stress{\large see ``[ref]pi\_PiDs\_defs.tex" in the root folder; or REFER TO ``GIT/xx (\cite{XYL13})" ; }
+
+%For the sake of conciseness,
+We first define the basic higher-order calculus and then the extension with parameterization.
+
+\subsubsection{Calculus \HOPi}
+%\psepvs{.2}
+%\noindent\textbf{2.2.1 ~ Calculus \HOPi}
+
+The basic higher-order (process-passing) calculus, \HOPi, is defined by the following grammar in which the operators have their standard meaning.
+%We use processes, denoted by uppercase letters ($T,P,Q,R,A,B,E,F...$), are defined by the following grammar. Lowercase letters stand for channel names.
+We denote by $X,Y,Z$ process variables.
+%We use $\Pi_{seg}$ for convenience.
+\[
+\begin{array}{l}
+T,T' ::= 0 \,\Big{|}\, X \,\Big{|}\,  u(X).T \,\Big{|}\, \overline{u}T'.T \,\Big{|}\, T\para T' \,\Big{|}\, (c)T \,\Big{|}\,  !u(X).T \,\Big{|}\, !\overline{u}T'.T
+\end{array}
+\]
+%The operators are: prefix:$u(X).T, \overline{u}T'.T$; composition: $T\para T'$; restriction: $(c)T$ in which $c$ is bound. Parallel composition has the least precedence.
+A process variable $X$ is bound in $u(X).T$ and free otherwise. 
+We reuse the notations for names in \FOPi\, and additionally use $\fpv{\cdot}$, $\bpv{\cdot}$, $\pv{\cdot}$ respectively to denote free process variables, bound process variables and process variables in a set of processes or actions defined shortly. Closed processes are those having no free variables and considered by default.
+We use $u.0$ for $u(X).0$, $\overline{u}.0$ for $\overline{u}0.0$, %$\overline{m}A$ for $\overline{m}A.0$;
+ and $\tau.P$ for $(c)(c.P\para \overline{c}.0)$ ($c$ fresh).
+ %, and sometimes $\overline{u}[A].T$ for $\overline{u}A.T$ for the sake of clarity. 
+ \xxx{For convenience later, we may write $\overline{u}(A)$ or $\overline{u}[A]$ for higher-order output.}
+ Same as in \FOPi, a tilde represents a tuple.
+A higher-order substitution $T\hosub{A}{X}$ replaces variable $X$ with $A$ and can be extended to tuples in the usual way.
+\xxx{
+Contexts are defined also like in \FOPi. 
+In particular, contexts can be extended to multihole ones in the standard way \cite{SW01a}; basically a multihole context has several holes each of which may occur a couple of times. By default, we consider one-hole contexts.
+\xxxx{To facilitate bisimulation and related discussion, we denote by
+$E[\ve{X}]$ (sometimes called a environment) the expression $E$ (possibly) with free variables $\ve{X}$, and $E[\ve{A}]$ stands for $E\hosub{\ve{A}}{\ve{X}}$ \xxxx{respecting name-capture}. 
+A context $C[\cdot]$ and an $E[X]$ are different in some sort. Essentially, $E[X]$ is a kind of multihole contexts allowing multiple occurrence of the hole and disallows name capture. So we may also write $E[\cdot]$ in the discussion, bearing in mind its difference from a general context. 
+}}
+
+%We work up-to $\alpha$-conversion and always assume no capture.
+%We use input-guarded replication as a derived operator \cite{Tho93,LPSS08}:
+%$ !\phi.P \DEF (c)(Q_{\scriptscriptstyle c,\phi,P} \para \overline{c}Q_{\scriptscriptstyle c,\phi,P})$,
+%  $Q_{\scriptscriptstyle c,\phi,P} \DEF c(X).(\phi.(X\para P) \para \overline{c}X)$, where $\phi$ is a prefix.
+The guarded replications used in the grammar can actually be derived \cite{Tho93,LPSS08}, and we make them primitive for convenience. %the sake of convenience.
+The semantics of \HOPi\ is as below. It is worth noting that we always assume no name capture with resort to $\alpha$-conversion (e.g., in the last rule the side condition $\ve{c}\cap \fn{T_1} = \emptyset$ can be implicit). %So in the fourth rule of the first row, the usual side condition $bn(\lambda)\cap fn(T_1)=\emptyset}$ is omitted.
+\nsepvs{.2}%standard    Symmetric rules are omitted.
+%\begin{figure}[htbp]
+\[
+\begin{array}{ll}
+\frac{\displaystyle }{\displaystyle a(X).T\st{a(A)} T\hosub{A}{X}}  &
+\frac{}{\displaystyle \overline{a}A.T\st{\overline{a}A} T}  \\
+\frac{}{\displaystyle !\overline{a}A.T\st{\overline{a}A} T \para !\overline{a}A.T} &
+\frac{\displaystyle }{\displaystyle !a(X).T\st{a(A)} T\hosub{A}{X}\para !a(X).T } \\
+\frac{\displaystyle T\st{\lambda} T'}{\displaystyle (c)T\st{\lambda} (c)T'}{\scriptstyle c\not\in \n{\lambda}} \qquad &
+\frac{\displaystyle T\st{(\ve{c})\overline{a}A} T'}{\displaystyle (d)T\st{(d)(\ve{c})\overline{a}A} T'} {\scriptstyle d \in \fn{A}{-}\{\ve{c},a\}} \\
+\frac{\displaystyle T\st{\lambda} T'}{\displaystyle T\para T_1\st{\lambda} T'\para T_1} {\scriptstyle \bn{\lambda}\,\cap\, \fn{T_1}=\emptyset} \qquad &
+\frac{\displaystyle T_1\st{a(A)} T_1'\quad  T_2\st{(\ve{c})\overline{a}A} T_2'}{\displaystyle T_1\para T_2 \st{\tau}(\ve{c})(T_1'\,|\,T_2')}\;  \xxxx{\scriptstyle \ve{c}\,\cap\, \fn{T_1} = \emptyset} %&
+\end{array}
+\]
+% \[\begin{array}{ll}
+
+% \end{array}
+% \]
+% \[\begin{array}{ll}
+
+% \end{array}
+% \]
+%*************************
+%\vspace*{-.5cm}
+%*************************
+%\caption{Semantics of $\Pi$}\label{lts-Pi}
+%\end{figure}
+%The rules are mostly self-explanatory. For instance, in higher-order input $a(A)$, the received process $A$ becomes part of the receiving environment through a substitution.
+We denote by $\alpha,\lambda$ the actions: internal move ($\tau$), input ($a(A)$), output ($(\ve{c})\overline{a}A$) in which $\ve{c}$ is some local names carried by $A$ during the output. %We always assume no name capture with resort to $\alpha$-conversion.
+%Operations $fn(), bn(), n()$ can be similarly defined on actions.
+%$\wt{}$ is the reflexive transitive closure of internal actions $\tau$, and $\wt{\lambda}$ is $\wt{}\xrightarrow{\lambda}\wt{}$.  $\wt{\hat{\lambda}}$ is $\wt{}$ when $\lambda$ is $\tau$ and $\wt{\lambda}$ otherwise. $\st{\tau}_k$ means $k$ consecutive $\tau$'s.
+The notations $\wt{}$, $\wt{\lambda}$ and $\wt{\widehat{\lambda}}$ are similar to those in \FOPi. %We also reuse $\equiv$ for the structural congruence in \HOPi\ (and also \HOPiDd\ to be defined shortly) \cite{SW01a}, and this shall not raise confusion under specific context.
+%``$P\wt{\hat{\lambda}} P'$" abbreviates ``there is a process $P'$ such that $P\wt{\hat{\lambda}} P'$".
+ %$P\wt{}\cdot \mathcal{R}\, Q$ means $P\wt{} Q'$ and $Q' \,\mathcal{R}\, Q$ (i.e. $(Q',Q)\in \mathcal{R}$), where $\mathcal{R}$ is a binary relation.
+%We say relation $\mathcal{R}$ is closed under (variable) substitution if $(E\hosub{A}{X},F\hosub{A}{X})\in \mathcal{R}$ for any $A$ whenever $(E,F)\in \mathcal{R}$.
+%A process diverges if it can perform an infinite $\tau$ sequence.
+%*************************
+%\vspace*{-.9cm}
+%*************************
+
+
+\subsubsection{Calculus \HOPiDd}
+%\psepvs{.2}
+%\noindent\textbf{2.2.2 ~ Calculus \HOPiDd}
+
+Parameterization extends the syntax and semantics of \HOPi\ as follows. %in Figure \ref{PiDn}.
+Symbol $U_i$ (respectively, $K_i$) ($i=1,...,k$) is used as a meta-parameter of an abstraction (respectively, meta-instance of an application), and stands for a process variable or name variable (respectively, a process or a name). 
+\xxxx{We reuse the symbol $\equiv$ for the structural congruence in \HOPiDd. % (and \HOPi\ as well).} %\ \cite{SW01a}.
+}
+\nsepvs{.2} %, as will be clear shortly when defining \HOPiDd.
+%\begin{figure}[htbp]
+\[
+\begin{array}{ll}
+\mbox{\small Extension of syntax: } & \lrangle{\vectk{U}} T \;\Big{|}\;  T\lrangle{\vectk{K}}\\
+\mbox{\small Extension of semantics: } & \frac{\displaystyle Q\equiv P\quad P\st{\lambda} P'\quad P'\equiv Q'}{\displaystyle Q\st{\lambda} Q'} \\
+\mbox{\small Extension of structural congruence ($\equiv$): } & F\lrangle{\ve{K}} \equiv T\hosub{\ve{K}}{\ve{U}} \quad \\
+ & \mbox{ where } F\DEF \lrangle{\ve{U}}T \mbox{ and } \size{\ve{U}}{=}\size{\ve{K}} %{=}n
+\end{array}
+\]
+%*************************
+%\vspace*{-.5cm}
+%*************************
+%\caption{$\Pi$ with parameterization}\label{PiDn}
+%\end{figure}
+
+% %--------consider redefining \HOPiDd?? BEGIN*********
+% \xxz{\small\[
+% \begin{array}{lcl}
+% T,T' &::=&  0 \,\Big{|}\, X \,\Big{|}\,  u(X).T \,\Big{|}\, \overline{u}A'.T \,\Big{|}\, T\para T' \,\Big{|}\, (c)T \,\Big{|}\,  !u(X).T \,\Big{|}\, !\overline{u}A.T \,\Big{|}\, A\lrangle{\vectk{K}} \\
+% A &::=&  \lrangle{\vectk{U}} T %\,\Big{|}\, X
+% \end{array}
+% \] Then closed terms are processes.
+% }
+% %--------consider redefining \HOPiDd?? END*********
+
+
+We denote by $\lrangle{\vectk{U}} T$ a k-ary abstraction in which $\vectk{U}$ are the parameters to be instantiated, and by $T\lrangle{\vectk{K}}$ the application in which the parameters of $T$ are replaced by instances $\vectk{K}$. This application is modelled by an \xxxx{additional}  rule for structural congruence as above, in combination with the usual LTS rule for structural congruence as well, so as to make the process engaged in application evolve effectively.
+The condition $\size{\ve{U}}{=}\size{\ve{K}}$ requires that the parameters and the instantiating objects should be equal in length.
+%It also expresses that the parameterized process can do an action only after the application happens.
+%Calculus $\Pi^D_n$, which has process parameterization (or higher-order abstraction),
+%  is defined by taking $\ve{U},\ve{K}$ as $\ve{X},\ve{T'}$ respectively.
+%Calculus $\Pi^d_n$, which has name parameterization (or first-order abstraction),  is defined by taking $\ve{U},\ve{K}$ as $\ve{x},\ve{u}$ respectively.
+%For convenience, names (ranged over by $u,v,w$) are handled dichotomically: name constants (ranged over by $a,b,c,...,m,n$); name variables (ranged over by $x,y,z$).
+
+Now parameterization on process is obtained by taking \xiv{$\ve{U},\ve{K}$ as $\ve{X},\ve{T}$} respectively, %\ve{T'}
+and parameterization on names is obtained by taking $\ve{U},\ve{K}$ as $\ve{x},\ve{m}$ respectively. The corresponding abstractions are sometimes called process abstraction and name abstraction respectively, and we may use abstraction and parameterization interchangeably. We note that in $\lrangle{\vectk{U}} T$, variables $\vectk{U}$ are bound. For convenience, names are sometimes handled in a similar way as that in \FOPi, so are the related notations. 
+\xxxx{That is, we may distinguish between name variables and name constants. For example, we use name variable $x$ in the abstraction $\lrangle{x}T$ while name constant $d$ in the application $T\lrangle{d}$.
+}
+We denote by \HOPiDd\ the calculus \HOPi\ extended with both kinds of parameterizations.
+
+\xxxx{Calculus \HOPiDd\ can be made more precise with the help of a type system \cite{San92},
+to ensure correct use of abstraction and application. For example, $A$ should be an abstraction in $A\lrangle{P}$, a term like $\lrangle{X}P \para Q$ is ill-formed, and etc..
+ This however is not important for this work, %and not presented, 
+ and such a type system can be referred to Sangiorgi's work \cite{San92} (Section 2.3). 
+ We always assume type consistency and typing error shall not occur whatsoever. 
+%When defining HO processes with parameterization, a type system is necessary  However, this paper mainly focuses on expressiveness, and such a system is relatively not so important. (lest) It can indeed be referred to Sangiorgi's work. And so it is assumed that type errors would not happen whatsoever (based on the implicit type system).
+Subject to type consistency, terms of the form $\lrangle{\ve{X}}T$ and $\lrangle{\ve{x}}T$ are referred to as process abstractions and name abstractions, and processes as those without the (outermost) domination of abstraction operations (up-to structural congruence).
+}
+
+\xxx{We further remark that the choice of modelling applications as part of the structural congruence evolves from Sangiorgi's early work. We notice that here the application over an abstraction is not modeled as a reduction (or internal action).
+}
+%\xx{$<$more remark from response here$>$?}
+\xxxx{From certain viewpoint, a term may have an infinite application sequence (substitution), such as $\Omega\DEF (A)\lrangle{A}$ in which $A\DEF \lrangle{X}(X\lrangle{X})$ \xiv{(whose type should be a recursive one, but the specific form is not very interesting for this work).}
+Yet it appears a bit different from that in lambda-calculus, where an application indeed leads to a reduction.
+So this shall not be a great concern for the work here, though in general it needs some regulation, that is, the substitution should be well-defined and terminating. Interested readers can refer to Sangiorgi's seminal work that explains the typing and substitution issues \cite{San92} (Definition 2.3.3 and Lemma 2.3.4).
+}
+
+
+
+%*************************
+%\vspace*{-.4cm}
+%*************************
+%*************************
+%\vspace*{-.3cm}
+%*************************
+
+%remark  about the calculi
+
+%Process expressions (or terms) of the form $\lrangle{\ve{X}} P$ or $\lrangle{\ve{x}} P$, in which $\ve{X}$ or $\ve{x}$ is not empty, are \emph{parameterized processes}.
+%Terms without outmost parameterization are \emph{non-parameterized processes}, or simply processes.
+%We mainly focus on processes in the encodings to be presented. Sometimes related notations are slightly abused if no confusion is caused.
+%Only free  variables can be effectively parameterized; they become \emph{bound} after parameterization. In the syntax, null-parameterizations, for example $\lrangle{X_1,X_2}P$ in which $X_2\notin fv(P)$, are allowed.
+%A $\Pi^D_n$($n\geq 1$) process is definable in $\Pi^D_{n+1}$ (similar for $\Pi^d_n$) by making use of fresh dummy variable.
+%The semantics of parameterization renders it somewhat natural to deem application as extra rule of structural congruence,
+%denoted by $\equiv$, which is defined in the standard way \cite{Mil92,San94}. In addition to the standard rules (e.g. monoid rules for composition), it includes the application rules:
+%$(\lrangle{\ve{X}}P)\lrangle{\ve{A}}\equiv P\hosub{\ve{A}}{\ve{X}}$ and $(\lrangle{\ve{x}}P)\lrangle{\ve{u}}\equiv P\fosub{\ve{u}}{\ve{x}}$.
+
+%Type systems for $\Pi^D_n$ and $\Pi^d_n$ (also $\Pi^{D,d}_n$) can be routinely defined in a similar way to that in \cite{San92}, where the concept of \emph{order} is also formalized.
+%As mentioned, here we require that only second-order processes be admitted.
+%So parameterizing does not occur on parameterized processes, and application does not use parameterized processes as instance.
+%That is, we stipulate that in $\lrangle{\ve{U}}T'$ and $T\lrangle{\ve{T'}}$, $T'$ are not parameterized processes.
+%This prohibits processes such as $\lrangle{X}(\lrangle{Y}T)$ and $(\lrangle{X}(X\lrangle{A}))\lrangle{B}$ in which $B\equiv \lrangle{Y}Y$; instead, in the former one could use $\lrangle{X,Y}T$, and in the latter the instance $A$ could be sent to a service containing $B$ before retrieving the result.
+%The main reason we restrict to second-order processes is that it serves well in related study (e.g. the encodings in this paper and work from \cite{San92}) and can also simplify type consistency in programming. Technically this rules out a trivial encoding in section \ref{hierarchy} (some more remark is given in its end), simplifies the encoding in section \ref{relationship-ho-fo-abstraction} because it is currently not obvious how to extend to the general case.
+
+
+
+\subsubsection{Context bisimulation}
+%\stress{Notice that in context bisimulation the matching action (i.e., input or output) should have the same type of communicated processes as to the original action. E.g., $Q\WCB P\st{\overline{a}A} P'$ matched by $Q\wt{\overline{a}B} Q'$ in which $B$ has the same type as $A$.}
+
+Throughout the paper, we rely on the following notion of context bisimulation \cite{San92,San94}. %The definition is the same for calculi \HOPiD, \HOPid, and \HOPiDd.
+%\begin{definition}\label{context-bisimulation}
+%A symmetric relation $\mathcal{R}$ on \HOPiDd\ processes is a context bisimulation, if $P\,\mathcal{R}\, Q$ implies the following properties:
+%\begin{itemize}
+%\item[(1)] if $P \st{\alpha} P'$ and $\alpha$ is $a(A)$ or $\tau$, then $Q \wt{\widehat{\alpha}} Q'$ for some $Q'$ and $P'\,\mathcal{R}\, Q'$;
+%\item[(2)] if $P \st{(\ve{c})\overline{a}A} P'$ and $A$ is a process abstraction or name abstraction or not an abstraction, then $Q \wt{(\ve{d})\overline{a}B} Q'$ for some $B$ that is accordingly a process abstraction or name abstraction or not an abstraction, and moreover for every $E[X]$ s.t. $\{\ve{c},\ve{d}\}\cap \fn{E}=\emptyset$ it holds that $(\ve{c})(E[A]\para P') \; \mathcal{R}\;  (\ve{d})(E[B]\para Q')$.
+%\end{itemize}
+%Context bisimilarity, written $\WCB$, is the largest context bisimulation.
+%\end{definition}
+\begin{definition}[Context bisimulation]\label{context-bisimulation}
+A symmetric relation $\mathcal{R}$ on (closed) \HOPiDd\ processes is a context bisimulation, if $P\,\mathcal{R}\, Q$ implies the following properties:
+\begin{itemize}
+\item if $P \st{\alpha} P'$ and $\alpha$ is $a(A)$ or $\tau$, then $Q \wt{\widehat{\alpha}} Q'$ for some $Q'$ and $P'\,\mathcal{R}\, Q'$;
+% \item if $P \st{(\ve{c})\overline{a}A} P'$, then $Q \wt{(\ve{d})\overline{a}B} Q'$ for some $B$ that is of the same type as $A$, i.e., a process abstraction, a name abstraction or not an abstraction, and moreover for every $E[X]$ such that $\{\ve{c},\ve{d}\}\cap \fn{E}=\emptyset$ it holds that $(\ve{c})(E[A]\para P') \; \mathcal{R}\;  (\ve{d})(E[B]\para Q')$.
+\item if $P \st{(\ve{c})\overline{a}A} P'$ in which $A$ is a process abstraction, a name abstraction or not an abstraction, then $Q \wt{(\ve{d})\overline{a}B} Q'$ for some $B$ that is respectively a process abstraction, a name abstraction or not an abstraction, and moreover for every $E[X]$ such that $\{\ve{c},\ve{d}\}\cap \fn{E}=\emptyset$ it holds that 
+\begin{equation}
+(\ve{c})(E[A]\para P') \; \mathcal{R}\;  (\ve{d})(E[B]\para Q'). \nonumber\tag{*}%\eqnumber{\triangle}
+\end{equation}
+\end{itemize}
+Context bisimilarity, written $\WCB$, is the largest context bisimulation.
+\end{definition}
+
+Relation $\SCB$ denotes the strong context bisimilarity. As is well-known, $\WCB$ is a congruence; see \cite{San92,San94} for a proof. 
+\xiv{We stress that the bisimulations are defined over closed processes. So the expressions in (*) above in Definition \ref{context-bisimulation} should be closed in order to be relared by $\mathcal{R}$. This situation also applies to other definitions concerning bisimulations, e.g., bisimulations up-to context.
+}
+The extension of $\WCB$ to open processes and abstractions is defined in the expected way: suppose $\ve{X}\subseteq \fpv{T,T'}$, then $T\WCB T'$ iff $T\hosub{\ve{A}}{\ve{X}} \WCB T'\hosub{\ve{A}}{\ve{X}}$ for all closed $\ve{A}$; $\lrangle{\ve{X}}T \WCB \lrangle{\ve{X}}T'$ iff $T\hosub{\ve{A}}{\ve{X}} \WCB T'\hosub{\ve{A}}{\ve{X}}$ for all closed $\ve{A}$.
+\sepp
+
+\xxxx{We note that the matching for output in context bisimulation is required to bear the same kind of communicated process as compared to the simulated action, and the resulting two terms in (*) should be processes so as to be in $\R$ again. This is standard in such definitions; see \cite{San92}. 
+%Also relavant to this, in the bisimulation, the communicated processes are required to tbe the same type, and of course type error shall not occur. 
+Since we always assume type consistency, %we require the outputted terms, say A and B, in the (context) bisimulation to bear the same kind. 
+it means that, for example, for the outputted terms $A$ and $B$, if $A$ is a name abstraction, so is $B$; %and also $X$ in $E[X]$.
+similar for other cases. However, we do not have further requirement on the contents on these abstractions, as long as the requirement of the bisimulation is satisfied (actually this is part of the flexibility context bisimulation permits). 
+Also this design somewhat simplifies discussion, e.g., the characterization by normal bisimulation. Perhaps this can be somehow relaxed, but we do not know how to do it now.
+%- About requiring same type of A and B in the output clause of context bisimulation: 
+}
+
+
+
+\subsubsection{Bisimulation up-to}
+\xxx{
+Before going ahead, %on to the next section, 
+we make some discussion about the bisimulation proof method, since it is needed during building bisimulation in this work. 
+}
+
+\xxrmcolor{
+%NT: about up-to. ADD to after the definition of context bisimulation or another better place. 
+The proofs concerning establishing bisimulation in this paper take advantage of a proof technique called up-to technique \cite{SW01a,PS11}. The up-to technique is somewhat a standard and universal tool for process models (even sequential models like lambda-calculus). It has been widely validated and applied. Interested readers can refer to \cite{SW01a,PS11,San12} for good introduction to this traditional and developing technique. We will use the up-to technique in, for instance, the discussion of the properties of the encodings. 
+}
+
+\xxrmcolor{
+The up-to techniques used in this work mainly include up-to strong bisimulation ($\SCB$) or structural congruence ($\equiv$), and up-to context. 
+Technically, a relation \R is a context bisimulation up-to $\SCB$ (respectively, $\equiv$) if it satisfies all the clauses of the context bisimulation, except that the resulting two processes in the conclusion of each clause are related by $\SCB \R \SCB$ (respectively, $\equiv \R \equiv$) instead of \R. 
+%, i.e., replace \R with $\SCB \R \SCB$ (respectively, $\equiv \R \equiv$) in the conclusion of each clause. 
+}
+
+\xxrmcolor{
+Similarly, a relation \R is a context bisimulation up-to context if it satisfies all the clauses of the context bisimulation, except that the resulting two processes originally related by $\R$, say $P' \,\R\, Q'$, in the conclusion of each clause can now be written as $P'\equiv C[P''], Q'\equiv C[Q'']$ for some \xxxx{context $C$, and $P''$ and $Q''$} such that $P'' \,\R\, Q''$. That is, they can be rewritten into forms that extract the common parts of $P',Q'$ into a context, and separate the possibly different sub-processes $P'',Q''$ to be indeed related by \R (the common context may also have multiple holes, in which case the processes filling in the holes are bound to be related component-wise). 
+}
+
+\xxrmcolor{
+A relation \R as such above is not necessarily a bisimulation already, however, it is certain that it is subsumed by the largest bisimulation, i.e., bisimilarity. 
+%For example, if a relation \R is a context bisimulation up-to $\SCB$, the it holds that $\R \subseteq \WCB$. Briefly, this is true because  $\SCB \R \SCB$ is a context bisimulation. One has a similar situation for up-to context.  
+\xxxx{Below we formally define these up-to techniques for context bisimulation that are used in this work. 
+}
+%We do not give further details since it is not the main topic of this work; 
+More systematic introduction, comprehensive discussion and development of this technique can be found in \cite{SW01a,SR12,San12,SKS11,Mil89,MPS14,DHS18}.
+}
+%\nts{\fbox{TODO...check the notes on the first page} }
+\xiv{We recall that by default we deal with closed processes in bisimulations.}
+
+
+\xxrmcolor{
+%Todo: fill in the definitions; check explanation (ref ds)
+\begin{definition}[up-to \SCB]\label{d:up1}
+%A relation \R is a context bisimulation up-to \SCB if whenever $P\R Q$ it holds that 
+%modify from the def of context bisimulation 
+%P' \SCB\R \SCB Q'
+%in output, $A$ and $B$ are of the same type, i.e., non-abstraction, name abstraction, or process abstraction
+A symmetric relation $\mathcal{R}$ on \HOPiDd\ processes is a context bisimulation up-to \SCB, if whenever $P\,\mathcal{R}\, Q$ the following properties hold.
+\begin{itemize}
+\item if $P \st{\alpha} P'$ and $\alpha$ is $a(A)$ or $\tau$, then $Q \wt{\widehat{\alpha}} Q'$ for some $Q'$ and $P'\,\SCB\mathcal{R}\SCB\, Q'$;
+\item if $P \st{(\ve{c})\overline{a}A} P'$, then $Q \wt{(\ve{d})\overline{a}B} Q'$ where $B$ and $A$ are both process abstractions,  name abstractions or not abstractions, and moreover for every $E[X]$ such that $\{\ve{c},\ve{d}\}\cap \fn{E}=\emptyset$ it holds that $(\ve{c})(E[A]\para P') \; \SCB\mathcal{R}\SCB \;  (\ve{d})(E[B]\para Q')$.
+\end{itemize}
+\end{definition}
+If one replaces \SCB with $\equiv$ in the above definition, one gets the context bisimulation up-to $\equiv$.
+}
+
+\xxrmcolor{
+\begin{definition}[up-to context]\label{d:up2}
+%modify from up-to \SCB above
+%P'\equiv C[P''],  Q'\equiv C[Q''], and P''\R Q''
+A symmetric relation $\mathcal{R}$ on \HOPiDd\ processes is a context bisimulation up-to context, if whenever $P\,\mathcal{R}\, Q$ the following properties hold.
+\begin{itemize}
+\item if $P \st{\alpha} P'$ and $\alpha$ is $a(A)$ or $\tau$, then $Q \wt{\widehat{\alpha}} Q'$ for some $Q'$, $P'\equiv C[P'']$ and $Q'\equiv C[Q'']$ for some \xiv{(closed)} $P'', Q''$ and context $C$, and $P''\,\mathcal{R}\, Q''$;
+\item if $P \st{(\ve{c})\overline{a}A} P'$, then $Q \wt{(\ve{d})\overline{a}B} Q'$ 
+%for some $B$ that is of the same type as $A$, i.e., a process abstraction, a name abstraction or not an abstraction, 
+where $B$ and $A$ are both process abstractions,  name abstractions or not abstractions, 
+and moreover for every $E[X]$ such that $\{\ve{c},\ve{d}\}\cap \fn{E}=\emptyset$ it holds that $(\ve{c})(E[A]\para P') \equiv C[P'']$ and $(\ve{d})(E[B]\para Q')\equiv C[Q'']$ for some \xiv{(closed)} $P'', Q''$ and context $C$, and $P''\,\mathcal{R}\, Q''$.
+\end{itemize}
+\end{definition}
+}
+
+\xxxx{
+The two up-to techniques above can be combined, i.e., replacing $P''\,\R\, Q''$ in Definition \ref{d:up2} with $P'' \,\SCB\R\SCB\, Q''$ 
+%(respectively $P'' \,\equiv\R\equiv\, Q''$) 
+gives a context bisimulation up-to context and \SCB 
+%(respectively $\equiv$). 
+}
+
+\xxrmcolor{
+To be useful, an up-to technique must be sound. 
+\begin{theorem}[Soundness of the up-to technique]\label{thm:sound_up-to_context_general}
+If \R is a context bisimulation up-to context or/and up-to $\SCB$ (or $\equiv$), then $\R \,\subseteq\, \WCB$.
+\end{theorem}
+}
+
+\xxxx{One may not be so confident of the soundness of up-to context as that of up-to $\equiv$ or $\SCB$, which after all can be proven in a way similar to that for first-order processes (see \cite{SW01a}). \xxxx{We prove this theorem in Appendix \ref{appendix:up-to-context_general}}.}
+\xxxx{
+Intuitively, the up-to context technique for higher-order processes, as well as other up-to techniques, are sound because higher-order processes can be translated into first-order ones in a fully abstract way, and these up-to techniques are sound for first-order processes \cite{San92, SW01a, MPS14}. % (which we may also appeal to while discussing the encodings). 
+We also refer the reader to a recent work \cite{DHS18} for more detailed % and evidential
+discussion of the up-to context technique in the higher-order setting, whereby this technique is used to solve the unique solution issue. 
+}
+\xxxx{Further to our need, in Section \ref{s:encoding} we will also prove the soundness of the up-to context technique on top of the encodings presented in that section. As one shall see, that proof indeed is closely related to the proof of the soundness of the general up-to context technique defined in Definition \ref{d:up2}.
+}
+%\item about up-to context: see \cite{DHS18}; defs of the 2 up-to (strong bisimilarity and context); make it a (soundness) theorem; explain that it is sound and refer to \cite{SW01a,MPS14, DHS18} (\cite{SW01a} on first-order; \cite{MPS14} somewhat extension to higher-order setting; \cite{DHS18} touches up-to context in HO setting w.r.t. unique solution; moreover there is fully abstract encoding from higher-order process to first-order processes, and up-to context is true in the first-order setting, that is, HOpi can be translated into pi in a fully abstract way, and the technique is sound in pi); use it henceforth. %\cite{MPS14}
+%I attach the paper. Actually it is not using bisimulation, but unique solution of equations. For you, it is firther evidence that the
+%technique up-to context is sound, and you could refer to it, but it is
+%not really what you need in the paper (my other suggestions, of claiming
+%that the technique follows from the full abstraction of encoding into pi, would seem ok)
+
+
+
+
+\subsection{A notion of encoding}\label{s:criteria}
+%\psepvs{.2}
+%\noindent\textbf{\large 2.3 ~A notion of encoding}
+
+We \xxx{give} a notion of encoding in this section. %First, we define what
+We assume that a process model $\mathcal{L}$ is a triplet $(\mathcal{P}, \st{}, \approx)$, where $\mathcal{P}$ is the set of processes, $\st{}$ is the  LTS with a set $\mathcal{A}$ of actions, and $\approx$ is a behavioral equivalence {(with structural congruence implicit)}.
+Given $\mathcal{L}_i\DEF (\mathcal{P}_i, \st{}_i, \approx_i)$ ($i{=}1,2$), an encoding from  $\mathcal{L}_1$ to $\mathcal{L}_2$ is a function $\encoding{\cdot}{}{}: \mathcal{P}_1 \longrightarrow \mathcal{P}_2$ that satisfies some set of criteria.
+Notation $\encode{\mathcal{P}_1}{}{}$ stands for the image of the $\mathcal{L}_1$-processes inside $\mathcal{L}_2$ under the encoding, \xxxx{that is, $\encode{\mathcal{P}_1}{}{} \DEF \{\encoding{P}{}{} \,|\, P \mbox{ is an $\mathcal{L}_1$-process}\}$}. It should be clear that  $\encode{\mathcal{P}_1}{}{}\subseteq \mathcal{P}_2$ \cite{Gor09,Gor08a}. 
+
+We use $\dot\approx_2$ to denote the behavioural equivalence $\approx_2$ restricted to image $\encode{\mathcal{P}_1}{}{}$ {(\xxxx{up-to the standard structural congruence})}, \xiv{with the related terms  restricted to those on that image. Since the encoding is compositional, it makes sense to assume that a context is also mapped to a context.} 
+\xiv{However, contexts in the target model can be used in a somewhat more relaxed way, which we now explain. 
+A legal context here for $\dot\approx_2$ means a context in the target (higher-order) model that evaluates to a term in the image of the encoding, and thus is good for the bisimulation equality. That is, when a process is put in such a context, one gets in return a term that lies in the image of the encoding. 
+Usually a (receiving) context can be the context corresponding to a context in the source model run  through the encoding. Yet from the viewpoint of (context) bisimulation, a context in the (target) model can be a bit more versatile so as to allow more flexibility and discrimination. 
+Consequently, it may be a context $C[\cdot]$ that is not an  encoding but evaluates, when fed with a process, to a term falling within the image of encoding (such that suitable for the bisimulation). %, i.e., within the image of the encoding. 
+}
+%in the discussion of criteria (notion of encoding), concerning the restriction to the image of the encoding, add some explanation about up-to structural congruence (or strong bisimilarity). 
+
+
+\xxrmcolor{We also notice that generally the relation $\dot{\approx}_2$ obtained by restricting the (say, context) bisimilarity to the image of the encoding may be up-to some strong congruence (e.g., structural congruence or strong bisimilarity), i.e., the relation itself is defined on the image of the encoding, yet since generally the encoding may have some supporting structure that becomes garbage during evolution, certain strong congruence is used to collect these garbage and stick to the image of the encoding. 
+Here in this work, as will be seen, things are much simpler. This is because the encodings to be presented in the coming sections are direct enough to yield a somewhat seamless operational correspondence (i.e., an encoding properly evolves into another with little garbage). %Thus the relation $\dot{\approx}_2$ is indeed well-defined. 
+}
+
+The following criteria set (Definition \ref{gorla-like-cond}) used in this paper, as a benchmark for encodings, stems from \cite{LPSS10} (the version provided in \cite{LPSS10} is based on \cite{Gor08a}).
+%Notation $\mathcal{L}_1 \sqsubseteq \mathcal{L}_2$ means there is an encoding from $\mathcal{L}_1$ to $\mathcal{L}_2$. We know that $\sqsubseteq$ enjoys transitivity \cite{LPSS10}.
+As is known, encodability enjoys transitivity \cite{LPSS10}.
+%We will show that the encoding in Section \ref{s:encoding} satisfies all the criteria in Definition \ref{gorla-like-cond} except adequacy (1a).
+
+
+\begin{definition}[Criteria for encodings]\label{gorla-like-cond}
+%\begin{enumerate}
+%\item[]
+\noindent\textbf{Static criteria}:
+(1) Compositionality. \emph{For any $k$-ary operator $op$ of $\mathcal{L}_1$, and all $P_1,...,P_k\in \mathcal{P}_1$,  $\encoding{op(P_1,...,P_k)}{}{}$ $=\, C_{op}[\encoding{P_1}{}{},...,\encoding{P_k}{}{}]$ for some (multihole) context $C_{op}[\cdots]\in \mathcal{P}_2$;}
+%(2) [\stress{DROP THIS?}]~ Name invariance. \emph{For any injective substitution $\sigma$ of names, $\encoding{P\sigma}{}{} \,=\, \encoding{P}{}{}\sigma$. }
+
+%\item[]
+\noindent
+\textbf{Dynamic criteria}:
+%(1) [\stress{DROP THIS?}]~ Forth operational correspondence. %Action completeness.
+%\emph{Whenever $P\wt{\lambda} P'$, it holds $\encoding{P}{}{} \wt{\lambda'} \approx_2 \encoding{P'}{}{}$, for some action $\lambda'$ with the same \emph{subject}  as that of $\lambda$ (the subject of an action (e.g., $a(A)$) is the name on which the action happens (e.g., $a$)) ;} \\
+%(2) [\stress{DROP THIS?}]~ Back operational correspondence. %Action soundness.
+%\emph{Whenever $\encoding{P}{}{} \wt{\lambda'} T$, there exist $P'$ and $\lambda$ with the same \emph{subject} as that of $\lambda'$ s.t. $P\wt{\lambda} P'$ and $T\wt{} \approx_2 \encoding{P'}{}{}$;}\\
+(1a) Adequacy. \emph{$P \approx_1 P'$ implies $\encoding{P}{}{} \approx_2 \encoding{P'}{}{}$. }
+Adequacy is also known as \emph{soundness}. 
+(1b) \xiv{Completeness.} 
+\xxxx{
+\xiv{The converse of soundness, i.e., \emph{$\encoding{P}{}{} \approx_2 \encoding{P'}{}{}$ implies $P \approx_1 P'$}, is the \emph{completeness}.
+\emph{Full abstraction} refers to both soundness and completeness.}
+}
+(1c) Weak adequacy (or weak soundness). \emph{$P \approx_1 P'$ implies $\encoding{P}{}{} \dot\approx_2 \encoding{P'}{}{}$;} ~
+(2) Divergence-reflecting. \emph{If $\encoding{P}{}{}$ diverges, so does $P$.}
+%\end{enumerate}
+\end{definition}
+
+Adequacy (1a) obviously entails weak adequacy (1b), since $\approx_2$ allows more processes in the target model $\mathcal{L}_2$ (thus more variety of contexts). Yet weak adequacy is still useful because it may be too strong if one requires the encoding process to be compatible with all kinds of contexts in the target model. For instance, in order to achieve first-order interactions in a higher-order target model, it appears quite demanding to require equivalence under all kinds of input because the target higher-order model may have more powerful computational capability (so it can feed a much involved input). More often than not, using limited contexts in the target model, e.g., the encoding processes themselves, may be sufficient to meet the goal of the encoding.
+
+It is worthwhile to note that the criteria are short of those for operational correspondence. Although generally soundness and completeness may appear not very informative in absence of operational correspondence \cite{GN16,Par16}, we make this choice in this work out of the following consideration. The criteria for operational correspondence used in \cite{Gor08a}, though proven useful in many models, appear not quite convenient when discussing encodings into higher-order models \cite{LPSS10}, since (for example) the case of input can be hard to comply with the criteria due to the increased complexity in the (target) environment.
+\xxrmcolor{
+Namely, in the context of the target higher-order model, toward the establishment of context bisimulation, an input process is arbitrary and can be rather intricate (not necessarily an encoding process at all), so to break the desired correspondence with the original action in the source model.
+\xxxx{
+After all, we are more interested in full abstraction, and it is built on the standard bisimulation equalities %in the source and target models, 
+rather than arbitrary ones as discussed in \cite{Par16} (so the full abstraction is not trivial).
+}
+That said, the soundness and completeness are likely based on a different manner of operational correspondence. 
+}
+Notwithstanding, we will discuss the operational correspondence of the encoding in this work, and moreover, as will be seen, the concrete operational correspondence therein somehow strengthens the criteria of operational correspondence %(and related concepts) 
+used in \cite{Gor08a,LPSS10} (in \cite{Gor08a} the criteria are not action-labelled and thus the notion of success sensitiveness is contrived; in \cite{LPSS10} a labelled variant criteria is posited to its purpose). %success sensitiveness
+Beyond the scope of this paper, it would be intriguing to examine the possibility of formally pinning down some variant criteria of operational correspondence having vantage for higher-order (process) models.
+
+%Three possible motiv: 1) encoding used to achieve correct FO interactions in HO, so limited contexts may be ok; 2) too demanding to require all kinds of input because the target (HO) model has somewhat more powerful computation ability;  3) in practice usually not all possible objects are communicated (rather some typical ones).
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+%---------------------------
+% Local Variables:
+% mode: LaTeX
+% TeX-master: "main.tex"
+% End:

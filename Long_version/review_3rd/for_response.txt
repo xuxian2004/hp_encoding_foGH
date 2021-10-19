@@ -1,0 +1,112 @@
+
+
+%>>>>> Response to rev...RAW to use
+
+%NOTICE: the response below need first writing to the paper itself, and then write to the the response file
+
+%Be as CONCISE as possible
+
+
+- [DONE]  About up-to and soundness (Lemma 4)
+We prove a result that on the image of the encoding, the up-to context is valid. We believe that this technique also works in the general HO processes, though we do not give a proof since the result on the image of the encoding is sufficient for our purpose. Concerning the soundness of the encoding, this is not a contradiction because we are considering a subset of HO processes that are image of the encoding, and two processes bisimilar in this subset may not be so in the general case, when we allow more contexts that can be non-encodings. Thus even though that proof can be extended to the general situation in the output case, the input case can not, as exhibited in the counterexample. 
+To recap in a nutshell, the crux is mostly with input rather than output. 
+
+
+- [DONE]  About overall evaluation concerning novelty by Reviewer 2 
+Yes, I read that. 
+With respect, I don't see why he is questioning (maybe he/she is not so familiar with this topic as Dr. Schmitt; but notice that this does not mean I don't appreciate the comments). Among others, the encodings are completely different from previous ones and provides new ideas of encoding name-passing in HO, so is the analysis of its properties which exhibits the intricacy of even such concise encodings (two counterexamples).
+Also about the normal busimulation: having normal bisimulation in presence of only process parameterization (a previous paper as indicated) does not immediately mean that normal bisimulation exists when name parameterization is also included, because there is no way to send a name-passing using trigger-like gadgets directly. 
+Anyhow, the points have been made, and I have to response with all my effort. 
+
+
+<The following 3 points in a row may be handled together: to the semantics and bisimulation concerning type>
+-  [DONE]  About application as structural congruence:
+I understand your concern. Yet this appears not an issue for the work here, because we are more interested in the image of the encodings, where this would not happen. Moreover, actually the application of an abstraction is not modeled as a reduction (or internal action).  So it appears that the infinite reduction tree would not occur as in lambda-calculus where application indeed leads to a reduction. Yet Sangiorgi's work concerning the substitution is important though it seems harmless in here, and we have remarked on the this in the paper. Thank you for the comment. 
+
+- [DONE]    About type system: When defining HO processes with parameterization, a type system is necessary to ensure correct use of abstraction and application. However, this paper mainly focuses on expressiveness, and such a system is relatively not so important. (lest) It can indeed be referred to Sangiorgi's work. And so it is assumed that type errors would not happen whatsoever (based on the implicit type system).
+Also relavant to this, in the bisimulation, the communicated processes are required to tbe the same type, and of course type error shall not occur. This is somewhat standard in similar definitions; see Sangiorgi's work please. 
+- [DONE]   About requiring same type of A and B in the output clause of context bisimulation: Since we always assmume type inconsistency would not happen, we require the outputted terms, say A and B, in the (context) bisimulation to bear the same kind. It means that if A is a name abstraction, so is B; similar for other cases. This somewhat simplifies discussion, e.g., the normal bisimulation. Perhaps this can be somehow relaxed, but we do not know how to do it now.
+
+
+
+- [DONE]   About context $C[]$ and $E[X]$: Yes, they are a bit different. Essentially, $E[X]$ is a kind of context allowing multiple occurrence of the hole and disallows name capture. So we may also write $E[\cdot]$ in the discussion, bearing in mind its difference from a general context. 
+Also ADD TO the BODY: contexts can be extended to multihole ones in the standard way \cite{SW01a}. A multihole context has several holes each of which may occur a couple of times. 
+
+
+
+
+
+- [modified but not responded (seems not needed)] [DONE] About notation: For convenience later, we may write $\overline{a}(A)$ or $\overline{a}[A]$ for higher-order output.
+
+
+
+
+
+
+-  [note, may not be for response; attached as a anntation to the proof of completeness] [DONE] About In the proof of completeness of the encoding, the (bound) output must be able to be matched by a (bound) output with the same name in the outputted object (say $b$ in $\lrangle{Z}(Z\lrangle{b})$): we have given some argument concerning this, see the paper. Also notice that to force a contradiction if assumed otherwise, one may counteract / offset interfering factors from environment by consuming them using bisimulation between $\enc{P}$ and $\enc{Q}$. For example,to have a situation that one part has action $\alpha$ but the other part does not, one may eliminate the possible simulation from the remaining part by consuming all of  them before starting the argument. 
+BUT this note may not be so relevant. JUST stick to the arguments in the paper. 
+
+
+
+
+
+
+
+-  We now ...
+
+
+
+
+
+-  
+
+
+
+
+
+-  
+
+
+
+
+
+-  
+
+
+
+
+
+
+
+-  
+
+
+
+
+
+-  
+
+
+
+
+
+-  
+
+
+
+
+-  
+
+
+
+
+
+-  
+
+
+
+
+
+
+
+Sent from my iPhone

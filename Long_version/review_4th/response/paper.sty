@@ -1,0 +1,288 @@
+% Davide`s macros.
+
+%\newenvironment{proof}{\parindent = 0pt{\bf Proof: }}{\qed}
+
+
+% for process algebras
+
+\newcommand{\Prpi}{{\cal P}_\pi}
+\newcommand{\Abpi}{{\rm Ab}_\pi}
+
+\newcommand{\AG}{{\rm Ag}}     %terms of a generic process algebra
+\newcommand{\AGr}{\cal L \times \cal L}  
+
+\mathcode`\!="4021       % `!' as prefix operator
+\mathcode`\|="326A       % `|' as relation operator
+\mathcode`\.="602E       % `dot' of prefixes
+\newcommand{\res}[1]{{\boldsymbol  \nu} #1\: } %restriction
+\newcommand{\resb}[1]{({\boldsymbol  \nu} #1)} %restriction with brackets
+\newcommand{\nil}{\boldsymbol 0}               %nil
+
+
+\newcommand{\out}[2]{\overline{#1} \langle #2\rangle}    % pi-calculus free output
+\newcommand{\bout}[2]{\overline{#1}(#2)}  % pi-calculus bound output
+\newcommand{\inp}[2]{#1(#2)}              % pi-calculus input
+
+\newcommand{\outC}[1]{\overline{#1}}      % CCS  output
+\newcommand{\inpC}[1]{#1}                 % CCS  input
+
+
+\newcommand{\mat}[2]{[#1  =  #2 ]}         % matching
+
+
+
+
+\newcommand{\abs}[1]{(#1)\,}            %abstractions
+\newcommand{\app}[2]{#1 \langle #2 \rangle}        %applications
+
+\newcommand{\Names}{{\cal N}}              % set of all names
+\newcommand{\fn}[1]{\mbox{\rm fn($#1$)}}   % free names
+\newcommand{\bn}[1]{\mbox{\rm bn($#1$)}}   % bound names
+\newcommand{\n}[1]{\mbox{\rm names($#1$)}}     % names
+\newcommand{\subj}[1]{\mbox{\rm subj($#1$)}}     % subject of an action
+
+
+
+% substitutions
+%\def\sub#1#2{\{\raisebox{.5ex}{\small$#1$}\! / \!\mbox{\small$#2$}\}}
+\def\sub#1#2{\{\raisebox{.5ex}{\small$#1$} / \mbox{\small$#2$}\}}
+%
+
+
+%tilde's
+
+
+\newcommand{\til}[1]{\widetilde{#1}}
+\newcommand{\tila}{{\til a}}
+\newcommand{\tilx}{{\til x}}
+\newcommand{\tilb}{{\til b}}
+\newcommand{\tilc}{{\til c}}
+\newcommand{\tile}{{\til e}}
+
+
+
+
+
+% arrow & transition systems
+\newcommand{\ra}{\longrightarrow}   %strong reduction    
+\newcommand{\Ra}{\Longrightarrow}   %weak reduction      
+
+\newcommand{\Rah}{\Longrightarrow_{\rm h}}   %head  reduction
+
+  
+\newcommand{\ar}[1]{\:\stackrel{{#1}}{\longrightarrow}\:}
+				    %strong labelled transitions %%xx: !!!conflict with package xypic; do not use!
+\newcommand{\Ar}[1]{\:\stackrel{{#1}}{\Longrightarrow} \:}
+				    %weak  labelled transitions
+
+\newcommand{\arcap}[1]{\:\stackrel{{\widehat{#1}}}{\ra}\:}
+                                    %strong labelled transitions with hat
+\newcommand{\Arcap}[1]{\:\stackrel{{\widehat{#1}}}{\Longrightarrow}\:} 
+                                    %weak labelled transitions with hat
+
+
+
+
+
+
+
+
+%equivalences
+
+\newcommand{\Dwa}{{\!\,\Downarrow}}           % plain convergence
+\newcommand{\Dwan}[1]{\Downarrow^{#1}}  % plain convergence in #1 steps
+\newcommand{\Dwab}[1]{\Downarrow_{#1}}  % plain convergence on #1
+
+\newcommand{\DwaXi}{\Downarrow^\infty}  % convergence for lambda-terms like Xi
+
+\newcommand{\outcon}{\Dwa_{\rm asy}}      % asynchronous convergence
+\newcommand{\outconn}[1]{\outcon^{#1}}    % asynchronous convergence in #1 steps
+
+\newcommand{\Div}{{\!\,\Uparrow}}              %divergence
+\newcommand{\DivL}{\Uparrow_{\beta,\nu}}  %divergence using only
+					  %beta,nu rules
+
+\newcommand{\DivB}{\Uparrow_{\beta,\nu,\xi}}  %divergence using only
+			             		  %beta,nu,xi rules
+
+
+\newcommand{\lmay}{\leq_{\rm may}}      %may preorder (less)
+\newcommand{\gmay}{\geq_{\rm may}}      %may preorder (greater)
+\newcommand{\may}{\sim_{\rm may}}       %may equivalence
+
+\newcommand{\lmayasy}{\leq_{\rm may}^{\rm asy}}      %may asynchronous  preorder (less)
+\newcommand{\gmayasy}{\geq_{\rm may}^{\rm asy}}      %may asynchronous preorder (greater)
+\newcommand{\mayasy}{\sim_{\rm may}^{\rm asy}}       %may asynchronous equivalence
+
+\newcommand{\expamayasy}{\expa_{\rm may}^{\rm asy}}    %asynchronous-may expansion (less)
+\newcommand{\contrmayasy}{\contr_{\rm may}^{\rm asy}}  %asynchronous-may expansion (greater)
+
+
+\newcommand{\lmust}{\leq_{\rm must}}      %must preorder (less)
+\newcommand{\gmust}{\geq_{\rm must}}      %must preorder (greater)
+\newcommand{\must}{\sim_{\rm must}}       %must equivalence
+
+\newcommand{\lmustasy}{\leq_{\rm must}^{\rm asy}}      %must preorder (less)
+\newcommand{\gmustasy}{\geq_{\rm must}^{\rm asy}}      %must preorder (greater)
+\newcommand{\mustasy}{\sim_{\rm must}^{\rm asy}}       %must equivalence
+
+
+\newcommand{\contr}{\succcurlyeq}             % expansion (greater)
+\newcommand{\expa}{\preccurlyeq}		 % expansion (less)
+
+
+
+\newcommand{\web}{\,\approx \,}   %weak bisimulation 
+
+
+
+
+
+
+%special symbols
+
+\newcommand{\defi}{\stackrel{\mbox{\scriptsize def}}{=}}  %to give a
+							  %name to
+							  %expressions
+\newcommand{\Mybar}{{\center \rule{\hsize}{0.5mm}}}       % bar in tables
+\newcommand{\reff}[1]{(\ref{#1})}       %references between brackets
+\newcommand{\midd}{\; \; \mbox{\Large{$\mid$}}\;\;} %separation symbol
+						    %in grammars
+
+% \ifCam
+% \def\qed{\unskip\nobreak\hfil\penalty50\hskip1em\null\nobreak\hfil
+%   $QED$ \parfillskip=0pt\finalhyphendemerits=0\endgraf}  % square end proofs
+% \else						    
+% \def\qed{\unskip\nobreak\hfil\penalty50\hskip1em\null\nobreak\hfil
+%   $\Box$\parfillskip=0pt\finalhyphendemerits=0\endgraf}  % square end proofs
+% \fi
+  
+\newcommand{\st}{\mbox{s.t.}\ }
+
+\newcommand{\trans}[1]{\mbox{{\sc{\tt #1}}}}
+\newcommand{\mysp}{12pt}
+\newcommand{\R}{{\cal R}}                % for relations (plain symbol)
+\newcommand{\rela}{\mathrel{\R}}         % for relations (as a operator)
+
+
+\newcommand{\myiff}[2]{%#1 
+$ $ \hfill iff \hfill $ $ 
+\begin{center}
+\mbox{for all $n$, } #2
+\end{center} }
+
+\newcommand{\ground}{}
+
+
+
+
+
+
+
+
+
+% for contexts
+\newcommand{\setcon}{{\cal C}} % for a set of context
+
+
+\newcommand{\brac}[1]{[#1] }   % brackets for the context hole
+
+\newcommand{\ct}[1]{ C \brac{#1} } 
+\newcommand{\qct}{ C  }
+\newcommand{\holem}{ [ \cdot  ] }
+\newcommand{\holei}[1]{[\cdot]_{#1}}
+
+
+\newcommand{\ctp}[1]{ C' \brac{#1} }         
+\newcommand{\qctp}{ C'  }
+
+\newcommand{\ctl}[1]{ C^x_\lambda \brac{#1} }         
+\newcommand{\qctl}{ C^x_\lambda }
+
+\newcommand{\ctlx}[2]{ C^{#1}_\lambda \brac{#2} }         
+\newcommand{\qctlx}[1]{ C^{#1}_\lambda }
+
+\newcommand{\ctlxapp}[1]{ C^{\til x,x}_{\lambda-{\rm var}} \brac{#1} }         
+\newcommand{\qctlxapp}{ C^{\til x,x}_{\lambda-{\rm var}}}
+
+\newcommand{\ctapp}[1]{ C_{\rm app} \brac{#1} }         
+\newcommand{\qctapp}{ C_{\rm app}}
+
+\newcommand{\ctappn}[1]{ C^{x,n}_{\rm var} \brac{#1} }         
+\newcommand{\qctappn}{ C^{x,n}_{\rm var}}
+
+\newcommand{\qctappnn}[1]{ C^{x,#1}_{\rm var}}
+
+
+\newcommand{\ctpu}[1]{ C'_1 \brac{#1}  }         
+\newcommand{\qctpu}{ C'_1  }
+
+\newcommand{\ctpp}[1]{ C'' \brac{#1}}        
+\newcommand{\qctpp}{ C''  }
+
+\newcommand{\ctD}[1]{ D \brac{#1} }         
+\newcommand{\qctD}{ D  }
+
+\newcommand{\ctDp}[1]{ D' \brac{#1} }         
+\newcommand{\qctDp}{ D'  }
+
+\newcommand{\ctu}[1]{C_1 \brac{#1}}         
+\newcommand{\qctu}{C_1}
+
+\newcommand{\ctd}[1]{C_2 \brac{#1}}         
+\newcommand{\qctd}{C_2}
+
+\newcommand{\cti}[2]{C_{#1} \brac{#2}}         
+\newcommand{\qcti}[1]{C_{#1}}
+
+\newcommand{\ctpi}[2]{C'_{#1} \brac{#2}}         
+\newcommand{\qctpi}[1]{C'_{#1}}
+
+\newcommand{\cttil}[1]{\til C \brac{#1}}         
+\newcommand{\qcttil}{\til C}
+
+
+
+%encodings
+
+\newcommand{\encoding}[1]{ [\! [ #1 ] \! ] }
+\newcommand{\enco}[2]{\app{\robinenco\encoding{#1}}{#2}}
+\newcommand{\encom}[1]{\robinenco\encoding{#1}}
+\newcommand{\qencom}{\robinenco}
+\newcommand{\robinenco}{}
+\newcommand{\qenco}{\encoding{\,}}
+
+
+
+% $\lambda$-calculus
+
+\newcommand{\Var}{{\cal V}ar}  %$\lambda$-variables
+ 
+%lambda-calculus  trees 
+\newcommand{\LLT}[1]{LT(#1)}
+\newcommand{\LLTN}{L\'evy-Longo Tree} 
+\newcommand{\BT}[1]{BT(#1)}
+\newcommand{\BTN}{B\"{o}hm Tree} 
+
+
+%for name of laws
+\newcommand{\law}[1]{\mbox{{\bf L#1}}}
+
+
+
+%for links
+
+
+\newcommand{\link}[2]{#1 \rhd  #2}
+%\newcommand{\link}[2]{#1 \Rightarrow #2}
+
+
+
+
+
+% For the language target of the encoding
+
+\newcommand{\lang}{{\cal L}}
+\newcommand{\lange}[1]{{\cal L}_{#1}}
+
+

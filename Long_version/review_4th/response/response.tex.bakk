@@ -1,0 +1,489 @@
+\documentclass[]{article} %this options tells llncs not to (re)define \vec
+\usepackage[utf8x]{inputenc}
+%\usepackage[combine]{ucs}
+%\DeclareUnicodeCharacter{0x0305}{$\overline{b}$}
+%\usepackage {amsthm,amssymb,amsbsy}
+\usepackage {amssymb,amsbsy}
+
+\input{paper.sty}
+
+% per i commenti di Davide
+%\newcommand{\DSb}{   {\bf DSbeg}    \marginpar{{\bf $DS$}}}
+%\newcommand{\DSe}{  {\bf DSend}    \marginpar{{\bf $ $}}}
+\newcommand{\DSb}{}
+\newcommand{\DSe}{}
+
+%\newcommand{\Db}{   {\bf Dnew}    \marginpar{{\bf $DS$}}}
+%\newcommand{\De}{  {\bf Dfin}    \marginpar{{\bf $ $}}}
+\newcommand{\Db}{}
+\newcommand{\De}{}
+
+
+%----------------
+\input{head_pc.tex}
+%----------------
+
+
+\thicklines
+%\setlength{\topmargin}{0cm}
+
+%\setlength{\textwidth}{12.5cm}
+%\setlength{\textheight}{19.5cm}
+
+%\setlength{\oddsidemargin}{.1cm}
+%\renewcommand{\baselinestretch}{1.3}
+
+
+
+\newcommand{\finish}[1]{ \vskip .2cm  {\bf #1} \vskip .2cm   \marginpar{{\bf $*$}}}
+\newcommand{\uptoc}{up-to-$\leq$-and-contexts}
+\newcommand{\uptoE}{up-to-$\expa$-and-contexts}
+\newcommand{\uptoEdiv}{up-to-$\expa^\Div$-and-contexts}
+\newcommand{\expaDiv}{\mathrel{\expa^\Div}}
+\newcommand{\contrDiv}{\mathrel{\mbox{}^\Div\!\!\contr}}
+
+
+\newcommand{\rev}[1]{\item {\tt #1}}
+\newcommand{\ans}[1]{\vskip .4cm  #1 \vskip .4cm}
+
+
+\newcommand{\leqNAT}{\leqslant}
+\newcommand{\geqNAT}{\geqslant}
+
+\def\RR{\mathrel{\cal R}} % R with some space around
+\def\S{{\cal S}}          % S without spaces around
+\def\SS{\mathrel{\cal S}} % S with some space around
+
+
+%  \newtheorem{definition}{Definition}[section]
+%  \newtheorem{example}[definition]{Example}
+%  \newtheorem{lemma}[definition]{Lemma}
+%  \newtheorem{theorem}[definition]{Theorem}
+%  \newtheorem{corollary}[definition]{Corollary}
+%  \newtheorem{proposition}[definition]{Proposition} 
+%  \newtheorem{remark}[definition]{Remark}
+
+%\newcommand{\contrdiv}{^{\Uparrow}\!\!\!\contr}
+%%\newcommand{\conref}[1]{\rc{\ref{#1}}}
+%\newcommand{\conref}[1]{}
+%%\newcommand{\defref}[1]{\rc{\ref{#1}}}
+%\newcommand{\defref}[1]{}
+
+
+\begin{document}
+\subsection*{A second response to the reviewers of the paper ``Parameterizing Higher-order Processes on Names
+and Processes"}
+\label{ss:}
+
+
+First of all, again we would like to thank the reviewers for all the time and
+effort they have spent on reviewing the paper. Following the further comments, we have revised further the paper
+and amended various technical points. 
+
+
+The main modifications have been the following ones. 
+
+
+\begin{enumerate}
+
+\item We have ...
+
+\item We have ...
+
+% \item We have given proofs for the up-to techniques, both in a general higher-order setting (among the first of such result, as we know) and in the image of the encoding, and also the proof for the congruence property of normal bisimilarity. These proofs also constitute the novel part of this work. 
+
+% \item We have modified the paper to improve presentation as well as other things, including clarifying the main contributions. 
+
+% Briefly, we have contributed two new encodings of first-order pi-calculus into the higher-order with parameterization, together with full analysis (full abstraction or counterexamples). 
+% The encodings are completely different from previous ones and provide new ideas of encoding name-passing in the higher-order setting, so is the analysis of the properties which exhibits the intricacy of even such concise encodings. % (two counterexamples).
+
+% In particular, they improve the previous encoding in ICE15 which uses a more complicated method and is not very satisfactory in both strategy and analytical results. The encoding and comprehensive analysis in this work provide new laconic encoding strategy and tool for handling name-passing in the higher-order paradigm. 
+
+% We also provide a characterization of context bisimilarity with normal bisimilarity in presence of name parameterization. This goes beyond previous work in two respects.
+% One is that it involves name parameterization besides process parameterization, so a crucial point here is that one has to find a way to communicate a name with solely  process-passing. In contrast, our previous work in ICE13 only involves process parameterization and is technically a bit easier to deal with. We also notice that having normal bisimulation in presence of only process parameterization (as indicated in the ICE13 paper) does not immediately mean that normal bisimulation exists when name parameterization is also included, because how to send a name using certain gadgets is not directly known and needs careful and novel design. 
+
+% The other respect is that the characterization by normal bisimilarity is made in a purely higher-order setting. So one does not have name-passing at all, different from Sangiorgi's work in his thesis. 
+% Also the characterization appears not possible with only name parameterization, and even the combination of name parameterization with process parameterization does not necessarily implies the existence of normal bisimulation in a straightforward way.
+
+% \item We have revised various parts of the paper to improve the language and organization. Many sentences are rewritten according to the comments from the reviewers. We have also asked our colleagues to proofread the paper, helping to make it more readable. Sorry for the previous inconvenience. 
+
+% (Please notice that there is some strange blank lines around the equation on page 4, perhaps due to the latex style file. We currently do not know how to remove it. We hope this would not cause much inconvenience. Sorry for this.)
+
+% %\item We have 
+% %expanded and adjusted the background section, in particular the part leading to the definitions of Trees (LTs and BTs).
+
+% %\item  We have 
+% %expanded and clarified the meaning of compositionality and uniformity for an encoding.
+
+% %\item We have 
+% % made  explicit the meaning of congruence and
+% % precongruence. Most important, in the conditions for an encoding, we now
+% % require that the precongruences used are \emph{plain}. For a relation on
+% % pi-calculus terms,  `plain' is a kind of beta-conversion property,
+% % meaning that whenever an abstraction $F=(a)P$ appears with an argument,
+% % say $\app Fb$ then this application $\app Fb$ should be in the relation with 
+% % $P \{b/a\}$. This is a harmless property, because the processes 
+% % $\app Fb$ and  $P \{b/a\}$ have exactly the same transitions (by definition of
+% % transition on application). However, the property allows us to infer
+% % a few useful consequences, such as the closure of the relation under
+% % substitutions (see the new Lemma 3), which we use in various places in
+% % the paper.
+
+% %\item We have ............
+% % integrated the intuitive explanation of theorem 1 (one
+% % of the main theorems), which used to be in the main text, with the
+% % actual proof, which is in the appendix, 
+% % \Db
+% % leaving only a  short explanation in the main
+% % text.
+% % \De
+
+
+\item We have amended various technical points, as indicated in the comments below.
+\end{enumerate} 
+
+
+
+
+
+Below we explain the actions taken for the technical points that have been raised. 
+
+\section{To reviewer I (Alan Schmitt)}
+
+
+\begin{itemize}
+
+
+% \rev{
+% Abstract
+
+% Last sentence of the abstract. You do not show how the conditions can
+% be adapted and used in other concurrent formalisms in this paper. Delete
+% this sentence here. You already repeat this in the introduction and in the
+% conclusion. You should leave this comment only in the conclusion.
+% }
+
+% \ans{Done.}
+
+%\rev{
+% \begin{itemize}
+% \item
+% 'derivative' is not a word we use in lambda calculus. Replace it by
+% `reduct' which is what I suppose you mean here.
+
+
+% \item `(Exception ...)' Sentences between parentheses are subordinated
+% sentences and should not start with capital letters. It is not nice to
+% make such an excessive use of parentheses. Try to avoid them. In this
+% particular sentence, they could be deleted.
+% \end{itemize}
+%  }
+
+% \ans{Done.}
+
+% \begin{verbatim}
+% This paper presents and studies two compositional encodings of the pi calculus in a higher-order pi calculus with name and process parameterization. In addition, a normal bisimilarity for the parameterized calculus is introduced and shown to coincide with context bisimilarity.
+% \end{verbatim}
+
+\rev{
+Page 3, "operates names". Grammar (operates should have no 's'), and meaning: what does "operate names" mean? Is it "modify"?
+}
+\ans{%See the answer in the beginning? 
+TODO...
+}
+
+
+\rev{
+Page 3, discussion of being computationally complete. HO calculi (even without name restriction, let alone parameterization) are already computationally complete, so this argument is moot. Maybe you want to stress out that there is no *compositional* encoding of name passing using process passing.
+}
+\ans{%See the answer in the beginning? 
+TODO...
+}
+
+
+\rev{
+Page 4, discussion of HO bisimilarity. You should say that HO bisimilarity is correct, but it is too fine: it distinguishes processes that are actually equivalent.
+}
+\ans{%See the answer in the beginning? 
+TODO...
+}
+
+
+
+\rev{
+Page 4, example of factorization. The restriction (m) part is missing, hence this equation is wrong.
+}
+\ans{%See the answer in the beginning? 
+TODO...
+}
+
+
+
+
+\rev{
+Page 5, top diagram. You should keep the restriction (m) in this example, as it makes the factorization relation correct. It can indeed be removed in the definition of the relation R in the second diagram.
+}
+\ans{%See the answer in the beginning? 
+TODO...
+}
+
+
+
+\rev{
+Page 11, Now parameterization on process is obtained by taking U,K as X,T'. Why T' and not T?
+}
+\ans{%See the answer in the beginning? 
+TODO...
+}
+
+
+\rev{
+Page 12, example of $\Omega$. How can this term occur if you use typing? What is its type?
+
+Page 12, definition 3. This would be much simpler if you introduced types, then you could says "of the same type".
+}
+\ans{%See the answer in the beginning? 
+TODO MORE (\rc{not flush to the paper yet...})...
+
+- Sorry this is simply an example suggested by the other reviewer. In a type system that assures termination, it will not occur. It think its type looks like $...???...$ (see San's thesis?).
+
+-  About a type system.
+Yes, it would help understand with a type system, which I was once considering including it. However that type system has been well presented in Sangiorgi's thesis, and can be referred to whenever necessary. With all due respect, I don't think I can present it in a better way, so it might be wise to cite it (also avoiding making the paper too 'fat' and estray). 
+%Moreover, from the viewpoint of expressiveness, it is actually causes little harm to understand the encodings. 
+I thank the referee a lot for this comment. 
+
+}
+
+
+
+\rev{
+Page 12, definition 3, equation (*). Maybe say that E must be closed and not be an abstraction.
+}
+\ans{%See the answer in the beginning? 
+TODO...
+}
+
+
+
+\rev{
+Page 12, claim that context bisimularity is a congruence. It is a congruence for HOpi. You need to show it for your calculus.
+}
+\ans{%See the answer in the beginning? 
+TODO...
+}
+
+
+
+
+\rev{
+Page 14, definition 5. You need to stress in this definition that P'' and Q'' are closed, as you rely on it in the proof of Theorem 1. This matters a lot as it restricts the contexts that may be used.
+}
+\ans{%See the answer in the beginning? 
+TODO...
+}
+
+
+
+\rev{
+Page 15, definition 6. It is not clear whether you require completeness for your encoding. You should say it explicitly.
+}
+\ans{%See the answer in the beginning? 
+TODO...
+}
+
+
+\rev{
+Page 19, proof of Lemma 2. This proof could be moved to an appendix.
+}
+\ans{%See the answer in the beginning? 
+TODO...
+}
+
+
+\rev{
+Page 23, proof of Lemma 4, second case where you introduce the context for the up-to-context. Maybe highlight that these processes are closed.
+}
+\ans{%See the answer in the beginning? 
+TODO...
+}
+
+
+\rev{
+Page 24, proof of Lemma 5, second case where you restrict the transition done by [[Q]]. This could be described in an intermediary lemma proven in an appendix.
+}
+\ans{%See the answer in the beginning? 
+TODO...
+}
+
+
+
+\rev{
+Page 25, proof of Lemma 5, bound output case. This could be made more precise, for instance by setting E to be (.)<(x)R'>, where R' does not contain b and is such that R'\{b/x\} = [[R]].
+}
+\ans{%See the answer in the beginning? 
+TODO...
+}
+
+
+
+
+\rev{
+Page 27, Lemma 6, first case. Say that C is an *evaluation* context
+}
+\ans{%See the answer in the beginning? 
+TODO...
+}
+
+
+
+\rev{
+Page 27, proof of Lemma 6. This proof could be moved to an appendix.
+}
+\ans{%See the answer in the beginning? 
+TODO...
+}
+
+
+
+\rev{
+Page 31, context used for the counter-example for weak soundness. This notion of "legal" context should really be made formal. Up until this point, I thought a legal context was something like [[E(.)]] where [[.]] = . (as translation is compositional). Here you seem to change the rules be defining a legal context as a context that may be applied to yield a legal term. Please give a precise definition of a legal context.
+}
+\ans{%See the answer in the beginning? 
+TODO MORE (\rc{not flush to the paper yet...})...
+
+-  About the 'context' in the range of encodings.
+Yes, a receiving environment can be taken as the context corresponding to $E[\cdot]$ through the encoding. Yet from the viewpoint of encoding, it is (usually) defined to the encoding of a context $C[\cdot]$, and in the definition of context bisimulation, it is restricted to those stipulated by the context bisimulation, i.e., avoiding capture as for $E[\cdot]$. 
+I wish this would help clarify further. Sorry for the confusion. Thanks a lot. 
+
+}
+
+
+\rev{
+Page 33, proof of Lemma 9. This proof could be moved to an appendix.
+}
+\ans{%See the answer in the beginning? 
+TODO...
+}
+
+
+\rev{
+Page 43, proof of Theorem 1. You could initially show that R' is a congruence, as you use it in the proof by induction.
+
+You should also state that each Rn only relates closed processes.
+}
+\ans{%See the answer in the beginning? 
+TODO...
+}
+
+
+
+\rev{
+Page 43, property proved by induction. You state that each Rn meets the requirement for context bisimulation. I think this is wrong, or not clear enough. If you can show directly that R = R0 is a context bisimulation, why use an induction at all?
+
+The correct statement of the induction might be something like "if P Rn Q and P does a step, then Q does a step and the results are related (in a context bisimulation way) by R'". So you do not have that each Rn is a context bisimulation, but when you take them together as R', it works.
+}
+\ans{%See the answer in the beginning? 
+TODO...
+}
+
+
+
+
+\rev{
+
+}
+\ans{%See the answer in the beginning? 
+TODO...
+}
+
+
+
+\rev{
+
+}
+\ans{%See the answer in the beginning? 
+TODO...
+}
+
+
+
+\rev{
+}
+\ans{%TODO...
+Done.
+}
+
+
+
+\rev{
+}
+\ans{%TODO...
+Amended.
+}
+
+
+
+
+% \rev{
+% }
+% \ans{%TODO...
+% Done.
+% }
+
+% \rev{
+% }
+% \ans{%TODO...
+% Amended.
+% }
+
+% \rev{
+% - Page 39. I did not check the proofs of the appendix.
+% }
+% \ans{TODO...
+% }
+
+
+
+% \rev{
+% TO ADD
+% }
+% \ans{TODO...
+% }
+
+\end{itemize}
+
+
+
+
+
+
+
+%------------------------------------------------------------
+\clearpage
+%------------------------------------------------------------
+
+\section{To reviewer II}
+\begin{itemize}
+
+
+
+\rev{
+TO ADD
+}
+\ans{TODO... 
+}
+
+
+
+
+% \rev{
+% TO ADD
+% }
+% \ans{TODO...}
+
+
+
+\end{itemize}
+
+
+\end{document} 

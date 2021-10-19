@@ -1,0 +1,516 @@
+\section{Proofs for Section \ref{s:normal}}\label{a:proofs-normal}
+We prove the factorization theorem in this section. In order to do this, we need some laws as to the behavior of the trigger $\triggerd$. The counterparts concerning the other two kinds of triggers, i.e., $\trigger$ and $\triggerD$, are referred to \cite{Xu13, San92}. We note that these triggers are of different types, so there would be no conflict.
+Intuitively, Lemma \ref{l:prop-triggers} states some distributive laws about the replication $!m(Z).Z\lrangle{A}$ and the various process operators, i.e., prefixes, parallel composition, and application.
+We note that the proofs may use some up-to technique. 
+
+% \xx{We recall that if a relation $\mathcal{R}$ is a bisimulation up-to, say, $\SCB$, then in this relation the two simulating processes after making some action need not be directly related by $\mathcal{R}$, but (respectively) strongly bisimilar to a pair of processes that belongs to $\mathcal{R}$. 
+% Such a relation is not necessarily a (context) bisimulation itself, but it must be contained by the context bisimilarity (for the case of up-to $\SCB$, this is achieved by showing the relation $\SCB \R \SCB$ is a context bisimulation). See \cite{SW01a} for comprehensive discussion. }
+% \xx{
+% This up-to technique and similar ones (for example, up-to context used in the soundness proof of the encoding in Section \ref{s:encoding}) are standard for establishing bisimulation relations, so we omit the definition here and in what follows and advise the reader to consult \cite{San94, Mil89, SW01a} for further details.
+% }
+%Notice that in the first clause of Lemma \ref{l:prop-triggers}, the output prefix does not have any free occurrence of $m$, differently from the second clause of that lemma. The proofs of the two lemmas are placed in \ref{appendix:normal_bisimulation}.
+
+\begin{lemma}\label{l:prop-triggers}
+%\oo{\large \fbox{\#\#\#\# TODO (see \cite{Xu13} or IJCM paper in ``[ref]hopi\_v.6\_abri.rar" in this working directory)}}
+Suppose $E[X], E_1[X], E_2[X]$ belong to \HOPiDd\ and $X$ stands for a name abstraction, and assume $m\notin \fn{E,E_1,E_2,A,B}$. 
+%$\trigger, \triggerD, \triggerd$; $\triggerExp, \triggerDExp, \triggerdExp$.
+\begin{enumerate}
+\item[(1)] If $m\notin \fn{\alpha}$ and $\bpv{\alpha}\notin \fpv{A}$, then
+\begin{enumerate}
+\item[(i)] we have 
+\[
+\begin{array}{l}
+ (m)(\alpha.E[\triggerd] \para  !m(Z).Z\lrangle{A}) \WCB \alpha.(m)(E[\triggerd] \para  !m(Z).Z\lrangle{A})
+\end{array}
+\]
+
+\item[(ii)] moreover, if $E[\triggerd]\equiv \ve{\lrangle{U}}E'$ for some non-abstraction $E'$, then
+\[
+(m)(\alpha.E[\triggerd] \para  !m(Z).Z\lrangle{A}) \WCB \alpha.\ve{\lrangle{U}}((m)(E' \para  !m(Z).Z\lrangle{A}))
+\]
+\end{enumerate}
+
+
+\item[(2)] For output prefix
+\begin{enumerate}
+\item[(i)] we have 
+\[
+\begin{array}{l}
+ (m)(\overline{a}B_1.E_1[\triggerd] \para  !m(Z).Z\lrangle{A}) \WCB  (m)(\overline{a}B_2.E_1[\triggerd] \para  !m(Z).Z\lrangle{A})
+\end{array}
+\] where $B_1\equiv E_2[\triggerd]$, $B_2\equiv (m)(E_2[\triggerd] \para  !m(Z).Z\lrangle{A})$.
+
+\item[(ii)] moreover, if $E_2[\triggerd]\equiv \ve{\lrangle{U}}E_2'$ and $E_1[\triggerd]\equiv \ve{\lrangle{U'}}E_1'$ for some non-abstraction $E_1'$ and $E_2'$, then
+% \[
+% \begin{array}{l}
+%  (m)(\overline{a}B_1.E_1[\triggerd] \para  !m(Z).Z\lrangle{A}) \WCB  (m)\overline{a}B_2'.(B_2'' \para  !m(Z).Z\lrangle{A})
+% \end{array}
+% \] 
+\[
+\begin{array}{l}
+ (m)(\overline{a}B_1.E_1[\triggerd] \para  !m(Z).Z\lrangle{A}) \WCB  \overline{a}B_2'.B_2'' 
+\end{array}
+\] 
+where $B_1\equiv E_2[\triggerd]$, $B_2'\equiv \ve{\lrangle{U}}(m)(E_2' \para  !m(Z).Z\lrangle{A})$, and \\
+$B_2''\equiv \ve{\lrangle{U'}}(m)(E_1' \para  !m(Z).Z\lrangle{A})$.
+
+\end{enumerate}
+
+\item[(3)] It holds for parallel composition that
+\[
+\begin{array}{l}
+ (m)(E_1[\triggerd]\para E_2[\triggerd] \para  !m(Z).Z\lrangle{A}) \\
+ \qquad\qquad\quad \WCB  (m)(E_1[\triggerd] \para  !m(Z).Z\lrangle{A}) \para (m)(E_2[\triggerd] \para  !m(Z).Z\lrangle{A})
+\end{array}
+\]
+
+\item[(4)] For application operation
+\begin{enumerate}
+\item[(i)] we have 
+\[B\lrangle{(m)(E_1[\triggerd] \para  !m(Z).Z\lrangle{A})} \WCB (m)(B\lrangle{E_1[\triggerd]} \para  !m(Z).Z\lrangle{A})
+\]
+\item[(ii)] moreover, if $E_1[\triggerd]\equiv \ve{\lrangle{U}}E_1'$ for some non-abstraction $E_1'$, then
+\[B\lrangle{\ve{\lrangle{U}}((m)(E_1' \para  !m(Z).Z\lrangle{A}))} \WCB (m)(B\lrangle{E_1[\triggerd]} \para  !m(Z).Z\lrangle{A}))
+\]
+\end{enumerate}
+
+\end{enumerate}
+\end{lemma}
+\begin{proof}
+%\oo{\large \fbox{\#\#\#\# TODO (see/reuse \cite{Xu13} or IJCM paper in ``[ref]hopi\_v.6\_abri.rar" in this working directory)}}
+%#####
+
+%
+\noindent(1) We focus on (i) since (ii) is similar. % and simpler. 
+We define \\ $P_1\DEF (m)(\alpha.E[\triggerd] \para  !m(Z).Z\lrangle{A})$ 
+ and $Q_1\DEF \alpha.(m)(E[\triggerd] \para  !m(Z).Z\lrangle{A})$. We define $\mathcal{R}_1 \DEF \{(P_1,Q_1)\}\cup \mathrm{ID}$ in which $\mathrm{ID}\DEF \{(P,P)\}$ is the identity relation. We show that $\mathcal{R}_1$ is a strong context bisimulation up-to $\equiv$, which forces the result to be true.  We iterate the cases on $\alpha$, which is obviously the only action $P_1$ incurs. %(the situation of the other way is similar).
+\begin{itemize}
+\item $\alpha$ is $\tau$. Then $P_1\st{\tau} (m)(E[\triggerd] \para  !m(Z).Z\lrangle{A})$ is matched by \\
+$Q_1\st{\tau} (m)(E[\triggerd] \para  !m(Z).Z\lrangle{A})$.
+%
+\item $\alpha$ is $c(Y)$ for some $c$. Then $P_1\st{c(R)} (m)(E[\triggerd]\hosub{R}{Y} \para  !m(Z).Z\lrangle{A})$ is matched by 
+\[
+\begin{array}{lcl}
+Q_1 &\st{c(R)}& ((m)(E[\triggerd] \para  !m(Z).Z\lrangle{A}))\hosub{R}{Y} \\
+ && \equiv (m)(E[\triggerd]\hosub{R}{Y} \para  !m(Z).Z\lrangle{A})
+\end{array}
+\] due to $bv(\alpha)\notin fv(A)$.
+%
+\item $\alpha$ is $\overline{b}B$ for some $b$ and $B$. Then $P_1\st{\overline{b}B} (m)(E[\triggerd] \para  !m(Z).Z\lrangle{A})\DEF R_1$ is matched by $Q_1\st{\overline{b}B} R_1$, and clearly we have $(E[B]\para R_1) \,\mathcal{R}\, (E[B]\para R_1)$ for every $E[X]$.
+\end{itemize}
+%
+\noindent(2) 
+We only prove (i) since it is technically more involved and (ii) can be proven in a similar manner. 
+For convenience, let $P_2\DEF (m)(\overline{a}B_1.E_1[\triggerd] \para  !m(Z).Z\lrangle{A})$ and $Q_2\DEF (m)(\overline{a}B_2.E_1[\triggerd] \para  !m(Z).Z\lrangle{A})$. We define $\mathcal{R}_2$ as follows.
+%\begin{equation}\label{eq:lemma_prop-triggers}%\label{eq:lemma_r2}
+%%\mathcal{R}_2 \DEF 
+%\left\{\Big{(}(m)(G[B_1] \para  !m(Z).Z\lrangle{A}),(m)(G[B_2] \para  !m(Z).Z\lrangle{A})\Big{)} \,\middle|\,  \mbox{ for some $G[\cdot]$,  $E_2$, and $A$} \right\} \,\cup\,\SCB
+%\end{equation} 
+\begin{equation}\label{eq:lemma_prop-triggers}%\label{eq:lemma_r2}
+%\mathcal{R}_2 \DEF 
+\left\{\Big{(}(m)(G[B_1] \para  !m(Z).Z\lrangle{A}),(m)(G[B_2] \para  !m(Z).Z\lrangle{A})\Big{)} \middle|  \mbox{for $G[\cdot],E_2,A$} \right\} \cup\SCB
+\end{equation} 
+
+We note that $E_2$ appears in $B_1,B_2$ and $m$ is fresh, i.e., $m\notin \fn{G,E_1,E_2,A}$.
+One can easily observe that $(P_2,Q_2)\in \mathcal{R}_2$ by taking $G$ as $\overline{a}[\cdot].E_1[\triggerd]$.
+We show that $\mathcal{R}_2$ is a strong context bisimulation up-to $\SCB$ by induction on $G$. For the sake of convenience, we denote the element in $\mathcal{R}_2$ as: $P_3\DEF (m)(G[B_1] \para  !m(Z).Z\lrangle{A})$ and $Q_3\DEF (m)(G[B_2] \para  !m(Z).Z\lrangle{A})$. 
+\begin{itemize}
+\item $G[\cdot]$ is $[\cdot]$.
+%In this case we have $P_3$ and $Q_3$ as below.
+Then we have
+\[
+\begin{array}{lcl}
+P_3 &\equiv& (m)(B_1\para  !m(Z).Z\lrangle{A}) \\
+Q_3 &\equiv& (m)(B_2\para  !m(Z).Z\lrangle{A})
+\end{array}
+\]
+Because $m\notin fn(E_2,A)$, we know $Q_3 \SCB B_2\equiv P_3$. This closes the current case.
+%
+\item $G[\cdot]$ is $b(Y).G_1[\cdot]$.  
+We assume that $Y\notin \fpv{A}$. %($A$ is closed).
+Now we have %$P_3$ and $Q_3$ as below.
+\[
+\begin{array}{lcl}
+P_3 &\equiv& (m)(b(Y).G_1[B_1]\para  !m(Z).Z\lrangle{A}) \\
+Q_3 &\equiv& (m)(b(Y).G_1[B_2]\para  !m(Z).Z\lrangle{A})
+\end{array}
+\]
+Assume that $P_3$ releases an action (the case $Q_3$ does is similar). Clearly the only action from $P_3$ is $b(A')$ by $G[B_1]$, i.e.,
+\[
+\begin{array}{lcl}
+P_3&\st{b(A')}& (m)((G_1[B_1])\hosub{A'}{Y}\para  !m(Z).Z\lrangle{A}) \\
+ & & \equiv (m)((G_1'[B_1'])\para  !m(Z).Z\lrangle{A}) \quad
+\end{array}
+\]
+ where
+\[
+\begin{array}{l} 
+G_1'\DEF G_1\hosub{A'}{Y},\mbox{ and } \\
+B_1'\DEF B_1\hosub{A'}{Y}\equiv (E_2[\triggerd])\hosub{A'}{Y}\equiv E_2'[\triggerd] \mbox{ for some } E_2'[X] 
+\end{array}
+\] So $Q_3$ simulates with the following action
+\[
+\begin{array}{lcl}
+Q_3 &\st{b(A')}& (m)((G_1[B_2])\hosub{A'}{Y}\para  !m(Z).Z\lrangle{A}) \\
+ & & \equiv (m)((G_1'[B_2'])\para  !m(Z).Z\lrangle{A}) 
+\end{array}
+\]
+ where 
+$
+B_2'\DEF B_2\hosub{A'}{Y}\equiv (m)(E_2'[\triggerd] \para  !m(Z).Z\lrangle{A})
+$. 
+This case is closed by taking $G$ and $E_2$ in (\ref{eq:lemma_prop-triggers}) respectively as $G_1'$ and $E_2'$.
+%
+\item $G[\cdot]$ is $\overline{b}\big{[}G_1[\cdot]\big{]}.T$. 
+Then we have %$P_3$ and $Q_3$ as below.
+\[
+\begin{array}{lcl}
+P_3 &\equiv& (m)(\overline{b}\big{[}G_1[B_1]\big{]}.T\para  !m(Z).Z\lrangle{A}) \\
+Q_3 &\equiv& (m)(\overline{b}\big{[}G_1[B_2]\big{]}.T\para  !m(Z).Z\lrangle{A})
+\end{array}
+\]
+Assume that $P_3$ releases an action (the case $Q_3$ does is similar). Clearly the only action from $P_3$ is $(m)\overline{b}\big{[}G_1[B_1]\big{]}$, i.e., % (from $G[B_1]$), that is,
+\[
+P_3\st{(m)\overline{b}\big{[}G_1[B_1]\big{]}} T \para  !m(Z).Z\lrangle{A}
+\] Then $Q_3$ simulates by the following action %matches by making the following move
+\[
+Q_3\st{\overline{b}\big{[}G_1[B_2]\big{]}} (m)(T \para  !m(Z).Z\lrangle{A})
+\] Now for every $F[X]$ s.t. $\{m\}\cap fn(F)=\emptyset$, we need to establish %and $bn(F)\cap (fn(B_1)\cup fn(B_2))=\emptyset$, we need to prove
+\[
+\begin{array}{lcl}
+(m)(F[G_1[B_1]]\para T \para  !m(Z).Z\lrangle{A})  &\mathcal{R}_2&   F[G_1[B_2]]\para (m)(T \para  !m(Z).Z\lrangle{A}) \\
+& & \SCB (m)(F[G_1[B_2]]\para T \para  !m(Z).Z\lrangle{A})
+\end{array}
+\] where the $\SCB$ may involve some $\alpha$-conversion to avoid name capture. %in $G_1$. 
+Then this case is closed by taking $G$ as $F[G_1[\cdot]]\para T$ in (\ref{eq:lemma_prop-triggers}).
+%
+\item $G[\cdot]$ is $\overline{b}A.G_1[\cdot]$. This is similar to the previous case.
+%
+%
+\item $G[\cdot]$ is $G_1[\cdot]\para T$. In this case we have $P_3$ and $Q_3$ as below.
+\[
+\begin{array}{lcl}
+P_3 &\equiv& (m)(G_1[B_1]\para T \para  !m(Z).Z\lrangle{A}) \\
+Q_3 &\equiv& (m)(G_1[B_2]\para T \para  !m(Z).Z\lrangle{A})
+\end{array}
+\] Assume that $P_3$ releases an action $\alpha$ (the situation $Q_3$ does is similar). 
+There are a number of cases concerning where $\alpha$ originates from, specifically: 1) $T$; 2) $G_1$; 3) $B_1$; 4) interaction between $G_1,B_1,T$ and $!m(Z).Z\lrangle{A}$ (5 subcases). Below we look into two cases. The remainder is similar. % and simpler.
+\begin{itemize}
+\item First, the case $\alpha$ comes from an interaction between $B_1$ and $T$ (not on $m$ since $T$ has no knowledge of $m$). 
+We look at the subcase $B_1$ does an output and $T$ does an input. That is %(notice we assume no name capture)
+\[
+\begin{array}{l}
+B_1\st{(\ve{c})\overline{d}A'} B_1'\qquad\quad T\st{d(A')} T'\qquad\quad \\
+P_3\st{\tau}\SCB (m)((\ve{c})(G_1[B_1']\para T') \para  !m(Z).Z\lrangle{A}) \DEF P_3'
+\end{array}
+\] Since $d$ is not $m$, the action by $B_1$ must stem from $E_2$, i.e., \\
+$E_2[Tr_m]\st{(\ve{c})\overline{d}A'} E_2'[\triggerd]\equiv B_1'$. So 
+\[B_2\st{(\ve{c})\overline{d}A'} B_2'\equiv (m)(E_2'[\triggerd]\para !m(Z).Z\lrangle{A})
+\] and
+\[
+Q_3\st{\tau}\SCB (m)((\ve{c})(G_1[B_2']\para T') \para  !m(Z).Z\lrangle{A}) \DEF Q_3'
+\] Then we have $(P_3',Q_3')\in \mathcal{R}_2$ by regarding $G$ and $E_2$ in (\ref{eq:lemma_prop-triggers}) respectively as $(\ve{c})(G_1[\cdot]\para T')$ and $E_2'$.
+
+\item Second, the case $\alpha$ comes from an interaction between $!m(Z).Z\lrangle{A}$ and $B_1$. That is
+\[
+\begin{array}{l}
+B_1\equiv E_2[\triggerd] \st{(\ve{c})\overline{m}A'} B_1' \qquad A'\equiv \lrangle{Y}(Y\lrangle{h}) \;\;(\mbox{actually $\ve{c}$ only has $h$}) \\
+!m(Z).Z\lrangle{A}\st{m(A')}\SCB A'\lrangle{A} \para !m(Z).Z\lrangle{A} \\
+P_3\st{\tau} \SCB (m)((\ve{c})(G_1[B_1'] \para  A'\lrangle{A}) \para T\para !m(Z).Z\lrangle{A})\DEF P_3'
+\end{array}
+\] Since $B_1$ is free to go (i.e., not underneath any prefix), 
+we have %(assuming no name capture concerning $\ve{c}$)
+\[
+\begin{array}{l}
+P_3' \SCB (m)(G_1[B_1''] \para T\para !m(Z).Z\lrangle{A}) \DEF P_3''\\
+\mbox{ where } B_1''\DEF (\ve{c})(B_1'\para A'\lrangle{A})
+\end{array}
+\] Moreover, because $\triggerd$ has been fired in $B_1$, we can write $B_1'$ as $E_2'[\triggerd]$ for some $E_2'[X]$ (in which $X\notin \fpv{E_2'}$). Then
+\[
+ B_1''\equiv E_2''[\triggerd] \qquad \mbox{ where }\qquad
+ E_2''[X]\DEF (\ve{c})(E_2'[X]\para A'\lrangle{A})
+\]
+Thus
+\[
+\begin{array}{rl}
+B_2\equiv (m)(E_2[\triggerd] \para  !m(Z).Z\lrangle{A}) & \\
+\st{\tau}\SCB & (m)((\ve{c})(B_1' \para  A'\lrangle{A}) \para !m(Z).Z\lrangle{A}) \\
+\SCB& (m)(B_1''\para !m(Z).Z\lrangle{A}) \DEF B_2''\\
+\end{array}
+\]
+$\qquad\quad
+\begin{array}{l}
+Q_3\st{\tau} (m)(G_1[B_2'']\para T \para  !m(Z).Z\lrangle{A}) \DEF Q_3'' 
+\end{array}
+$
+ 
+In summary,
+\[
+\begin{array}{l}
+P_3\st{\tau} \SCB (m)(G_1[B_1''] \para T\para !m(Z).Z\lrangle{A})\equiv P_3'' \\
+ \mbox{ where } B_1''\equiv E_2''[\triggerd] \\\\
+Q_3\st{\tau} \SCB (m)(G_1[B_2'']\para T \para  !m(Z).Z\lrangle{A})\equiv Q_3'' \\
+\mbox{ where } \; B_2'' \equiv (m)(E_2''[\triggerd]\para !m(Z).Z\lrangle{A})
+\end{array}
+\] Hence we have $(P_3'',Q_3'')\in\mathcal{R}_2$ by treating $G$ and $E_2$ in (\ref{eq:lemma_prop-triggers}) respectively as $G_1[\cdot]\para T$ and $E_2''$.
+\end{itemize}
+
+
+\item $G[\cdot]$ is $(c)G_1[\cdot]$. Here we have $P_3$ and $Q_3$ as below.
+\[
+\begin{array}{lcl}
+P_3 &\equiv& (m)((c)G_1[B_1]\para  !m(Z).Z\lrangle{A}) \\
+Q_3 &\equiv& (m)((c)G_1[B_2]\para  !m(Z).Z\lrangle{A})
+\end{array}
+\] Suppose $P_3$ makes an action $\alpha$ (the situation for $Q_3$ is similar). Like the previous case, there are several subcases pertaining to where $\alpha$ is originated: 1) $G_1$; 2) $B_1$; 3) interaction between $G_1,B_1$ and $!m(Z).Z\lrangle{A}$ (3 subcases). The discussion can be conducted in a way similar to the previous case (only caution that the design of $G$ in (\ref{eq:lemma_prop-triggers}) may involve the restriction on $c$).
+
+
+\item $G[\cdot]$ is $\lrangle{y}G'[\cdot]$ or $\lrangle{Y}G'[\cdot]$. This case, somehow correlated with the next case, is trivial because $P_3$ and $Q_3$ do not exhibit any action.
+
+
+\item $G[\cdot]$ is $G_1[\cdot]\lrangle{z}$ or $G_1[\cdot]\lrangle{B'}$. Take the former (the latter is similar), which means $G_1$ takes the shape $\lrangle{y}G_2[\cdot]$, i.e., $G[\cdot]\equiv (\lrangle{y}G_2[\cdot])\lrangle{z}$. So $G[\cdot]$ is essentially $G_2'[\cdot]$ for some $G_2'$. Then this case eventually falls into one of the other cases.
+
+\end{itemize}
+
+
+\noindent(3) 
+Let 
+\[
+\begin{array}{l}
+P_3\DEF (m)(E_1[\triggerd]\para E_2[\triggerd] \para  !m(Z).Z\lrangle{A}) \\
+Q_3\DEF (m)(E_1[\triggerd] \para  !m(Z).Z\lrangle{A}) \para (m)(E_2[\triggerd] \para  !m(Z).Z\lrangle{A})
+\end{array}
+\] This result follows from (2) in this lemma, since $(P_3,Q_3)\in \mathcal{R}_2$ in (\ref{eq:lemma_prop-triggers}) by taking $G$ as $E_1[\triggerd]\para [\cdot]$ (actually we prove a more general result in there).
+
+
+%#####
+\noindent(4) 
+We focus on (i) because (ii) is similar. % and simpler. 
+Suppose $B\equiv \lrangle{Y}T$, it amounts to proving
+\[
+\begin{array}{ll}
+ & P_1\DEF T\hosub{T_1}{Y} \WCB (m)(T\hosub{T_2}{Y} \para  !m(Z).Z\lrangle{A}) \DEF Q_1\\
+\mbox{ in which } & T_1\DEF  (m)(E_1[\triggerd] \para  !m(Z).Z\lrangle{A}) \mbox{ and } T_2 \DEF E_1[\triggerd]
+\end{array}
+\] To achieve this, we define $\mathcal{R}_3$ as follows.
+%\begin{equation}\label{eq:lemma_r3}
+%%\mathcal{R}_3 \DEF 
+%\left\{\Big{(}G[T_1],(m)(G[T_2] \para  !m(Z).Z\lrangle{A})\Big{)} \,\middle|\,  \mbox{ for some $G[\cdot]$ and $E_1$, and } m\notin fn(G,E_1,A)\right\} \,\cup\,\SCB
+%\end{equation}
+\begin{equation}\label{eq:lemma_r3}
+%\mathcal{R}_3 \DEF 
+\left\{\Big{(}G[T_1],(m)(G[T_2] \para  !m(Z).Z\lrangle{A})\Big{)} \middle| \mbox{for $G[\cdot], E_1$, } m\notin fn(G,E_1,A)\right\} \cup\SCB
+\end{equation}
+
+We note that $E_1$ appears in $T_1,T_2$, and $(P_1,Q_1)\in \mathcal{R}_3$.
+We can show $\mathcal{R}_3$ is a strong context bisimulation up-to $\SCB$ by induction on $G$.
+We skip the details because they are basically the same to the previous part (2-3) of this lemma. %that of Lemma \ref{premise-factor-0}.
+\myqed
+\end{proof}
+
+
+Now we are ready to prove the factorization theorem.
+\begin{proof}[Proof of Theorem \ref{factor-bigd-smalld}]
+\
+
+%\oo{\large \fbox{\#\#\#\# TODO (see/reuse \cite{Xu13} or IJCM paper in ``[ref]hopi\_v.6\_abri.rar" in this working directory)}}
+
+%\begin{itemize}
+%\item 
+%\item 
+%\end{itemize}
+%#####
+We focus on the case when $A$ is a name abstraction, i.e., clause (3) of this theorem. 
+We proceed by induction on the structure of $E$, and focus on the main cases, namely those relevant most to name-abstraction. 
+The proof for the others is similar (caution for using different triggers) and can be referred to \cite{San92, Xu13}.
+%%The proof is by induction on $E$. 
+The cases 1,2,3 are the base cases.
+\begin{enumerate}
+%
+\item $E$ is $0$ or $E$ is $Y$ and $Y\neq X$. These cases are trivial.
+%
+\item $E$ is $X$.
+In this case, $E[\triggerd]$ is $\triggerd\equiv \lrangle{z}\overline{m}[\lrangle{Y}(Y\lrangle{z})]$. %, and corresponds to the clause (3)(ii). 
+%\equiv \lrangle{Y}\overline{m}Y$ (up-to alpha-conversion), 
+%So the second statement of this theorem applies and 
+The two terms to compare are
+\[
+A \quad\mbox{ and }\quad \lrangle{z}((m)(\overline{m}[\lrangle{Y}(Y\lrangle{z})] \para  !m(Z).Z\lrangle{A}))   %\lrangle{Y}((m)(\overline{m}Y\para !m(Z).A\lrangle{Z})
+\]
+Suppose $A\equiv \lrangle{z'}F$, then the following equality is straightforward for every $h$, which completes this case.
+\[
+A\lrangle{h} \WCB (m)(\overline{m}[\lrangle{Y}(Y\lrangle{h})]\para !m(Z).Z\lrangle{A})
+\] 
+
+\item  $E$ is $X\lrangle{h}$.
+We show that the following relation $\mathcal{R}$ is a context bisimulation up-to $\SCB$.
+%Roughly speaking, in such a relation $\mathcal{R}$ the two simulating processes after making some action need not be directly related by $\mathcal{R}$, but (respectively) strongly bisimilar to a pair of processes that belongs to $\mathcal{R}$. This up-to technique and similar ones are standard for establishing bisimulation relations, so we omit the definition here and in what follows and advise the reader to consult \cite{San94, Mil89, SW01a} for further details. %; some related explanation can be found at the beginning of the proof for Theorem \ref{normal-characterization-bigd}).
+\[\mathcal{R} \DEF \{(A\lrangle{h}, (m)(\triggerd\lrangle{h}\para !m(Z).Z\lrangle{A}) \,\Big{|}\, m \mbox{ is fresh w.r.t. $A$ and $h$}\} \,\cup \WCB
+\] 
+Assume $(A\lrangle{h}, (m)(\triggerd\lrangle{h}\para !m(Z).Z\lrangle{A}) \in \mathcal{R}$ and $A\equiv \lrangle{z'}T$. % and $T$ is not an abstraction. 
+Then the pair of interest is %virtually 
+\[
+(T\hosub{h}{z'} \;,\;  (m)(\overline{m}[\lrangle{Y}(Y\lrangle{h})] \para !m(Z).Z\lrangle{A})
+\]
+There are mainly two cases to analyze.
+\begin{itemize}
+\item $(m)(\overline{m}[\lrangle{Y}(Y\lrangle{h})] \para !m(Z).Z\lrangle{A}) \st{\alpha} T'$. Then $\alpha$ must be $\tau$, and thus
+\[
+T'\SCB (m)(T\hosub{h}{z'}\para !m(Z).Z\lrangle{A})
+\] By $T\hosub{h}{z'}\wt{} T\hosub{h}{z'}$ (null transition),  %since $m$ is fresh, it can be readily seen that,
+we have
+\[
+T\hosub{h}{z'} \SCB T\hosub{h}{z'} \;\mathcal{R}\; T\hosub{h}{z'}  \SCB T'
+\]
+
+\item $T\hosub{h}{z'} \st{\alpha} T_1$. This is simulated by
+\[
+\begin{array}{ll}
+ & (m)(\overline{m}[\lrangle{Y}(Y\lrangle{h})] \para !m(Z).Z\lrangle{A}) \\
+\st{\tau} & (m)(T\hosub{h}{z'}\para !m(Z).Z\lrangle{A}) \\
+\st{\alpha} & (m)(T_1\para !m(Z).Z\lrangle{A}) \DEF T_2
+\end{array}
+\] So it holds that
+\[
+T_1 \SCB T_1 \;\mathcal{R}\; T_1 \SCB T_2
+\]
+\end{itemize}
+
+\noindent The following cases 4,5,6,7,8,9 are those involving the induction hypothesis (ind. hyp. for short). We note that in the induction steps, we will focus on the case when (ii) of (3) in this theorem occurs, because these are the most interesting cases and the other situations can be tackled similarly. % (and more easily). 
+%We will use Lemma \ref{l:prop-triggers} and the congruence property (implicitly).
+
+
+\item  $E$ is $\lrangle{y}E_1$. %Assume $E_1[\triggerd]$ is not an abstraction; the case when it is can be handled similarly.
+By ind. hyp., we immediately have, as required,
+\[
+\begin{array}{lcl}
+E[A] &\equiv& \lrangle{y}E_1[A] \\
+&\WCB& \lrangle{y}((m)(E_1[\triggerd] \para  !m(Z).Z\lrangle{A}))
+\end{array}
+\] %as required by (3)(ii) of this theorem.
+%To conclude this case, we need to show
+%\[\lrangle{y}((m)(E_1[\triggerd] \para  !m(Z).Z\lrangle{A})) \WCB  \lrangle{y}((m)(E_1[\triggerd] \para  !m(Z).Z\lrangle{A}))
+%\]
+%This is immediate and the right-hand-side is exactly the second claim (2) of this theorem.
+
+
+\item $E$ is $\overline{a}E_2.E_1$.
+We have
+\[
+\begin{array}{lcll}
+E[A] &\equiv& \overline{a}E_2[A].E_1[A] & \\
+&\WCB & \overline{a}[(m)(E_2[\triggerd] \para  !m(Z).Z\lrangle{A})].((m)(E_1[\triggerd] \para  !m(Z).Z\lrangle{A})) & \\
+ && \hspace*{8cm} (\mbox{ind. hyp.}) & \\
+&\WCB & (m)(\overline{a}[(m)(E_2[\triggerd] \para  !m(Z).Z\lrangle{A})].E_1[\triggerd] \para  !m(Z).Z\lrangle{A}) & \\
+&& \hspace*{7.3cm} (\mbox{Lemma \ref{l:prop-triggers}(1)}) & \\
+&\WCB & (m)(\overline{a}E_2[\triggerd].E_1[\triggerd] \para  !m(Z).Z\lrangle{A}) & \\
+&& \hspace*{7.3cm} (\mbox{Lemma \ref{l:prop-triggers}(2)}) & \\
+\end{array}
+\] %The last equation is exactly what we anticipate.
+%
+%%...
+%
+\item $E$ is $a(Y).E_1$.
+This is similar to the previous case. 
+%This is similar and easier than the previous case. %, also using Lemma \ref{l:prop-triggers}(1) and the congruence property. 
+%, and straightforward from Lemma \ref{l:prop-triggers}(1).
+%
+
+\item $E$ is $E_1\para E_2$. 
+We have
+\[
+\begin{array}{ll}
+& E[A] \equiv E_1[A]\para E_2[A]  \\
+\WCB & (m)(E_1[\triggerd] \para  !m(Z).Z\lrangle{A}) \para (m)(E_2[[\triggerd] \para  !m(Z).Z\lrangle{A})  \; (\mbox{ind. hyp.}) \\
+\WCB & (m)(E_1[[\triggerd] \para E_2[[\triggerd] \para  !m(Z).Z\lrangle{A})  \hspace*{2.2cm} (\mbox{Lemma \ref{l:prop-triggers}(3)})
+\end{array}
+\] 
+%The last equation completes this case.
+
+
+\item $E$ is $ (c)E_1$.
+%This is similar to and simpler than the previous case.
+This is similar to the previous case.
+
+
+\item $E$ is $E_2\lrangle{E_1}$.
+%This case can be reduced to the case $E$ is $Y\lrangle{E_1}$ and $Y\neq X$, because if $E_2$ is not a variable (i.e., an abstraction) or is $X$, then it can be handled in a way that falls into one of the previous cases (up-to structural congruence).  So we have
+This case can be reduced to the case $E$ is $Y\lrangle{E_1}$, because otherwise it falls into one of the previous cases (up-to structural congruence).  So we have
+\[
+\begin{array}{lcl}
+E[A] &\equiv& Y\lrangle{E_1[A]} \\
+ &\WCB & Y\lrangle{(m)(E[[\triggerd] \para  !m(Z).Z\lrangle{A})} \DEF T \qquad (\mbox{ind. hyp.})
+\end{array}
+\]
+For every $B$, we have the follow-up equation by Lemma \ref{l:prop-triggers}(4).
+\[B\lrangle{(m)(E_1[\triggerd] \para  !m(Z).Z\lrangle{A})} \WCB (m)(B\lrangle{E_1[\triggerd]} \para  !m(Z).Z\lrangle{A})
+\] Thus we have $T \WCB (m)(Y\lrangle{E_1[\triggerd]} \para  !m(Z).Z\lrangle{A})$.
+%$ i.e., for every $B$, 
+% This is immediate from Lemma \ref{l:prop-triggers}.
+\end{enumerate}
+%
+The proof is now completed.
+\myqed
+\end{proof}
+
+
+
+% We are now in a position to give the proof for Theorem \ref{normal-characterization-hopiDd}.
+% \begin{proof}[Proof of Theorem \ref{normal-characterization-hopiDd}]
+% We only need to prove $\WNB$ implies $\WCB$, since $\WCB$ is obviously finer than $\WNB$. 
+% To do this, we define the relation $\mathcal{R}$ below and show that it is a context bisimulation using Theorem \ref{factor-bigd-smalld}. % (\stress{up-to sth?}). 
+% \[
+% \mathcal{R} \DEF \{(P,Q) \,|\, P\WNB Q \}
+% \]
+% Suppose $P\mathcal{R} Q$. There are several cases (with subcases) to analyze. We focus on the main ones, concretely the case $P$ (or $Q$) communicates a name abstraction and clause (3)(ii) of Theorem \ref{factor-bigd-smalld} applies, and leave out the similar (and simpler) rest.
+
+% %\stress{TODO}
+% \begin{itemize}
+% \item $P\st{a(A)} P'$. There are three subcases.
+% \begin{itemize}
+% \item $A$ is a name abstraction. %, i.e., $A\equiv \lrangle{x}B$. 
+% Then $P'$ must be of the form $E[A]$ for some $E[Z]$ (one can choose such an $E$ that $Z$ is instantiated by the incoming $A$; similar for the other two subcases). So $P\st{a(\triggerd)} E[\triggerd]$. Since $P\WNB Q$, we know $Q\wt{a(\triggerd)} Q'' \equiv F[\triggerd]$ for some $F[Z]$ and $E[\triggerd] \WNB F[\triggerd]$. Then $Q\wt{a(A)} Q' \equiv F[A]$. Due to the congruence property of $\WNB$, the factorization theorem (Theorem \ref{factor-bigd-smalld}), and the fact that $\WCB$ implies $\WNB$, we have
+% \[
+% P'\equiv E[A] \,\WNB\, (m)(E[\triggerd] \para  !m(Z).Z\lrangle{A}) \,\WNB\, (m)(F[\triggerd] \para  !m(Z).Z\lrangle{A}) \,\WNB\, F[A]\equiv Q'
+% \] So $P' \mathcal{R} Q'$.
+
+% \item $A$ is an abstraction on process. %, i.e., $A\equiv \lrangle{X}B$. 
+% Similar to the last subcase, except that $\triggerD$ is used instead. %Then ...\stress{TODO}
+% \item $A$ is not an abstraction. Similar to the first subcase, except that $\trigger$ is used. %Then ...\stress{TODO}
+% \end{itemize}
+
+% \item $P\st{(\ve{c})\overline{a}A} P'$. There are again three subcases.
+% \begin{itemize}
+% \item $A$ is a name abstraction. %, i.e., $A\equiv \lrangle{x}B$. 
+% Because $P\WNB Q$, $Q\wt{(\ve{d})\overline{a}B} Q'$ and it holds that ($m$ is fresh)
+% \[(\ve{c})(P'\para !m(Z).Z\lrangle{A}) \,\WNB\,  (\ve{d})(Q'\para  !m(Z).Z\lrangle{B})
+% \] Using the congruence property of $\WNB$ twice and some structural manipulation, for every $E[X]$ ($\fn{E[X]}\cap \ve{c}\ve{d} = \emptyset$), we have
+% \[(\ve{c})(P'\para !m(Z).Z\lrangle{A} \para E[\triggerd]) \,\WNB\,  (\ve{d})(Q'\para  !m(Z).Z\lrangle{B} \para E[\triggerd])
+% \] and then
+% \[(\ve{c})(P'\para (m)(!m(Z).Z\lrangle{A} \para E[\triggerd])) \,\WNB\,  (\ve{d})(Q'\para  (m)(!m(Z).Z\lrangle{B} \para E[\triggerd]))
+% \] Now by the factorization theorem (Theorem \ref{factor-bigd-smalld}) and the fact that $\WCB$ implies $\WNB$, we know
+% \[(\ve{c})(P'\para E[A]) \,\WNB\,  (\ve{d})(Q'\para  E[B])
+% \] and thus 
+% \[(\ve{c})(P'\para E[A]) \,\mathcal{R}\,  (\ve{d})(Q'\para  E[B])
+% \] as required by context bisimulation.
+ 
+% %...\stress{TODO}
+% \item $A$ is an abstraction on process. %, i.e., $A\equiv \lrangle{X}B$. 
+% Similar to the last subcase, except that $\triggerD$ is used.  %Then ...\stress{TODO}
+% \item $A$ is not an abstraction. Similar to the first subcase, except that $\trigger$ is used. %Then ...\stress{TODO}
+% \end{itemize}
+
+% \item $P\st{\tau} P'$. Then we immediately have $Q\wt{} Q'$ and $P'\WNB Q'$, so $P'\mathcal{R} Q'$.
+% \end{itemize}
+
+% \end{proof}
+
+
+
+
+
+%---------------------------
+% Local Variables:
+% mode: LaTeX
+% TeX-master: "main.tex"
+% End:

@@ -1,0 +1,54 @@
+\section{Conclusion}\label{s:conclusion}
+In this paper, we have exhibited a new encoding of name-passing in the higher-order paradigm that allows parameterization, and a normal bisimulation in that setting as well. In the former, we demonstrate the conformance of the encoding to the well-established criteria in the literature. In the latter, we prove the coincidence between normal and context bisimulation by pinpointing how to factorize an abstraction on some name. The encoding of this work is inspired by the one proposed by Alan Schmitt during the communication concerning another work. That encoding, as given below, somewhat swaps the roles of input and output and treats $a(x).P$ somehow as $a.\lrangle{x}P$ (like those calculi admitting abstractions and concretions \cite{San92}). 
+\[
+\begin{array} {rcl}
+\enc{a(x).P} & \DEF & \overline{a}[\lrangle{x}\enc{P}]\\
+\enc{\overline{a}b.Q} &\DEF & a(Y).(Y\lrangle{b}\para \enc{Q}) %\quad \quad (Y \mbox{ is fresh})
+\end{array}
+\]
+From the angle of achieving first-order interaction, the encoding strategy above is truly interesting. However, it appears not to satisfy some usual operational correspondence (say, in \cite{Gor08a} or \cite{LPSS10}), and full abstraction is not quite clear. % with similar effort.
+Based on the results in this paper, it is tempting to expect that this encoding have some (nearly) same properties, and this is worthwhile for more investigation.
+
+The results of this paper can be dedicated to facilitate further study on the expressiveness of higher-order processes. The following questions, among others, are still open: whether \FOPi\ can be encoded in a higher-order setting only allowing parameterization on processes; whether there is a better encoding of \FOPi\ than the one in \cite{XYL15}, using higher-order processes only capable of parameterization on names; whether \HOPid\ afford a normal-like characterization of context bisimulation. 
+
+
+
+
+%\subsection{Discussion: Encoding \FOPi\ with \HOPiD\ or \HOPid}
+%\stress{Whether \FOPi\ can be encoded in \HOPid\ is still unknown, neither is the case with \HOPiD.}
+%
+%In \cite{XYL15}, we propose one such encoding which however is short of a satisfactory soundness result.
+%
+%Below is another trial by A. Schmitt. (\stress{A referential encoding of \FOPi\ in \HOPid\ (by A. Schmitt)})
+%\[
+%\begin{array} {rcl}
+%\enc{a(x).P} & \DEF & \overline{a}[\lrangle{x}\enc{P}]\\
+%\enc{\overline{a}b.Q} &\DEF & a(Y).(Y\lrangle{b}\para \enc{Q})\quad \quad (Y \mbox{ is fresh})
+%\end{array}
+%\]
+%
+%If we only consider the explanation of interaction (i.e., the $\tau$ action), then the above strategy would be interesting.
+%However, this strategy does not respect the notion of encoding given in Section \ref{s:criteria}. It does not satisfy, for example, the (weak) operational correspondence, as for any non-nil \FOPi\ process $P$, the encoding in \HOPid\ for input (i.e., $\enc{a(x).P}$) will evolve into a nill process after performing an output action. 
+%%Therefore the above schema is not precisely an encoding in the sense of our criteria. 
+%%Actually to our intuition, the encoding, if any, is somewhat akin to that in \cite{Tho93, XYL14}.
+%%That said,  This raises the question that in what condition we could adopt somewhat relaxed encoding criteria and still keep the study on expressiveness reasonable. This can be worthwhile for further investigation.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+%---------------------------
+% Local Variables:
+% mode: LaTeX
+% TeX-master: "main.tex"
+% End:

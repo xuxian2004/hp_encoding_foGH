@@ -1,0 +1,204 @@
+\section{Normal bisimulation for \HOPiDd}\label{s:normal}
+In this section, we show that context bisimulation in \HOPiDd\ can be characterized by the much simpler normal bisimulation. % called normal bisimulation.
+%In light of the result above, we have a characterization of context bisimulation in terms of normal bisimulation in calculus \HOPiDd.
+%\sep
+{We focus on unary parameterizations, i.e., abstractions and applications that allows only one variable or instance respectively, for the sake of simplicity and moreover because unary parameterizations appear more elementary; for example, intuitively an n-ary abstractions can be treated as a sequence of unary abstractions, and also recall that in the encoding above actually only unary parameterizations are utilized. Technically, by means of polyadic communication \cite{SW01a}, the characterization of normal bisimulation can be extended to arbitrary dimensions of parameterization. }
+
+\tdup{
+\bc{TODO (in \HOPiDd):}
+\begin{itemize}
+\item Factorization theorem; \bc{$\checkmark$}
+\item Definition of normal bisimulation $\WNB$; \bc{$\checkmark$}
+\item Coincidence between $\WNB$ and $\WCB$ (i.e., $\WNB$ implies $\WCB$ using the Factorization theorem). \bc{$\checkmark$}
+\end{itemize}
+\sepp\sepp
+
+\fbox{We stipulate that $\rc{\trigger} \DEF \overline{m}$, $\rc{\triggerD} \DEF \lrangle{Z}\overline{m}Z$, and $\rc{\triggerd} \DEF \lrangle{z}\overline{m}[\lrangle{Y}(Y\lrangle{z})]$.
+}
+}%\tdup
+
+\subsubsection*{The factorization theorem}
+Below is the factorization theorem in presence of parameterization on names. % (and on processes as well). We recall that $\equiv$ is the structural congruence.
+As explained in Section \ref{s:introduction}, the upshot of establishing the factorization theorem is to find the right small processes so-called triggers. Here we have three kinds of triggers, to tackle different kinds of parameterization. In particular, we stipulate that the triggers are as follows:  $\rrc{\triggerd} \DEF \lrangle{z}\overline{m}[\lrangle{Y}(Y\lrangle{z})]$, $\rrc{\triggerD} \DEF \lrangle{Z}\overline{m}Z$, and $\rrc{\trigger} \DEF \overline{m}$. These triggers are of somewhat a similar flavor but quite different in shape, with the aim at factorizing out respectively a name abstraction, a process abstraction and a non-abstraction process in certain context. The first trigger, i.e.,  $\triggerd$, is the main contribution of this work, whereas the other two are inherited from \cite{Xu13} and \cite{San92} respectively.
+
+%\begin{theorem}[Factorization]\label{factor-bigd-smalld} %[Factorization]
+%Given $E[X]$ of \HOPiDd, it holds for every $A$, fresh $m$ (i.e., $m\notin fn(E,A)$) that
+%\begin{itemize}
+%\item[(1)] if $E[X]$ is not an abstraction, then
+%\begin{itemize}
+%\item[(i)] if $A$ is not an abstraction, then
+%$E[A] \WCB (m)(E[\trigger] \para  !m.A)
+%$;
+%\item[(ii)] if $A$ is an abstraction on process, then
+%$E[A] \WCB (m)(E[\triggerD] \para  !m(Z).A\lrangle{Z})
+%$;
+%\item[(iii)] if $A$ is an abstraction on name, then
+%$E[A] \WCB (m)(E[\triggerd] \para  !m(Z).Z\lrangle{A})
+%$.
+%\end{itemize}
+%
+%\item[(2)]  else if $E[X]$ is an abstraction, i.e., $E[X]\equiv \ve{\lrangle{U}}E'$ for some non-abstraction $E'$ (here $\ve{\lrangle{U}}$ denotes the abstractions prefixing $E'$), %(that is not an abstraction)
+%then
+%\begin{itemize}
+%\item[(i)] if $A$ is not an abstraction, then
+%$E[A] \WCB \ve{\lrangle{U}}((m)(E'[\trigger] \para  !m.A))
+%$;
+%\item[(ii)] if $A$ is an abstraction on process, then
+%$E[A] \WCB \ve{\lrangle{U}}((m)(E'[\triggerD] \para  !m(Z).A\lrangle{Z}))
+%$;
+%\item[(iii)] if $A$ is an abstraction on name, then
+%$E[A] \WCB \ve{\lrangle{U}}((m)(E'[\triggerd] \para  !m(Z).Z\lrangle{A}))
+%$.
+%\end{itemize}
+%
+%%\item[(3)]  else if $E[X]\equiv \lrangle{y_1}\cdots\lrangle{y_k}E'$ for some $k\geq 1$ and non-abstraction $E'$, %(that is not an abstraction)
+%%then
+%%\begin{itemize}
+%%\item[(i)] if $A$ is not an abstraction, then
+%%\[
+%%...
+%%\]
+%%\item[(ii)] if $A$ is an abstraction on process, then
+%%\[
+%%...
+%%\]
+%%\item[(iii)] if $A$ is an abstraction on name, then
+%%\[
+%%...
+%%\]
+%%\end{itemize}
+%
+%\end{itemize}
+%\end{theorem}
+
+%\begin{theorem}[Factorization]\label{factor-bigd-smalld} %[Factorization]
+%Given $E[X]$ of \HOPiDd, it holds for every $A$, fresh $m$ (i.e., $m\notin fn(E,A)$) that
+%\begin{itemize}
+%\item[(1)] if $A$ is not an abstraction, then
+%\begin{itemize}
+%\item[(i)] if $E[\trigger]$ is not an abstraction, then $E[A] \WCB (m)(E[\trigger] \para  !m.A)$;
+%\item[(ii)] if $E[\trigger]$ is $\ve{\lrangle{U}}E'$ for some non-abstraction $E'$ (here and below, $\ve{\lrangle{U}}$ denotes the abstractions prefixing $E'$), then $E[A] \WCB \ve{\lrangle{U}}((m)(E' \para  !m.A))$.
+%\end{itemize}
+%\item[(2)] if $A$ is an abstraction on process, then
+%\begin{itemize}
+%\item[(i)] if $E[\triggerD]$ is not an abstraction, then $E[A] \WCB (m)(E[\triggerD] \para  !m(Z).A\lrangle{Z})$;
+%\item[(ii)] if $E[\triggerD]$ is $\ve{\lrangle{U}}E'$ for some non-abstraction $E'$, then $E[A] \WCB \ve{\lrangle{U}}((m)(E' \para  !m(Z).A\lrangle{Z}))$.
+%\end{itemize}
+%\item[(3)] if $A$ is an abstraction on name, then
+%\begin{itemize}
+%\item[(i)] if $E[\triggerd]$ is not an abstraction, then $E[A] \WCB (m)(E[\triggerd] \para  !m(Z).Z\lrangle{A})$;
+%\item[(ii)] if $E[\triggerd]$ is $\ve{\lrangle{U}}E'$ for some non-abstraction $E'$, then $E[A] \WCB \ve{\lrangle{U}}((m)(E' \para  !m(Z).Z\lrangle{A}))$.
+%\end{itemize}
+%\end{itemize}
+%\end{theorem}
+
+\begin{theorem}[Factorization]\label{factor-bigd-smalld} %[Factorization]
+Given $E[X]$ of \HOPiDd, it holds for every $A$, fresh $m$ (i.e., $m\notin \fn{E,A}$) that
+\begin{itemize}
+\item[(1)] if $A$ is not an abstraction, then
+\begin{itemize}
+\item[(i)] if $E[\trigger]$ is $\ve{\lrangle{U}}E'$ for some non-abstraction $E'$ (here and below, $\ve{\lrangle{U}}$ denotes the abstractions prefixing $E'$), then $E[A] \WCB \ve{\lrangle{U}}((m)(E' \para  !m.A))$;
+\item[(ii)] particularly, if $E[\trigger]$ is not an abstraction, then $E[A] \WCB (m)(E[\trigger] \para  !m.A)$.
+\end{itemize}
+\item[(2)] if $A$ is a process abstraction, then
+\begin{itemize}
+\item[(i)] if $E[\triggerD]$ is $\ve{\lrangle{U}}E'$ for some non-abstraction $E'$, then $E[A] \WCB \ve{\lrangle{U}}((m)(E' \para  !m(Z).A\lrangle{Z}))$;
+\item[(ii)] particularly, if $E[\triggerD]$ is not an abstraction, then $E[A] \WCB (m)(E[\triggerD] \para  !m(Z).A\lrangle{Z})$.
+\end{itemize}
+\item[(3)] if $A$ is a name abstraction, then
+\begin{itemize}
+\item[(i)] if $E[\triggerd]$ is $\ve{\lrangle{U}}E'$ for some non-abstraction $E'$, then $E[A] \WCB \ve{\lrangle{U}}((m)(E' \para  !m(Z).Z\lrangle{A}))$;
+\item[(ii)] particularly, if $E[\triggerd]$ is not an abstraction, then $E[A] \WCB (m)(E[\triggerd] \para  !m(Z).Z\lrangle{A})$.
+\end{itemize}
+\end{itemize}
+\end{theorem}
+
+%\begin{proof}
+In Theorem \ref{factor-bigd-smalld}, clause (1) is actually Sangiorgi's seminal work \cite{San92, SW01a}. Clause (2) is shown in \cite{Xu13}. Clause (3) depicts the factorization for abstraction on names, and is the contribution of this work.   %, can be discussed through a resembling technical routine. % almost the same as (ii). %and (i)
+Intuitively, it allows one to replace, in a context $E$, a specific component $A$ (being a name abstraction) with the uniform trigger $\triggerd$, move $A$ into a (distributed) new place, and in the meanwhile build up a connection between $\triggerd$ and the new place, so as to maintain the invariance of (observational) behaviour.
+Moreover to this end, when the context $E$ reveals some outmost abstractions, then such connection must be upheld by positioning these abstractions outmost accordingly.
+As opposed to the original process, the  process after factorization has a lighter structure to discuss, and one can concentrate on the new place where the factorized process might exhibit distinct behaviour.
+%So we go no further into the details. (\bc{maybe also due to space limit?})
+%See \cite{San92, SW01a, Xu13} for a reference.
+%With regard to more details we refer the reader to \cite{San92, SW01a, Xu13}.
+%\end{proof}
+
+With regard to the method of \emph{trigger} (including the technical approach), the fundamental framework is well-developed in the field, due to Sangiorgi \cite{SW01a}. The key to   establishing the factorization property for processes allowing abstraction on names is the \emph{trigger}, which has been unknown for a long time in contrast to the case of abstraction on processes and that without abstractions. Once a right trigger is found, the remainder of discussion can be made through a similar (but still tricky) technical routine.
+Below we give an example of the factorization concerning abstraction on names. The proof of Theorem \ref{factor-bigd-smalld} can be found in Appendix \ref{a:proofs-normal}. % with an example.
+%\begin{example}
+
+\noindent\textbf{Example} The basic idea of factorization concerning abstraction on names can be illustrated in the following example in which $m$ is fresh (i.e., not in $A\lrangle{\rrc{d}}$).
+%\[
+\begin{eqnarray}
+%A\lrangle{d} \approx_{ct} (m)((\lrangle{z}\overline{m}[\lrangle{Y}(Y\lrangle{z})])\lrangle{d} \para m(Z).Z\lrangle{A}) \\\\
+A\lrangle{\rrc{d}} &\WCB& (m)(\; (\lrangle{\rrc{z}}\overline{m}[\rbc{\lrangle{Y}(Y\lrangle{z})}])\lrangle{\rrc{d}} \,\para\, m(\rbc{Z}).\rbc{Z}\lrangle{A} \;) %\nonumber \\ %\label{eqn-fact-hopiDd}\\
+%& &
+\; \equiv\; (m)(\; \overline{m}[\rbc{\lrangle{Y}(Y\lrangle{\rrc{d}})}] \,\para\, m(\rbc{Z}).\rbc{Z}\lrangle{A} \;) \nonumber
+\end{eqnarray}
+%\]
+%~~~~~~~~~~~~~~~%\rc{TO ADD (opt.): fabricate an EXAMPLE based on equation \ref{eqn-fact-hopiDd}};
+\noindent For example, if $A$ is $\lrangle{x}\overline{x}b$, then $A\lrangle{d} \equiv \overline{d}b$, and
+\[
+\begin{array}{lclcl}
+A\lrangle{d}  &\WCB& (m)(\; \overline{m}[\lrangle{Y}(Y\lrangle{d})] \,\para\, m(Z).Z\lrangle{A} \;) %\\
+ &\WCB& (m)(\; (\lrangle{Y}(Y\lrangle{d}))\lrangle{A} \;) \;\equiv\; A\lrangle{d} \;\equiv\; \overline{d}b %\\
+% &\equiv& A\lrangle{d} \\
+% &\equiv& \overline{d}b
+\end{array}
+\]
+%\end{example}
+
+
+\subsubsection*{Normal bisimulation for \HOPiDd}
+Below is the definition of normal bisimulation whose clauses are designed on top of the factorization theorem. We recall that $\rrc{\trigger} \DEF \overline{m}$, $\rrc{\triggerD} \DEF \lrangle{Z}\overline{m}Z$, and $\rrc{\triggerd} \DEF \lrangle{z}\overline{m}[\lrangle{Y}(Y\lrangle{z})]$.
+\begin{definition}\label{normal-bisi-Dd} %[Normal bisimulation]
+A symmetric binary relation $\mathcal{R}$ on closed processes of \HOPiDd\ is a normal bisimulation, if whenever $P\,\mathcal{R}\, Q$ the following properties hold:
+\begin{enumerate}%\itemsep-.3em
+\item If $P \st{a(\trigger)} P'$ ($m$ is fresh), then $Q \wt{a(\trigger)} Q'$ for some $Q'$ s.t.  $P'\,\mathcal{R}\, Q'$; %($m$ is fresh w.r.t. $P$ and $Q$)
+\item If $P \st{a(\triggerD)} P'$ ($m$ is fresh), then $Q \wt{a(\triggerD)} Q'$ for some $Q'$ s.t.  $P'\,\mathcal{R}\, Q'$; %($m$ is fresh w.r.t. $P$ and $Q$)
+\item If $P \st{a(\triggerd)} P'$ ($m$ is fresh), then $Q \wt{a(\triggerd)} Q'$ for some $Q'$ s.t.  $P'\,\mathcal{R}\, Q'$; %($m$ is fresh w.r.t. $P$ and $Q$)
+
+\item If $P \st{(\ve{c})\overline{a}A} P'$ and $A$ is not an abstraction, then $Q \wt{(\ve{d})\overline{a}B} Q'$ for some $\ve{d},Q'$ and $B$ that is not an abstraction, and it holds that ($m$ is fresh) ~
+$(\ve{c})(P'\para !\rbc{m.A}) \; \mathcal{R}\;  (\ve{d})(Q'\para  !\rbc{m.B})$.
+\item If $P \st{(\ve{c})\overline{a}A} P'$ and $A$ is an abstraction on process, then $Q \wt{(\ve{d})\overline{a}B} Q'$ for some $\ve{d},Q'$ and $B$ that is a process abstraction, and it holds that ($m$ is fresh) ~
+$(\ve{c})(P'\para !\rbc{m(Z).A\lrangle{Z}}) \; \mathcal{R}\;  (\ve{d})(Q'\para  !\rbc{m(Z).B\lrangle{Z}})$.
+\item If $P \st{(\ve{c})\overline{a}A} P'$ and $A$ is a name abstraction, then $Q \wt{(\ve{d})\overline{a}B} Q'$ for some $\ve{d},Q'$ and $B$ that is a name abstraction, and it holds that ($m$ is fresh) ~
+$(\ve{c})(P'\para !\rbc{m(Z).Z\lrangle{A}}) \; \mathcal{R}\;  (\ve{d})(Q'\para  !\rbc{m(Z).Z\lrangle{B}})$.
+
+\item If $P \st{\tau} P'$, then $Q \wt{} Q'$ for some $Q'$ s.t. $P'\,\mathcal{R}\, Q'$;
+\end{enumerate}
+Process $P$ is normal bisimilar to $Q$, written $P\,\WNB\, Q$, if $P\,\mathcal{R}\, Q$ for some normal bisimulation $\mathcal{R}$. Relation \WNB\ is called normal bisimilarity, and is a congruence (see \cite{San92} for a reference). The strong version of \WNB\ is denoted by \SNB.
+\end{definition}
+
+
+
+
+\subsubsection*{Coincidence between normal bisimilarity and context bisimilarity in \HOPiDd}
+Now we have the following theorem. The proof is in Appendix \ref{a:proofs-normal}.
+%\iftoggle{appendixing}{%
+%  %using appendixing
+% The proof is in Appendix \ref{a:proofs-normal}.
+%}{%
+%  %no appendixing
+% The detailed proof is referred to \cite{Xu16app}.
+%}
+
+\begin{theorem}\label{normal-characterization-hopiDd} %[Normal characterization]
+In \HOPiDd, normal bisimilarity coincides with context bisimilarity; that is, $\WNB \,=\, \WCB$.
+\end{theorem}
+
+
+
+
+
+
+
+
+
+
+
+%---------------------------
+% Local Variables:
+% mode: LaTeX
+% TeX-master: "main.tex"
+% End:

@@ -1,0 +1,1026 @@
+\documentclass[]{article} %this options tells llncs not to (re)define \vec
+\usepackage[utf8x]{inputenc}
+%\usepackage[combine]{ucs}
+%\DeclareUnicodeCharacter{0x0305}{$\overline{b}$}
+%\usepackage {amsthm,amssymb,amsbsy}
+\usepackage {amssymb,amsbsy}
+
+\input{paper.sty}
+
+% per i commenti di Davide
+%\newcommand{\DSb}{   {\bf DSbeg}    \marginpar{{\bf $DS$}}}
+%\newcommand{\DSe}{  {\bf DSend}    \marginpar{{\bf $ $}}}
+\newcommand{\DSb}{}
+\newcommand{\DSe}{}
+
+%\newcommand{\Db}{   {\bf Dnew}    \marginpar{{\bf $DS$}}}
+%\newcommand{\De}{  {\bf Dfin}    \marginpar{{\bf $ $}}}
+\newcommand{\Db}{}
+\newcommand{\De}{}
+
+
+%----------------
+\input{head_pc.tex}
+%----------------
+
+
+\thicklines
+%\setlength{\topmargin}{0cm}
+
+%\setlength{\textwidth}{12.5cm}
+%\setlength{\textheight}{19.5cm}
+
+%\setlength{\oddsidemargin}{.1cm}
+%\renewcommand{\baselinestretch}{1.3}
+
+
+
+\newcommand{\finish}[1]{ \vskip .2cm  {\bf #1} \vskip .2cm   \marginpar{{\bf $*$}}}
+\newcommand{\uptoc}{up-to-$\leq$-and-contexts}
+\newcommand{\uptoE}{up-to-$\expa$-and-contexts}
+\newcommand{\uptoEdiv}{up-to-$\expa^\Div$-and-contexts}
+\newcommand{\expaDiv}{\mathrel{\expa^\Div}}
+\newcommand{\contrDiv}{\mathrel{\mbox{}^\Div\!\!\contr}}
+
+
+\newcommand{\rev}[1]{\item {\tt #1}}
+\newcommand{\ans}[1]{\vskip .4cm  #1 \vskip .4cm}
+
+
+\newcommand{\leqNAT}{\leqslant}
+\newcommand{\geqNAT}{\geqslant}
+
+\def\RR{\mathrel{\cal R}} % R with some space around
+\def\S{{\cal S}}          % S without spaces around
+\def\SS{\mathrel{\cal S}} % S with some space around
+
+
+%  \newtheorem{definition}{Definition}[section]
+%  \newtheorem{example}[definition]{Example}
+%  \newtheorem{lemma}[definition]{Lemma}
+%  \newtheorem{theorem}[definition]{Theorem}
+%  \newtheorem{corollary}[definition]{Corollary}
+%  \newtheorem{proposition}[definition]{Proposition} 
+%  \newtheorem{remark}[definition]{Remark}
+
+%\newcommand{\contrdiv}{^{\Uparrow}\!\!\!\contr}
+%%\newcommand{\conref}[1]{\rc{\ref{#1}}}
+%\newcommand{\conref}[1]{}
+%%\newcommand{\defref}[1]{\rc{\ref{#1}}}
+%\newcommand{\defref}[1]{}
+
+
+\begin{document}
+\subsection*{Response to the reviewers of the paper ``Parameterizing Higher-order Processes on Names
+and Processes"}
+\label{ss:}
+
+
+First of all, we would like to thank the reviewers for the time and
+effort they spent on reviewing the paper, and all the observations
+they made. Following these comments, we have revised the paper
+and amended various technical points. 
+
+
+The main modifications have been the following ones. 
+
+
+\begin{enumerate}
+
+\item We have given proofs for the up-to techniques, both in a general higher-order setting (among the first of such result, as we know) and in the image of the encoding, and also the proof for the congruence property of normal bisimilarity. These proofs also constitute the novel part of this work. 
+
+\item We have modified the paper to improve presentation as well as other things, including clarifying the main contributions. 
+
+Briefly, we have contributed two new encodings of first-order pi-calculus into the higher-order with parameterization, together with full analysis (full abstraction or counterexamples). 
+The encodings are completely different from previous ones and provide new ideas of encoding name-passing in the higher-order setting, so is the analysis of the properties which exhibits the intricacy of even such concise encodings. % (two counterexamples).
+
+In particular, they improve the previous encoding in ICE15 which uses a more complicated method and is not very satisfactory in both strategy and analytical results. The encoding and comprehensive analysis in this work provide new laconic encoding strategy and tool for handling name-passing in the higher-order paradigm. 
+
+We also provide a characterization of context bisimilarity with normal bisimilarity in presence of name parameterization. This goes beyond previous work in two respects.
+One is that it involves name parameterization besides process parameterization, so a crucial point here is that one has to find a way to communicate a name with solely  process-passing. In contrast, our previous work in ICE13 only involves process parameterization and is technically a bit easier to deal with. We also notice that having normal bisimulation in presence of only process parameterization (as indicated in the ICE13 paper) does not immediately mean that normal bisimulation exists when name parameterization is also included, because how to send a name using certain gadgets is not directly known and needs careful and novel design. 
+
+The other respect is that the characterization by normal bisimilarity is made in a purely higher-order setting. So one does not have name-passing at all, different from Sangiorgi's work in his thesis. 
+Also the characterization appears not possible with only name parameterization, and even the combination of name parameterization with process parameterization does not necessarily implies the existence of normal bisimulation in a straightforward way.
+
+\item We have revised various parts of the paper to improve the language and organization. Many sentences are rewritten according to the comments from the reviewers. We have also asked our colleagues to proofread the paper, helping to make it more readable. Sorry for the previous inconvenience. 
+
+(Please notice that there is some strange blank lines around the equation on page 4, perhaps due to the latex style file. We currently do not know how to remove it. We hope this would not cause much inconvenience. Sorry for this.)
+
+%\item We have 
+%expanded and adjusted the background section, in particular the part leading to the definitions of Trees (LTs and BTs).
+
+%\item  We have 
+%expanded and clarified the meaning of compositionality and uniformity for an encoding.
+
+%\item We have 
+% made  explicit the meaning of congruence and
+% precongruence. Most important, in the conditions for an encoding, we now
+% require that the precongruences used are \emph{plain}. For a relation on
+% pi-calculus terms,  `plain' is a kind of beta-conversion property,
+% meaning that whenever an abstraction $F=(a)P$ appears with an argument,
+% say $\app Fb$ then this application $\app Fb$ should be in the relation with 
+% $P \{b/a\}$. This is a harmless property, because the processes 
+% $\app Fb$ and  $P \{b/a\}$ have exactly the same transitions (by definition of
+% transition on application). However, the property allows us to infer
+% a few useful consequences, such as the closure of the relation under
+% substitutions (see the new Lemma 3), which we use in various places in
+% the paper.
+
+%\item We have ............
+% integrated the intuitive explanation of theorem 1 (one
+% of the main theorems), which used to be in the main text, with the
+% actual proof, which is in the appendix, 
+% \Db
+% leaving only a  short explanation in the main
+% text.
+% \De
+
+
+
+\item We have amended various technical points, as indicated in the comments below.
+\end{enumerate} 
+
+
+
+
+
+Below we explain the actions taken for the technical points that have been raised. 
+
+\section{To reviewer I (Alan Schmitt)}
+
+
+\begin{itemize}
+
+
+% \rev{
+% Abstract
+
+% Last sentence of the abstract. You do not show how the conditions can
+% be adapted and used in other concurrent formalisms in this paper. Delete
+% this sentence here. You already repeat this in the introduction and in the
+% conclusion. You should leave this comment only in the conclusion.
+% }
+
+% \ans{Done.}
+
+%\rev{
+% \begin{itemize}
+% \item
+% 'derivative' is not a word we use in lambda calculus. Replace it by
+% `reduct' which is what I suppose you mean here.
+
+
+% \item `(Exception ...)' Sentences between parentheses are subordinated
+% sentences and should not start with capital letters. It is not nice to
+% make such an excessive use of parentheses. Try to avoid them. In this
+% particular sentence, they could be deleted.
+% \end{itemize}
+%  }
+
+% \ans{Done.}
+
+% \begin{verbatim}
+% This paper presents and studies two compositional encodings of the pi calculus in a higher-order pi calculus with name and process parameterization. In addition, a normal bisimilarity for the parameterized calculus is introduced and shown to coincide with context bisimilarity.
+% \end{verbatim}
+
+\rev{
+%\begin{verbatim}
+This paper presents and studies two compositional encodings of the $\pi$ calculus in a higher-order $\pi$ calculus with name and process parameterization. In addition, a normal bisimilarity for the parameterized calculus is introduced and shown to coincide with context bisimilarity.
+
+The approach is interesting, but there are two significant technical issues that must be addressed before publication. The most crucial one is the absence of the proof that working up-to context is correct. In particular, I do not understand why the proof of Lemma 4 could not be reused to show that the encoding is sound (which would be problematic as a counter example is given). I suspect up-to context cannot be used for every context. The second issue is the absence of the proof that normal bisimilarity is a congruence.
+
+Regarding related work, why is there no reference to "On Parameterization of Higher-Order Processes" published in the International Journal of Computer Mathematics, Volume 94, 2017? I think it is strongly related to this paper.
+%\end{verbatim}
+}
+\ans{%See the answer in the beginning? TODO...
+The two technical issues are now addressed. Related proofs are provided for up-to context and congruence of normal bisimilarity. 
+The reason why Lemma 4 cannot extend to soundness is because the input case would become incorrect. Notice that the current case only allows input of `encapsulation of a name' from encodings. Extending to general process would fail the lemma, and this is actually what the counterexample suggests.
+}
+
+
+\rev{
+- Page 1, "These results demonstrate more essence of the parameterization method in the higher-order paradigm toward expressiveness and behavioural equivalence." I do not understand what these results demonstrate.
+}
+\ans{The abstract appear ok without this (vague) sentence. So it has been removed. }
+
+
+
+\rev{
+- Page 3, "In that effort, which somewhat precipitates the work here, we construct an encoding that harnesses the idea of Thomsen’s encoding and show that it is complete." and "Is there an encoding of first-order processes by the higher-order processes with the capability of parameterization?" It seems that the question you ask has already been answered by your previous paper. You need to explain why it is not the case.
+}
+\ans{Some explanation are added to the Section Introduction. Basically, we are looking for encodings as elegant as that from HO to FO, by taking advantage of parameterization. }
+
+
+
+\rev{
+- Page 4, diagram for factorization (bottom of page). It might be easier to understand if m was fresh instead of put under restriction. It's not obvious one is allowed to remove restrictions *in the middle of a process* as part of congruence.
+}
+\ans{We have modified the example to use fresh $m$ and removed the restriction. }
+
+
+
+\rev{
+- Page 6, "its relatively a bit" can be removed.
+}
+\ans{%TODO...
+Done.
+}
+
+
+
+\rev{
+- Page 7, "guarded input replication is used instead of general replication". Why not also have guarded output replication, as for the higher-order version?
+
+}
+\ans{%TODO...
+Because input guarded replication is sufficiently expressive. Please see [Sangiorgi 1998, On the bisimulation proof method; or his pi book.] 
+}
+
+
+
+\rev{
+- Page 7, semantics of $\pi$. You need to define n() and bn() for labels. In particular, what is bn(a(b))? If it is ∅, then how do you avoid capture for communication of a bound name. If it is {b}, then how do you allow the reception of b if it is not restricted but present in parallel. More precisely, how do you deal with these two reductions?
+
+%\={a}
+  a(x).P | b | \={a}b → P{b/x} | \={a}b \\
+  a(x).\={b}x | (b)(\={a}b) → (c)\={b}c (right now (b)\={b}b seems allowed)
+}
+\ans{Amended. The communication rule for bound output should have a side condition $b\notin \fn{P}$. Thanks.}
+
+
+
+\rev{
+- Page 7, semancis of $\pi$. You define structural congruence but do not use it in the semantics. Why?
+}
+\ans{Because we use it only as some structural manipulation method, and not including it in the semantics seems not to matter.}
+
+
+
+\rev{
+- Page 8, top of page. Do you mean $\alpha$ conversion should not result in name capture, or that you use $\alpha$ to always prevent name capture?
+}
+\ans{%TODO...
+We mean it one can always use $\alpha$-conversion to avoid name capture. Sorry for the confusion.
+}
+
+
+
+\rev{
+- Page 8, Definition 1. Why use $\alpha$ instead of $\lambda$ for labels here? And you do not need to list the labels if you include all of them.
+}
+\ans{%TODO...
+Amended.
+}
+
+
+
+\rev{
+- Page 8, Definition 2. Can R have b free?
+}
+\ans{%TODO...
+Yes. %, it is possible.
+}
+
+
+
+\rev{
+- Page 9, top of page. You use the same notation E[P] and C[P] for two different notions: contexts can capture names in $\pi$, but substitution neither capture names nor variables in the higher-order version. This should be clarified and reflected in the notation.
+}
+\ans{%TODO...
+Yes, they are different. In a sense, $E[X]$ is a kind of contexts allowing multiple occurrence of the hole and disallows name capture. This has been clarified in the paper. Thanks a lot. 
+}
+
+
+
+\rev{
+- Page 9, "and this shall not raise confusion under specific context" can be removed
+}
+\ans{%TODO...
+Done.
+}
+
+
+
+\rev{
+- Page 9, extension of semantics with structural congrunce. The structural congruence rule should come before, or you could delay introducing structural congruence till this point.
+}
+\ans{%TODO...
+It's delayed till the extension of the semantics. Thanks. 
+}
+
+
+
+\rev{
+- Page 9, "This application is modelled by an extensional rule". In what sense the rule is "extensional"? Do you mean "additional"?
+}
+\ans{%TODO...
+Yes. Amended. Sorry.
+}
+
+
+
+\rev{
+- Page 10, "For convenience, names are sometimes handled in a similar way as that in $\pi$ (so are the related notations)". What does this mean? Please give examples.
+}
+\ans{%TODO...
+It means that we may distinguish between name variables and name constants. For example, we use name variable $x$ in the abstraction $\lrangle{x}T$ while name constant $d$ in the application $T\lrangle{d}$.
+}
+
+
+
+\rev{
+- Page 10, Definition 3, "B that is of the same type as A". Do you allow A to be <X>0 and B to be <X>(<Y>0)? They are both process abstractions. If you do not allow them, then the notion of types become crucial and should be given. Also the X in context E should have the same type.
+}
+\ans{%TODO...
+We only require $A$ and $B$ to have the same type (maybe here using `type' is not very proper), meaning that both of them are name abstractions, process abstractions, or non-abstractions (i.e., processes). The body of the abstractions does not have specific requirement, as long as they meet the typing and bisimulation requirement. Yes, $X$ in $E$ should have same type accordingly, so that the receiving environment can have a correct form. BTW.  the example {\tt <X>(<Y>0)} you give can be written as $\lrangle{X,Y} 0$, but this may be irrelevant.
+}
+
+
+
+\rev{
+- Page 10, "to bear the same kind". Please define "kind". Is it "type"?
+}
+\ans{%TODO...
+Please see the response to the last comment. It means that they are both process/name abstraction or non-abstraction. Thanks.
+}
+
+
+
+\rev{
+- Page 10, "and abstractions is defined in the expected way" Abstractions are part of the syntax, so it is strange that you need to extend the definition of bisimulation. This should be part of definition 3 (where P can be an abstraction).
+}
+\ans{%TODO...
+The definition of context bisimulation is on processes (not including abstractions), and this is why we make the extension.
+Thanks for the comment.
+}
+
+
+
+\rev{
+- Page 11, "P' ≡ C[P'], Q' ≡ C[Q'']". Can this context capture names or variables? In other word, is it a different kind of context than the E ones?
+}
+\ans{%TODO...
+Yes. It is a plain context. Please see also above the difference between $C$ and $E$.
+}
+
+
+
+\rev{
+- Page 11, bottom of page. Nitpick: the up to context is already combined with structural congruence, as it is a congruence (so you can apply it in depth to P'' and Q'' when you build C[P''] and C[Q'']).
+}
+\ans{%TODO...
+Amended.
+}
+
+
+
+\rev{
+- Page 12, Theorem 1. This theorem needs to be proven, as none of the referenced work use parameterization. I'm convinced the theorem is true for up to strong bisimilarity and up to structural congruence, but I'm sceptical regarding up to context.
+}
+\ans{%TODO...
+A proof is now given.
+}
+
+
+
+\rev{
+- Page 12, "up-to some structural congruence". Which?
+- Page 12, Section 2.3. If you don't need this additional structual congruence, please don't introduce it.}
+\ans{%TODO...
+It means the standard one, and is amended. 
+This explanation is trying to describe the general situation, since here we are defining the general notion of encoding. It seems harmless here.
+Sorry for the inconvenience.
+}
+
+
+
+
+\rev{
+- Page 12, Definition 6. Do you require completeness? It is not clear here.
+}
+\ans{%TODO...
+Yes, it is required in this paper. 
+}
+
+
+
+\rev{
+- Page 12, after definition 6. The definition of $\dot{\approx_2}$ is not clear. The initial text seems to suggest that it is $\dot{\approx_2}$ ∩ [|P₁|], but this seems to suggest it is a congruence where restricted sets of contexts may be considered. This needs to be clarified.
+}
+\ans{%TODO...
+Yes, it is $\approx_2$ restricted to the image of the encoding $\encode{\mathcal{P}_1}{}{}$, with the related contexts also restricted to those on that image. Since the encoding is compositional, a context can also be mapped to a context.
+Thanks for the comment.
+}
+
+
+
+\rev{
+- Page 13, last paragraph of Section 2. I do not understand the point being made, especially since it is said at the end it does not matter. This paragraph could be removed.
+}
+\ans{%TODO...
+This paragraph was added in response to the comment from a reviewer from the previous (workshop) version of the paper. His/Her point is that for any encoding, one can always have full abstraction for some (maybe not so meaningful) equivalences. Responding and following that point, we wrote this paragraph to explain that the full abstraction here is not arbitrary and is not the situation as he/she mentioned. Sure we will remove it if you insist. Thank you all the same.
+}
+
+
+
+\rev{
+- Page 14, Section 3.2, "Apparently". "Apparently" means "It seems that", typically to later say it is not the case. I'm not sure this is what you want to say here.
+}
+\ans{%TODO...
+Sorry for this. "Apparently" is removed.
+}
+
+
+
+\rev{
+- Page 14, "Literally in the meanwhile" can be removed.
+}
+\ans{%TODO...
+Done.
+}
+
+
+
+\rev{
+- Page 14, before Lemma 2, "(clause (2))". Say of which lemma or definition.
+}
+\ans{%TODO...
+Done. It is that of Lemma 2 and 3. Thanks. 
+}
+
+
+
+\rev{
+- Page 14, "In Lemma 2 and Lemma 3, the input cases are not stated for an input". This only matters for Lemma 3.
+}
+\ans{%TODO...
+Actually it is about both Lemma 2 and Lemma 3. Notice that in both of them, $\encoding{P}{}{}$ is possible to have input other than those used in the lemmas. Thanks.
+}
+
+
+
+\rev{
+- Page 14, proof of Lemma 1, "Also the encoding is divergence-reflecting, for the reason that it does not bring about any divergence". This seems to need Lemmas 2 and 3 to be shown, so it should be moved to a new lemma after those are proven (since Lemmas 2 and 3 need Lemma 1 for renaming)
+}
+\ans{%TODO...
+Divergence-reflecting is now moved to a property after these two lemmas on operational correspondence. Thanks.
+}
+
+
+
+\rev{
+- Page 17, Input case (at the top of the page). Please do not reuse T for different processes in the same subcase. Also, I don't understand how you go from "(m)(\={m}[<x>[|P₁|]] | !m(Y).Y<b>)" to "(m)(!m(Y).Y<b> | [|P₁|]{b/x})". You do a communication? If so you should highlight it.
+}
+\ans{%TODO...
+Amended.
+Yes, there is a communication on $m$. This has been highlighted.
+Thanks.
+}
+
+
+
+\rev{
+- Page 18, end of proof. Same as before, is a communication happening here?
+}
+\ans{%TODO...
+Yes, there is a communication on $m$ here. It is explained now. Thanks.
+}
+
+
+
+\rev{
+- Page 19, example of soundness failure. You could give the intuition of why the particular example fails: it is possible to capture the process corresponding to \={b} then to duplicate it. This is similar to some behaviors that can be seen in presence of passivation (see [16], end of Section 2.3)
+}
+\ans{%TODO...
+It is given now. Thank you very much for the advice.
+}
+
+
+
+\rev{
+- Page 19, mention of $\dot{\approx_{ct}}$. This was not formally defined, and it should be. The restriction is not only on processes to consider, but on the context E used for output.
+}
+\ans{%TODO...
+Yes. The restriction is on the image of the encoding, i.e., $\{\encoding{P}{}{} \,|\, P \mbox{ is a $\pi$ process} \}$. Since the encoding is compositional, a context is also mapped to a context. This is further defined and explained. Thanks.
+}
+
+
+
+\rev{
+- Page 20, proof of Lemma 4, bound output case. There is something very wrong here: what prevents you from using E to create something like the process T of page 18 (assuming you were proving adequacy)? In other words, couldn't you use the same proof to show that the translation is sound (which you showed is not). Is the problem in the application of up-to context in some cases?
+}
+\ans{%TODO...
+As we mentioned on the first page, we prove the result that on the image of the encoding, the up-to context is valid (Proposition 1). We also prove that this technique also works in the general HO processes (Theorem 1)
+%, though we do not give a proof since the result on the image of the encoding is sufficient for our purpose. 
+Concerning the soundness of the encoding, this is not a contradiction because we are considering a subset of HO processes that are image of the encoding, and two processes bisimilar in this subset may not be so in the general case, when we allow more contexts that can be non-encodings. 
+Thus even though that proof can be extended to the general situation in the output case, the input case can not, as exhibited in the counterexample actually. 
+To recap about your concern, the crux is mostly with input rather than output. 
+}
+
+
+
+\rev{
+- Page 20, "In terms of the notion of encoding, this is a more desired result." can be removed.
+}
+\ans{%TODO...
+Done.
+}
+
+
+
+\rev{
+- Page 21, argument that the label must be "\={a}[<Z>(Z<b>)]". This should be made more formal (it should be its own lemma). Same thing for bound output.
+}
+\ans{We have rewritten this argument to make it more formal. This is not put in a standalone lemma, because it is actually not used elsewhere, so WMHO, a claim in proof would do the part. Thanks.
+}
+
+
+
+\rev{
+- Page 21, bottom of page. What if R mentions b? This seems to break the property as b cannot be free in E.
+}
+\ans{Yes, but $E$ can have a free $b$ from $\lrangle{Z}(Z\lrangle{b})$.
+}
+
+
+
+\rev{
+- Page 22, "folliwng" → "following"
+}
+\ans{%TODO...
+Amended.
+}
+
+
+
+\rev{
+- Page 23, Lemma 6, case 1. Why do you need bisimilarity here, and not simply structural congruence?
+}
+\ans{%TODO...
+This is because we need strong bisimilarity in the case of replication, though for most cases the structural congruence works well.
+}
+
+
+
+\rev{
+- Page 25, "w.o.l.g." → "wlog"
+}
+\ans{%TODO...
+Done. Thanks.
+}
+
+
+
+% \rev{
+% - Page 39. I did not check the proofs of the appendix.
+% }
+% \ans{TODO...
+% }
+
+
+
+% \rev{
+% TO ADD
+% }
+% \ans{TODO...
+% }
+
+\end{itemize}
+
+
+
+
+
+
+
+%------------------------------------------------------------
+\clearpage
+%------------------------------------------------------------
+
+\section{To reviewer II}
+\begin{itemize}
+
+
+
+\rev{
+The paper is poorly written, and sometimes sloppy in its conception. There are many examples of incorrect english or poorly phrased 
+explanations, some of which are in the 'minor comments' section below. There are too many, however, to be exhaustive. Some technical issues 
+are also discussed below.
+
+The main idea is quite natural: we can reasonably expect to capture name passing by having abstraction-passing, for both names and processes.
+However, the author already published a paper [2] showing name passing can be encoded through abstraction-passing, with only name abstractions. 
+Therefore, there is really no surprise in the main results. The encodings presented in the paper are more natural, more concise; but this is not 
+clear to me anything meaningful has been accomplished in this paper.
+
+Furthermore, the results regarding normal form bisimulation are already known for abstraction-passing calculi, with just one type of abstraction. 
+Therefore, it is clear that by adding constructs to the language, thus making the contexts stronger, this characterisation would still hold
+(the addition of a new type of abstraction does not change the bisimulation itself).
+
+A lot of the proofs do not seem meaningful, and consist of just sequences of algebraic calculations.
+Those proofs could go in an appendix, however I am not convinced much would be left.
+
+I would advise against publication. For me, to be even considered, the paper should be almost entirely rewritten, and some convincing arguments 
+should be given about its contribution and novelty.
+}
+\ans{We have carefully modified the paper by taking into account these comments. Please also see the main modification explained at the beginning of this file. Thank you  for the helpful advice.
+%TODO... ?
+}
+
+
+
+\rev{
+The use of structural congruence to define abstraction and application (and substitution) is a problem: 
+with such a rule, it is very easy to build an infinite derivation tree.
+
+Care has also to be taken in order to ensure that the 'normalization' of a substitution terminates.
+In [1], Sangiorgi uses a sorting/type system to ensure that substitutions terminate.
+It would seem important here, however it is barely refered to. 
+Otherwise it is possible to write a diverging terms: <X>(X<X>)<<Y>(Y<Y>)> (this is basically Omega).
+%Xu, X., Yin, Q., Long, H.: On the computation power of name parameterization in higher-order processes. In: Proceedings of 8th Interaction and Concurrency Experience (ICE 2015),
+}
+\ans{%TODO...
+Thank you for the point, and I see your concern (I think). 
+The use of structural evolves from previous works by Sangiorgi. Notice that here the application of an abstraction is not modelled as a reduction (or internal action). So this might be a bit different from that in lambda-calculus. Thank you for pointing this out (I'm not an expert in lambda...)\\
+%Yet this appears not an issue for the work here, because Moreover we are more interested in the image of the encodings, where this would not happen. , actually  So it appears that the infinite reduction tree would not occur as in %lambda-calculus where application indeed leads to a reduction. 
+Yes, Sangiorgi's work concerning the substitution (Lemma 2.3.4 in his PhD thesis) is important, and we have remarked on this in the paper. Thank you for the comment. 
+}
+
+
+\rev{
+The proof of a lemma or theorem should be right after its statement, not after other lemmas, or 
+a page of additional explanations.
+}
+\ans{%TODO...
+Sorry for the inconvenience. We have checked and moved those proofs to right after what they prove. Thanks for the comment. 
+}
+
+
+
+\rev{
+"Bisimulation" is sometimes used instead of "bisimilarity".
+}
+\ans{%TODO...
+This is because sometimes bisimilarity appears a bit too technical to be used, though it may be more accurate. We have checked and made modification to improve on this. Thanks.
+}
+
+
+
+\rev{
+About 'computational expressiveness': 
+"higher-order processes equipped with parameterization are computationally more expressive."
+"it appears reasonable for such an extension to be able to
+express first-order processes since lambda-calculus is universal in computation."
+I'm not sure I understand these remarks; what does "computational expressiveness" mean here? 
+I assume it is not computability. Furthermore, the lambda-calculus can be encoded 
+in the higher-order pi-calculus, so I'm not sure what this means.}
+\ans{%TODO...
+Sorry for the confusion. 
+
+Here we mean that higher-order processes equipped with parameterization are strictly more expressive than the  basic higher-order processes without parameterization. The latter cannot encode the former (See reference [15]). %, which is Turing complete. 
+
+Furthermore, higher-order processes equipped with parameterization somewhat have the core of lambda-calculus (which is computationally complete), and as you mentioned, are able to encode lambda-calculus. So theoretically higher-order processes equipped with parameterization should be able to encode first-order processes, though the strategy can vary and have different consequences. 
+
+We have rewritten related sentences. 
+Thanks a lot. 
+}
+
+
+
+
+
+\rev{
+p.2
+
+Incorrect use of "i.e.":
+
+"but is very hard to analyze for
+full abstraction (i.e., the first-order processes are equivalent if and only if their
+encodings are; the ‘if only’ direction is called soundness and the other direc-
+tion is called completeness)."
+}
+\ans{%TODO...
+It's been rewritten. Sorry and thanks.
+}
+
+
+
+\rev{
+"the encoding has a correct operational correspondence (i.e., the correspondence between
+the processes before and after the encoding),"
+-> We establish an operational correspondence between the reductions of a process and its encoding.
+(incorrect use of "i.e.")
+}
+\ans{%TODO...
+It's been rewritten. Thank you for the advice.
+}
+
+
+
+\rev{
+p.3
+
+"This encoding depends heavily on the notions of ‘localized’ which means only
+the output capability of a name can be communicated during interactions, and
+‘asynchronous’ which means the output is non-blocking."
+-> This encoding relies heavily on output capability ... 
+}
+\ans{%TODO...
+Amended.
+}
+
+
+
+\rev{
+"Though technically a nice reference, intuitively because this variant of $\pi$-calculus is less expressive
+than the full $\pi$-calculus, it is not very surprising that the higher-order processes
+with parameterization on names can interpret it faithfully, i.e., fully abstract
+with respect to barbed congruence."
+-> remove
+}
+\ans{%TODO...
+Done.
+}
+
+
+
+\rev{
+"In that effort, which somewhat precipitates the work here, [...]"
+To that end, [...]. This inspired the present work.
+
+"This question is important in two aspects."
+-> respects
+}
+\ans{%TODO...
+Amended. Thanks.
+}
+
+
+
+\rev{
+p.4
+
+bisimulation is used but not explained
+}
+\ans{%TODO...
+Some explanation has been added. 
+}
+
+
+
+\rev{
+"here | denotes concurrency,"
+-> We write | for the parallel composition
+}
+\ans{%TODO...
+Done.
+}
+
+
+
+\rev{
+"E[A] means putting A in the environment E."
+-> E[A] is a shorthand for E where the hole [.] is substituted by A.
+}
+\ans{%TODO...
+Done.
+}
+
+
+
+\rev{
+"To meet this challenge, a crucial so-called factorization theorem is used to circumvent technical difficulty."
+-> A crucial ingredient is a
+}
+\ans{%TODO...
+Done.
+}
+
+
+
+\rev{
+"how normal bisimulation is designed in the basic higher-order processes."
+
+"In particular, the factorization states the following property,"
+}
+\ans{%TODO...
+Amended.
+}
+
+
+
+\rev{
+p.5
+
+"(i.e., not clear if the characterization remains true in a strictly higher-order setting without name-passing),"
+Incorrect use of i.e.
+
+"Such kind of encoding"
+-> This kind of encoding
+}
+\ans{%TODO...
+Amended.
+}
+
+
+
+\rev{
+p. 7
+
+"2.1 Calculus $\pi$"
+-> $\pi$-calculus
+}
+\ans{%TODO...
+Done.
+}
+
+
+\rev{
+"Usually closed processes are considered by default"
+In pi, I'm don't think it makes a lot of sense.
+}
+\ans{%TODO...
+It may not be so meaningful as in higher-order processes. Here it  offers some convenience. We have commented on this. Thank you for the comment.
+}
+
+
+
+\rev{
+p.12
+"We define a notion of encoding"
+}
+\ans{%TODO...
+Done.
+}
+
+
+
+\rev{
+p.14
+
+Example:
+Put the example in an "example" block.
+}
+\ans{%TODO...
+Done.
+}
+
+
+\rev{
+Conclusion:
+
+"proper uniform-looking ‘trigger’"
+Does not make much sense to me
+}
+\ans{%TODO...
+Amended. 
+We simply mean a trigger here. 
+Sorry for this confusing expression.
+}
+
+
+
+\rev{
+p. 18
+
+"the soundness of the encoding is not true."
+-> the encoding is not sound 
+}
+\ans{%TODO...
+Done.
+}
+
+
+
+\rev{
+p. 22
+
+"though its properties are not
+clear before this work 1"
+-> were not clear?
+-> avoid footnote
+}
+\ans{%TODO...
+Done.
+}
+
+
+
+\rev{
+"This encoding was suggested by Alan Schmitt 
+during the communication concerning
+another work."
+-> "when discussing a different subject"?
+-> no point in that: just say the encoding was 
+suggested by A. Schmitt
+}
+\ans{%TODO...
+Done.
+}
+
+
+
+\rev{
+p. 28
+
+"For the sake of conciseness, we use $\cdot$ to denote certain existent process."
+-> Here, . is some unspecified process.
+}
+\ans{%TODO...
+Done. Thanks.
+}
+
+
+
+\rev{
+p.29
+
+"To summary,"
+-> To summarize
+}
+\ans{%TODO...
+Amended. Sorry for this.
+}
+
+
+
+\rev{
+p. 33
+"(i) if E[Trm] is <U>E' for some non-abstraction 
+E' (here and below, <U> 
+denotes the abstractions prefixing E ), then..."
+"(ii) particularly, if E[T r m ] is not an abstraction, then..."
+Remove this
+-> Simply replace E[Trm] by <~U>E[Trm] so you don't need E'...
+It feels like we should assume <~U>E' to be closed or something similar here. 
+}
+\ans{%TODO...
+I'm not quite sure what you mean here. The intention is to explicitly  distinguish between the parameterized case and non-parameterized case, and state them in separate clauses so as to emphasize their difference in forms and also offer some convenience in related discussion. Certainly it could be stated in a more uniform fashion, though in effect they are the same. I have commented on this in the paper. Thank you for the advice, and I apologize for the possible inconvenience. 
+
+Yes, typically abstracted variables may have some `closedness', though in general this appears not mandatory. 
+
+Thank you for the comment.
+}
+
+
+
+
+\rev{
+p.34 
+
+"The proof is similar to those in the references [2, 22, 29, 34]."
+-> is similar to the congruence proofs in [2,...]
+}
+\ans{%TODO...
+Done.
+}
+
+
+
+\rev{
+"We note that although we have a new form of triggers here, the proof approach is exactly the
+same."
+Not very useful.
+The whole paragraph should be rewritten.
+}
+\ans{%TODO...
+It's been rewritten. Sorry for this.
+}
+
+
+
+\rev{
+p. 35
+"We only need to prove $≈_{nr}$ implies $≈_{ct}$ , since ≈ ct is obviously finer than $≈_{nr}$."
+Explain why.
+}
+\ans{%TODO...
+The reason is that $\approx_{ct}$ requests no less than $\approx_{nr}$, and $\approx_{nr}$ can be considered as a special case of $\approx_{ct}$, when the input and receiving context of output are chosen to be as in $\approx_{nr}$.
+
+This is explained in the proof now.
+
+Thank you for the comment. 
+}
+
+
+
+\rev{
+"and leave out the similar (and simpler) rest."
+-> leave out the other cases.
+}
+\ans{%TODO...
+Done.
+}
+
+
+
+% \rev{
+% TO ADD
+% }
+% \ans{TODO...}
+
+
+
+\end{itemize}
+
+
+\end{document} 

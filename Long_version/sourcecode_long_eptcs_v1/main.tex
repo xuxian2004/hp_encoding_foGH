@@ -1,0 +1,148 @@
+%\documentclass[submission,copyright,creativecommons]{eptcs}
+\documentclass[submission]{eptcs}
+%\documentclass[adraft]{eptcs}
+%\documentclass[preliminary]{eptcs}
+\providecommand{\event}{} % Name of the event you are submitting to
+%\usepackage{breakurl}             % Not needed if you use pdflatex only.
+
+%definitions
+\input{head_pc}
+\RequirePackage[normalem]{ulem}
+\RequirePackage{color}\definecolor{RED}{rgb}{1,0,0}\definecolor{BLUE}{rgb}{0,0,1}
+\providecommand{\DIFadd}[1]{{\protect\color{blue}\uwave{#1}}}
+\providecommand{\DIFdel}[1]{{\protect\color{red}\sout{#1}}}
+%DIF SAFE PREAMBLE
+\providecommand{\DIFaddbegin}{}
+\providecommand{\DIFaddend}{}
+\providecommand{\DIFdelbegin}{}
+\providecommand{\DIFdelend}{}
+%DIF FLOATSAFE PREAMBLE
+\providecommand{\DIFaddFL}[1]{\DIFadd{#1}}
+\providecommand{\DIFdelFL}[1]{\DIFdel{#1}}
+\providecommand{\DIFaddbeginFL}{}
+\providecommand{\DIFaddendFL}{}
+\providecommand{\DIFdelbeginFL}{}
+\providecommand{\DIFdelendFL}{}
+
+%
+%\usepackage{etoolbox} %moved to head_pc.tex
+%\newtoggle{appendixing} % whether to include appendices
+%\toggletrue{appendixing}
+%\togglefalse{appendixing}
+%\iftoggle{appendixing}{%
+  % using appendixing
+%}{%
+  % no appendixing
+%}
+
+
+%\title{Interpreting Name-passing with Abstraction-passing}
+%\title{A New Encoding of Name-passing with Process-passing}
+%\title{Parameterizing Higher-order Processes over Names and Processes}
+%\title{Higher-order Processes with Parameterization over Names and Processes}
+\title{Parameterizing Higher-order Processes on Names and Processes}
+\author{Xian Xu
+\thanks{The paper is an expanded version of the work presented at EXPRESS/SOS 2016, EPTCS 8704: 78-92, 2016. }
+\thanks{This work has been supported by project ANR 12IS02001 PACE and NSF of China (61261130589, 61472239, 61572318).}
+\institute{East China University of Science and Technology, Shanghai, China (200237)}
+\email{xuxian@ecust.edu.cn}
+%\and
+%Qiang Yin \quad\qquad Huan Long
+%\institute{Shanghai Jiao Tong University, China}
+%\email{\quad yinqiang.sjtu@gmail.com \quad\qquad longhuan@sjtu.edu.cn}
+}
+%%\def\titlerunning{On the Computation Power of Name Parameterization in Higher-order Processes}
+%\def\titlerunning{Higher-order Processes with Parameterization}
+\def\titlerunning{}
+%%\def\authorrunning{Xian Xu, Qiang Yin \& Huan Long}
+%\def\authorrunning{Xian Xu}
+\def\authorrunning{}
+
+\begin{document}
+\maketitle
+
+%\oo{TODO : make it a journal paper.
+%\begin{itemize}
+%\item[DONE] add all the skipped/brief/missing proofs, e.g., Lemma \ref{l:syn-pro-encoding}, Theorem \ref{factor-bigd-smalld} and its preparing lemmas (see ICE2013 paper \cite{Xu13});
+%\item[DONE] add the detailed discussion for normal characterization for context bisimulation in $\HOPid$ (see ICE 2013 paper \cite{Xu13});
+%\item[DONE] add the discussion of the variant encoding in Section \ref{s:conclusion};
+%\item adjust and improve the whole paper to be consistent (including presentation): 
+%\begin{itemize}
+%\item[DONE] start from Section \ref{s:conclusion}; %, now at Section \ref{smalld-charac}; 
+%\item[DONE] %[\bc{to continue from Section 2}] 
+%then from the beginning, noticing the result on the variant encoding; 
+%\end{itemize}
+%\item[DONE] spell-check and maybe more checks;
+%\item send.
+%\end{itemize}
+%}
+
+%\bc{TODO :\rc{make it a (workshop) paper} (technical stuff nearly ok now); } %\bc{$\checkmark$}}
+%\begin{itemize}
+%\item introduction.  \bc{$\checkmark$}
+%\item definition.  \bc{$\checkmark$}
+%\item conclusion.  \bc{$\checkmark$}
+%\item tidy up (remove the tiny comments by redefining ``$\backslash$tdup").  \bc{$\checkmark$}
+%\item page limit and more readable (\rc{flow})  \,\&\,  remove colors and nts %\bc{$\checkmark$}
+%\item \greycolor{Words: facilitate, demonstrate, be dedicated to, }
+%\end{itemize}
+%\sep
+%\vspace*{-.5cm}
+\begin{abstract}
+\noindent\emph{\textbf{Abstract}}~ 
+Parameterization extends higher-order processes with the capability of abstraction and application (like those in lambda-calculus). This extension is strict, i.e., higher-order processes equipped with parameterization is computationally more powerful. This paper studies higher-order processes with two kinds of parameterization: one on names and the other on processes themselves. We present two main results. One is that in presence of parameterization, higher-order processes can encode first-order (name-passing) processes in a quite neat fashion, in contrast to the fact that higher-order processes without parameterization cannot encode first-order processes at all. In the other result, we provide a simpler characterization of the (standard) context bisimulation for higher-order processes with parameterization, in terms of the normal bisimulation that stems from the well-known normal characterization for higher-order calculus. These results demonstrate more essence of the parameterization method in the higher-order paradigm toward expressiveness and behavioural equivalence.
+
+\vspace*{.1cm}
+\noindent\emph{keywords}: Parameterization, Encoding, Context bisimulation, Higher-order, First-order, Processes %, Name-passing, Process-passing,
+
+\vspace*{.1cm}
+\noindent\emph{2000 MSC}: 68Q85
+\end{abstract}
+
+
+%----------------------------------------------------------------------------------------------
+%\input{scribble.tex}
+\input{introduction.tex}
+\input{preliminary.tex}
+\input{encoding.tex}
+\input{normal.tex}
+\input{conclusion.tex}
+%----------------------------------------------------------------------------------------------
+
+%----------------------------------------------------------------------------------------------
+\sepp
+\noindent\textbf{Acknowledgements}\;\;
+%This work has been supported by project ANR 12IS02001 PACE and NSF of China (61261130589, 61472239, 61572318). 
+We are grateful to the referees of EXPRESS/SOS 2016 for their useful comments on this article and related work. We also thank Qiang Yin for the helpful discussion. 
+%Alan Schmitt
+\sepp
+
+%-------------------------bibliography------------------------------------------------------------
+%\clearpage
+%\vspace*{-3mm}
+%\nocite{*}
+\bibliographystyle{eptcs}
+\bibliography{process}
+%-----------------------------------------------------------------------------------------------
+
+%-----------------------------------------------------------------------------------------------
+%\iftoggle{appendixing}{%
+  %using appendixing
+\sepp\sepp
+%\clearpage
+\appendix
+\noindent\textbf{\Large Appendix}
+%\sepp
+
+\noindent\textit{Remark}. For the sake of conciseness, in the arguments in the appendix, we sometimes omit the existential statement such as ``for some ..." if clear from context.
+
+\input{appendix_proof_encoding.tex}
+\input{appendix_proof_normal.tex}
+\input{appendix_proof_variant_encoding.tex}
+%}{%
+  %no appendixing
+%}
+
+%-----------------------------------------------------------------------------------------------
+
+\end{document}

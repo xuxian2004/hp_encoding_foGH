@@ -1,0 +1,112 @@
+\section{\xxx{Proofs for Section \ref{s:encoding}}}\label{appendix:up-to-context_encodings}
+
+We give the proof of Proposition \ref{prop:up-to-context_encodings}.
+For convenience, we reproduce the definition of a relation that is a context bisimulation up-to context. 
+By saying some term is an encoding, we mean that it is the encoding of certain ($\pi$) process. Recall that the encoding of a context is a conext put through the encoding with the hole translated into a hole. 
+In the output clause of Definition \ref{d:up3_encoding}, $Q$ is required to make the same output as $P$. This corresponds to the requirement of bound output in the bisimulation of $\pi$-calculus, and suffices for our purpose.
+\begin{definition}[up-to context]\label{d:up3_encoding}
+%modify from up-to \SCB above
+%P'\equiv C[P''],  Q'\equiv C[Q''], and P''\R Q''
+A symmetric relation $\mathcal{R}$ on the image of the encoding is a context bisimulation up-to context, if whenever $P\,\mathcal{R}\, Q$ the following properties hold.
+\begin{itemize}
+\item if $P \st{\alpha} P'$ and $\alpha$ is $\tau$ or $a(A)$ in which $A$ is $\lrangle{Z}(Z\lrangle{b})$, then $Q \wt{\widehat{\alpha}} Q'$ for some $Q'$, $P'\equiv C[P'']$ and $Q'\equiv C[Q'']$ for some $P'', Q''$ and context $C$ that is an encoding, and $P''\,\mathcal{R}\, Q''$;
+
+\item if $P \st{(\ve{c})\overline{a}A} P'$ in which $A$ is $\lrangle{Z}(Z\lrangle{b})$ and $\ve{c}$ is either empty or $\{b\}$, 
+%then $Q \wt{(\ve{d})\overline{a}B} Q'$ for some $B$ that is an enoding and of the same type as $A$, 
+then $Q \wt{(\ve{c})\overline{a}A} Q'$ 
+and for every $E[\cdot]$ (\xx{or $E[X]$?}) that is an encoding and satisfies 
+%$\{\ve{c},\ve{d}\}\cap \fn{E}=\emptyset$, 
+$\{\ve{c}\}\cap \fn{E}=\emptyset$, 
+%it holds that $(\ve{c})(E[A]\para P') \equiv C[P'']$ and $(\ve{d})(E[B]\para Q')\equiv C[Q'']$
+it holds that $(\ve{c})(E[A]\para P') \equiv C[P'']$ and $(\ve{c})(E[A]\para Q')\equiv C[Q'']$  
+for some $P'', Q''$ and context $C$ that is an encoding, and $P''\,\mathcal{R}\, Q''$.
+\end{itemize}
+\end{definition}
+
+
+\begin{proof}[Proof of Proposition \ref{prop:up-to-context_encodings}]
+Assume $\R$ is as defined in Definition \ref{d:up3_encoding}. 
+We show that the relation $\R'$ defined below is a context bisimulation \xxx{up-to $\equiv$}, thus proving the proposition.
+\[
+\R' \DEF \{(C[P], C[Q]) \,|\, P \,\R\, Q, \mbox{ and $C$ is a context that is an encoding}\}
+\]
+We make a case analysis. Suppose $P\R' Q$ and notice that $P$ and $Q$ are not parameterized.
+
+%-------------PROOF BODY BEGIN-------------
+\xx{TODO: to fetch from `NOTES'}
+%-------------PROOF BODY END-------------
+
+\begin{itemize}
+\item 
+\item 
+\item 
+\item 
+\item 
+\item 
+\item 
+\end{itemize}
+\qed
+\end{proof}
+
+\noindent\textit{Remark} ~ 
+\xx{We remark on the proof above.}
+\begin{itemize}
+\item 
+\xx{\small Perhaps we can also use the way of proving congruence \cite{Fu07,MH02,San92,SW01a}. We denote by $\mathbb{N}$ the set of natural numbers. Define the relations $\R_n$ and $\R'$ as follows.
+% \[
+% \begin{array}{lcl}
+% \R_0 &\DEF& \R \\
+% \R_{n+1} &\DEF& \left\{(C[M],C[N]) \,|\, M\,\R_{n}\, N \mbox{ and } C \mbox{ is $R \para [\cdot]$, or $(d)[\cdot]$} \right\} \\ %$\vartheta.[\cdot]$,
+% \R' &\DEF& \bigcup_{i\in \mathbb{N}} \R_i
+% \end{array}
+% \]
+\[
+\begin{array}{lcl}
+\R_0 &\DEF& \R \\
+\R_{n+1} &\DEF& \left\{(C[M],C[N]) \,|\, M\,\R_{n}\, N \mbox{ and } C C\in \mathcal{D} \right\} \\ %$\vartheta.[\cdot]$,
+\R' &\DEF& \bigcup_{i\in \mathbb{N}} \R_i\\\\
+\mathcal{D} &\DEF& \left\{
+\begin{array}{lllll}
+%[\cdot],  & 
+a(X).[\cdot],\quad & \overline{a}([\cdot]).R,\quad & \overline{a}A_1.[\cdot],\quad & \lrangle{X}[\cdot], \quad & \lrangle{x}[\cdot],\\~
+[\cdot]\lrangle{A_1}, & [\cdot]\lrangle{d}, & R\para [\cdot], & (d)[\cdot] &
+\end{array}
+\right\}
+\end{array}
+\]
+In somewhat a similar way, we can prove by induction on $n$ that $\R'$ is a bisimulation up-to $\equiv$. In this approach, the procedure of induction is like the proof above, and takes the usual pattern \cite{Fu07,MH02,San92,SW01a}. This would actually even complicates the arguments, so rather the current proof we provide as above offers technically a somewhat simplified way in a particular seeting of encodings.
+}
+
+\item 
+\end{itemize}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+%---------------------------
+% Local Variables:
+% mode: LaTeX
+% TeX-master: "main.tex"
+% End:
+
+

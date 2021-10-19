@@ -1,0 +1,70 @@
+\section{Proofs for Section \ref{s:normal}}\label{a:proofs-normal}
+We give the proof for Theorem \ref{normal-characterization-hopiDd}.
+\begin{proof}[Proof of Theorem \ref{normal-characterization-hopiDd}]
+We only need to prove $\WNB$ implies $\WCB$, since $\WCB$ is obviously finer than $\WNB$. 
+To do this, we define the relation $\mathcal{R}$ below and show that it is a context bisimulation. % (\stress{up-to sth?}). 
+\[
+\mathcal{R} \DEF \{(P,Q) \,|\, P\WNB Q \}
+\]
+Suppose $P\mathcal{R} Q$. There are several cases (with subcases) to analyze. We focus on the main ones, and leave out the similar (and simpler) rest.
+
+%\stress{TODO}
+\begin{itemize}
+\item $P\st{a(A)} P'$. There are three subcases.
+\begin{itemize}
+\item $A$ is an abstraction on name. %, i.e., $A\equiv \lrangle{x}B$. 
+Then $P'$ must be of the form $E[A]$ for some $E[Z]$ (one can choose such an $E$ that $Z$ is instantiated by the incoming $A$; similar for the other two subcases). So $P\st{a(\triggerd)} E[\triggerd]$. Since $P\WNB Q$, we know $Q\wt{a(\triggerd)} Q'' \equiv F[\triggerd]$ for some $F[Z]$ and $E[\triggerd] \WNB F[\triggerd]$. Then $Q\wt{a(A)} Q' \equiv F[A]$. Due to the congruence property of $\WNB$, the factorization theorem (Theorem \ref{factor-bigd-smalld}), and the fact that $\WCB$ implies $\WNB$, we have
+\[
+P'\equiv E[A] \,\WNB\, (m)(E[\triggerd] \para  !m(Z).Z\lrangle{A}) \,\WNB\, (m)(F[\triggerd] \para  !m(Z).Z\lrangle{A}) \,\WNB\, F[A]\equiv Q'
+\] So $P' \mathcal{R} Q'$.
+
+\item $A$ is an abstraction on process. %, i.e., $A\equiv \lrangle{X}B$. 
+Similar to the last subcase, except that $\triggerD$ is used instead. %Then ...\stress{TODO}
+\item $A$ is not an abstraction. Similar to the first subcase, except that $\trigger$ is used. %Then ...\stress{TODO}
+\end{itemize}
+
+\item $P\st{(\ve{c})\overline{a}A} P'$. There are again three subcases.
+\begin{itemize}
+\item $A$ is an abstraction on name. %, i.e., $A\equiv \lrangle{x}B$. 
+Because $P\WNB Q$, $Q\wt{(\ve{d})\overline{a}B} Q'$ and it holds that ($m$ is fresh)
+\[(\ve{c})(P'\para !m(Z).Z\lrangle{A}) \,\WNB\,  (\ve{d})(Q'\para  !m(Z).Z\lrangle{B})
+\] Using the congruence property of $\WNB$ twice and some structural manipulation, for every $E[X]$ ($\fn{E[X]}\cap \ve{c}\ve{d} = \emptyset$), we have
+\[(\ve{c})(P'\para !m(Z).Z\lrangle{A} \para E[\triggerd]) \,\WNB\,  (\ve{d})(Q'\para  !m(Z).Z\lrangle{B} \para E[\triggerd])
+\] and then
+\[(\ve{c})(P'\para (m)(!m(Z).Z\lrangle{A} \para E[\triggerd])) \,\WNB\,  (\ve{d})(Q'\para  (m)(!m(Z).Z\lrangle{B} \para E[\triggerd]))
+\] Now by the factorization theorem (Theorem \ref{factor-bigd-smalld}) and the fact that $\WCB$ implies $\WNB$, we know
+\[(\ve{c})(P'\para E[A]) \,\WNB\,  (\ve{d})(Q'\para  E[B])
+\] and thus 
+\[(\ve{c})(P'\para E[A]) \,\mathcal{R}\,  (\ve{d})(Q'\para  E[B])
+\] as required by context bisimulation.
+ 
+%...\stress{TODO}
+\item $A$ is an abstraction on process. %, i.e., $A\equiv \lrangle{X}B$. 
+Similar to the last subcase, except that $\triggerD$ is used.  %Then ...\stress{TODO}
+\item $A$ is not an abstraction. Similar to the first subcase, except that $\trigger$ is used. %Then ...\stress{TODO}
+\end{itemize}
+
+\item $P\st{\tau} P'$. Then we immediately have $Q\wt{} Q'$ and $P'\WNB Q'$, so $P'\mathcal{R} Q'$.
+\end{itemize}
+
+
+
+\end{proof}
+
+
+
+
+
+
+
+
+
+
+
+
+
+%---------------------------
+% Local Variables:
+% mode: LaTeX
+% TeX-master: "main.tex"
+% End:

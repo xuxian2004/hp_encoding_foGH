@@ -1,0 +1,263 @@
+\section{\xxx{Proofs for Section \ref{s:preliminary}}}\label{appendix:up-to-context_general}
+
+We give the proof of Theorem \ref{thm:sound_up-to_context_general}.
+We make two remarks before going into the proof.
+\begin{itemize}
+\item The proof can be readily adapted to the proof of the correctness of the up-to context technique of general higher-order processes, for other bisimulations like normal bisimulation. Moreover, it can be specialized to the up-to context technique for the encodings. The main difference is that the (receiving) contexts are restricted and the input processes are limited. Actually nevertheless, we provide somewhat a more direct proof in the case of the technique on the encodings (Proposition \ref{prop:up-to-context_encodings}).  In the case of normal bisimulation, for instance, the input objects are triggers and the receiving context are the corresponding trigger-receiving ones. 
+%>>>>>write a corollary for the up-to context for normal bisimulation (def and thm), and use it in the congruence proof?? 
+\item The main thrust of the proof reminds one of proving the congruence properties of a bisimilarity in a higher-order setting \cite{SW01a}.
+%(actually it can. e somehow used to prove congruence properties) \cite{SW01a, san's new ref mentioned earlier}; (maybe also Howe's method, but essentially the same). 
+Actually this indeed leads to the congruence of the context bisimulation \cite{San92,SW01a}. % on top of encodings (as well as on general higher-order processes) is a . 
+\end{itemize}
+
+
+\begin{proof}[Proof of Theorem \ref{thm:sound_up-to_context_general}]
+Assume $\R$ is as defined in Definition \ref{d:up2}. %We show that the relation $\R'$ defined below is a context bisimulation \xxx{up-to $\equiv$}, thus proving the proposition.
+We define the relations $\R_n$ and $\R'$ on processes as follows. Recall that $\mathbb{N}$ is the set of natural numbers.
+\[
+\begin{array}{lcl}
+\R_0 &\DEF& \R \\
+\R_{n+1} &\DEF& \left\{(C[M],C[N]) \,|\, M\,\R_{n}\, N \mbox{ and } C\in \mathcal{D} \right\} \\ %$\vartheta.[\cdot]$,
+\R' &\DEF& \bigcup_{i\in \mathbb{N}} \R_i \\\\
+\mathcal{D} &\DEF& \left\{
+\begin{array}{lllll}
+%[\cdot],  & 
+a(X).[\cdot],\quad & \overline{a}([\cdot]).R,\quad & \overline{a}A_1.[\cdot],\quad & \lrangle{X}[\cdot], \quad & \lrangle{x}[\cdot],\\~
+[\cdot]\lrangle{A_1}, & [\cdot]\lrangle{d}, & R\para [\cdot], & (d)[\cdot] &
+\end{array}
+\right\}
+\end{array}
+\]
+We prove by induction on $n$ that $\R'$ is a context bisimulation up-to $\equiv$, that is, each $\R_{n}$ meets the requirement of the context bisimulation. Since $\R\subseteq \R'$, $\R\subseteq \WCB$ follows.
+%Notice that we may write context and $C[\cdot]$ and often omit the $\cdot$ in $C[\cdot]$ for the sake of conciseness. 
+
+
+%-------------PROOF BODY BEGIN-------------
+\xx{TODO: to fetch from `NOTES'}
+\sepp
+
+\xx{(0)~ Notice the definition above is on processes. }
+%, not including abstractions. 
+
+(1) The induction basis: $n$ is $0$, and $\R_0$ is $\R$. This case is immediate in terms of $\R$'s definition. 
+
+(2) Suppose the result holds for $\R_{k}$, we prove the result for $\R_{k+1}$. Now suppose $C[P] \,\R_{k+1}\, C[Q]$ for $P \,\R_{k}\, Q$. 
+For convenience, we give the result for  $\R_{k}$ as follows. 
+\begin{itemize}
+\item if $P \st{\alpha} P'$ and $\alpha$ is $a(A)$ or $\tau$, then $Q \wt{\widehat{\alpha}} Q'$ for some $Q'$,  and $P' \,\R'\, Q'$;
+\item if $P \st{(\ve{c})\overline{a}A} P'$, then $Q \wt{(\ve{d})\overline{a}B} Q'$ for some same-type $B$, and moreover for every $E[X]$ as stipulated, it holds that $(\ve{c})(E[A]\para P')  \,\R'\, (\ve{d})(E[B]\para Q')$.
+\end{itemize}
+Now in order to achieve the induction step, we make a case analysis of the actions from $C[P]$ w.r.t. $C$, to show that $C[P]$ and $C[Q]$ satisfies the bisimulation requirement.
+
+%adapt from the proof of up-to on encodings
+\begin{itemize}
+
+\item 
+
+\item $C[P]\st{a(A)} \cdot$.
+\begin{itemize}
+\item $C$ is $a(X).[\cdot]$. In this case, since $P$ and $Q$ are closed, the action $C[P]\st{a(A)} P$ can be  simulated by $C[Q] \st{a(A)} Q$. So we have $P \,\R'\, Q$ because $P\,\R_{k}\, Q$.
+
+\item $C$ is $\overline{a}([\cdot]).R$. This is not possible.
+\item $C$ is $\overline{a}A_1.[\cdot]$. This is not possible.
+\item $C$ is $\lrangle{X}[\cdot]$. This is not possible.
+\item $C$ is $\lrangle{x}[\cdot]$. This is not possible.
+\item $C$ is $[\cdot]\lrangle{A_1}$. This is not possible.
+\item $C$ is $[\cdot]\lrangle{d}$. This is not possible. 
+
+\item $C$ is $R\para [\cdot]$. There are two possibilities. 
+\begin{itemize}
+\item The action is from $P$. That is, $P\st{a(A)} P'$, and $C[P] \st{a(A)} R\para P'$. Since $P\,\R_{k}\, Q$, we know that $Q \wt{a(A)} Q'$ and $P'\,\R'\, Q'$. So $C[Q]$ simulates by $C[Q] \wt{a(A)} R\para Q'$. From  $P'\,\R'\, Q'$, we have 
+\[
+\begin{array}{lcl}
+R\para P' &\R'& R\para Q'
+\end{array}
+\]
+
+\item The action is from $R$. That is, $R\st{a(A)} R'$, and $C[P] \st{a(A)} R'\para P$. So $C[Q]$ simulates by $C[Q] \st{a(A)} R'\para Q$. Because $P\,\R_{k}\, Q$, we have
+\[
+\begin{array}{lcl}
+R'\para P &\R'& R'\para Q
+\end{array}
+\]
+\end{itemize}
+
+\item $C$ is $(d)[\cdot]$.  The action is from $P$. That is, $P\st{a(A)} P'$, and $C[P] \st{a(A)} (d)P'$. Since $P\,\R_{k}\, Q$, we know that $Q \wt{a(A)} Q'$ for some $Q'$ and $P'\,\R'\, Q'$. So $C[Q]$ simulates by $C[Q] \wt{a(A)} (d)Q'$. Because $P'\,\R'\, Q'$,  we have
+\[
+\begin{array}{lcl}
+(d)P' &\R'& (d)Q'
+\end{array}
+\]
+
+\end{itemize}
+
+
+
+\item
+
+\item  $C[P]$ makes an output. 
+$C[P]\st{(\ve{c})\overline{a}A} \cdot$.
+\begin{itemize}
+\item $C$ is $a(X).[\cdot]$. This is not possible.
+
+\item $C$ is $\overline{a}([\cdot]).R$. In this case, $C[P]\st{\overline{a}P} R$. Then $C[Q]$ simulates by $C[Q]\st{\overline{a}Q} R$, and we have for every $E$ as stipulated in the definition of context bisimulation (for conciseness, we will skip this stipulation henceforth)
+\[
+\begin{array}{lclcl}
+E[P]\para R &\equiv& C'[P] \,\R'\, C'[Q] &\equiv& E[Q]\para R
+\end{array}
+\] in which $C'\DEF E[\cdot]\para R$, because $P \,\R_{k}\, Q$.
+
+\item $C$ is $\overline{a}A_1.[\cdot]$. In this case, $C[P]\st{\overline{a}A_1} P$. Then $C[Q]$ simulates by $C[Q]\st{\overline{a}A_1} Q$, and we have for every $E$ as stipulated
+\[
+\begin{array}{lclcl}
+E[A_1]\para P &\equiv& C'[P] \,\R'\, C'[Q] &\equiv& E[A_1]\para Q
+\end{array}
+\] in which $C'\DEF E[A_1]\para [\cdot]$, because $P \,\R_{k}\, Q$.
+
+\item $C$ is $\lrangle{X}[\cdot]$. This is not possible.
+\item $C$ is $\lrangle{x}[\cdot]$. This is not possible.
+\item $C$ is $[\cdot]\lrangle{A_1}$. This is not possible.
+\item $C$ is $[\cdot]\lrangle{d}$. This is not possible. 
+
+\item $C$ is $R\para [\cdot]$. There are several  possibilities.
+\begin{itemize}
+\item The action is from $R$. That is, $R\st{(\ve{c})\overline{a}A} R'$ and \\
+$C[P]\equiv R\para P \st{(\ve{c})\overline{a}A} R'\para P$. In this case, $C[Q]$ simulates by \\
+$C[Q]\st{(\ve{c})\overline{a}A} R'\para Q$. Now we have  for every $E$ as demanded, and $C'\DEF (\ve{c})(E[A]\para R'\para [\cdot])$.
+\[
+\begin{array}{lcl}
+(\ve{c})(E[A]\para R'\para P) &\equiv& C'[P]  \\
+(\ve{c})(E[A]\para R'\para Q) &\equiv& C'[Q]
+\end{array}
+\]
+Hence we obtain $C'[P] \,\R'\, C'[Q]$ with $P \,\R_{k}\, Q$.
+
+\item The action is from $P$. That is, $P\st{(\ve{c})\overline{a}A} P'$ and \\
+$C[P]\equiv R\para P \st{(\ve{c})\overline{a}A} R\para P'$. In this case, since $P\,\R_{k}\, Q$, we know that $Q \wt{(\ve{d})\overline{a}B} Q'$, 
+and for every $E$ as stipulated, 
+it holds that \\
+$(\ve{c})(E[A]\para P') \,\R'\, (\ve{d})(E[B]\para Q')$. So $C[Q]$ simulates by \\
+$C[Q] \wt{(\ve{d})\overline{a}B} R\para Q'$. Now, we have for every $E$: 
+\[
+\begin{array}{lclcl}
+(\ve{c})(E[A]\para R\para P') &\equiv& R\para (\ve{c})(E[A]\para P') &\equiv& C[(\ve{c})(E[A]\para P')] \\
+(\ve{d})(E[B]\para R\para Q') &\equiv& R\para (\ve{d})(E[B]\para Q') &\equiv& C[(\ve{d})(E[B]\para Q')]
+\end{array}
+\]
+Hence we obtain $C[(\ve{c})(E[A]\para P')] \,\R'\, C[(\ve{d})(E[B]\para Q')]$ because \\
+$(\ve{c})(E[A]\para P') \,\R'\, (\ve{d})(E[B]\para Q')$. 
+\end{itemize}
+
+
+\item $C$ is $(e)[\cdot]$ (we use $e$ instead of $d$ here for clarity). There are a number of  possibilities. 
+\begin{itemize}
+\item $e\notin \fn{A}$. The action is $C[P]\st{(\ve{c})\overline{a}A} (e)P'$ from $P\st{(\ve{c})\overline{a}A} P'$ (we assume $e\notin \ve{c}$). Then since $P\,\R_{k}\, Q$, we know that $Q \wt{(\ve{d})\overline{a}B} Q'$ (we assume $e\notin \ve{d}$, and for every $E$ as stipulated, 
+it holds that \\
+$(\ve{c})(E[A]\para P') \,\R'\, (\ve{d})(E[B]\para Q')$. There are two possibilities of the simulation by $C[Q]$.
+\begin{itemize}
+\item $e\notin \fn{B}$. Then $C[Q]$ simulates by $C[Q] \wt{(\ve{d})\overline{a}B} (e)Q'$. Now for every $E$ as stipulated,
+\[
+\begin{array}{lclcl}
+(\ve{c})(E[A]\para (e)P') &\equiv& (e)(\ve{c})(E[A]\para P') &\equiv& C[(\ve{c})(E[A]\para P')] \\
+(\ve{d})(E[B]\para (e)Q') &\equiv& (e)(\ve{d})(E[B]\para Q') &\equiv& C[(\ve{d})(E[B]\para Q')]
+\end{array}
+\]
+Hence we obtain $C[(\ve{c})(E[A]\para P')] \,\R'\, C[(\ve{d})(E[B]\para Q')]$ because $(\ve{c})(E[A]\para P') \,\R'\, (\ve{d})(E[B]\para Q')$. 
+
+\item $e\in \fn{B}$. Then $C[Q]$ simulates by $C[Q] \wt{(\ve{d}e)\overline{a}B} Q'$. Now for every $E$ as stipulated,
+\[
+\begin{array}{lclcl}
+(\ve{c})(E[A]\para (e)P') &\equiv& (e)(\ve{c})(E[A]\para P') &\equiv& C[(\ve{c})(E[A]\para P')] \\
+(\ve{d}e)(E[B]\para Q') &\equiv& (e)(\ve{d})(E[B]\para Q') &\equiv& C[(\ve{d})(E[B]\para Q')]
+\end{array}
+\]
+Hence we obtain $C[(\ve{c})(E[A]\para P')] \,\R'\, C[(\ve{d})(E[B]\para Q')]$ because $(\ve{c})(E[A]\para P') \,\R'\, (\ve{d})(E[B]\para Q')$. 
+\end{itemize}
+
+\item $e\in \fn{A}$. The action is $C[P]\st{(\ve{c}e)\overline{a}A} P'$ from $P\st{(\ve{c})\overline{a}A} P'$ (we assume $e\notin \ve{c}$). Then since $P\,\R_{k}\, Q$, we know that $Q \wt{(\ve{d})\overline{a}B} Q'$ (we assume $e\notin \ve{d}$, and for every $E$ as stipulated, 
+it holds that \\
+$(\ve{c})(E[A]\para P') \,\R'\, (\ve{d})(E[B]\para Q')$. There are two possibilities of the simulation by $C[Q]$.
+\begin{itemize}
+\item $e\notin \fn{B}$. Then $C[Q]$ simulates by $C[Q] \wt{(\ve{d})\overline{a}B} (e)Q'$. Now for every $E$ as stipulated,
+\[
+\begin{array}{lclcl}
+(\ve{c}e)(E[A]\para P') &\equiv& (e)(\ve{c})(E[A]\para P') &\equiv& C[(\ve{c})(E[A]\para P')] \\
+(\ve{d})(E[B]\para (e)Q') &\equiv& (e)(\ve{d})(E[B]\para Q') &\equiv& C[(\ve{d})(E[B]\para Q')]
+\end{array}
+\]
+Hence we obtain $C[(\ve{c})(E[A]\para P')] \,\R'\, C[(\ve{d})(E[B]\para Q')]$ because $(\ve{c})(E[A]\para P') \,\R'\, (\ve{d})(E[B]\para Q')$. 
+
+\item $e\in \fn{B}$. Then $C[Q]$ simulates by $C[Q] \wt{(\ve{d}e)\overline{a}B} Q'$. Now for every $E$ as stipulated,
+\[
+\begin{array}{lclcl}
+(\ve{c}e)(E[A]\para P') &\equiv& (e)(\ve{c})(E[A]\para P') &\equiv& C[(\ve{c})(E[A]\para P')] \\
+(\ve{d}e)(E[B]\para Q') &\equiv& (e)(\ve{d})(E[B]\para Q') &\equiv& C[(\ve{d})(E[B]\para Q')]
+\end{array}
+\]
+Hence we obtain $C[(\ve{c})(E[A]\para P')] \,\R'\, C[(\ve{d})(E[B]\para Q')]$ because $(\ve{c})(E[A]\para P') \,\R'\, (\ve{d})(E[B]\para Q')$. 
+\end{itemize}
+
+\end{itemize}
+\end{itemize}
+
+\item
+
+\item  $C[P]\st{\tau} \cdot$. 
+\begin{itemize}
+\item $C$ is $a(X).[\cdot]$. This is not possible. 
+\item $C$ is $\overline{a}([\cdot]).R$. This is not possible. 
+\item $C$ is $\overline{a}A_1.[\cdot]$. This is not possible. 
+\item $C$ is $\lrangle{X}[\cdot]$. This is not possible. 
+\item $C$ is $\lrangle{x}[\cdot]$. This is not possible. 
+\item $C$ is $[\cdot]\lrangle{A_1}$. This is not possible. 
+\item $C$ is $[\cdot]\lrangle{d}$. This is not possible. 
+
+\item $C$ is $R\para [\cdot]$.  Three possibilities. 
+\begin{itemize}
+\item $\tau$ is from $R$. That is, $R\st{\tau} R'$, and $C[P]\st{\tau} R'\para P$. Then $C[Q]$ simulates by $C[Q]\st{\tau} R'\para Q$. So we have $R'\para P \,\R'\, R'\para Q$ because $P\,\R_{k}\, Q$.
+
+\item $\tau$ is from $P$. That is, $P\st{\tau} P'$, and  $C[P] \st{\tau} R\para P'$. Since $P\,\R_{k}\, Q$, we know $Q\wt{} Q'$ and $P'\,\R'\, Q'$. So $C[Q]$ simulates by $C[Q] \wt{} R\para Q'$. Because $P'\,\R'\, Q'$, we have the following pair in $\R'$ as required. 
+\[
+\begin{array}{lcl}
+R\para P' &\R'&  R\para Q'
+\end{array}
+\]
+
+\item $\tau$ is from interaction between $R$ and $P$. Two more subcases.
+\begin{itemize}
+\item $P$ makes an output and $R$ makes an input. That is, $P \st{(\ve{c})\overline{a}A} P'$, $R \st{a(A)} R' \equiv E'[A]$ for some $E'[Y]$ (such that $Y$ is only replaced by the inputted $A$), and $C[P] \st{\tau} (\ve{c})(R'\para P')$. Since $P\,\R_{k} Q$, we know that $Q \wt{(\ve{d})\overline{a}B} Q'$, and for every $E$ as required, 
+it holds that $(\ve{c})(E[A]\para P') \,\R'\, (\ve{d})(E[B]\para Q')$. So $C[Q]$ simulates by \\
+$C[Q] \wt{\tau} (\ve{d})(R''\para Q')$ in which $R \st{a(B)} R''\equiv E'[B]$. We can take $E$ to be $E'$ and obtain the following pair in $\R'$:
+\[
+\begin{array}{lclclcl}
+(\ve{c})(R'\para P') &\equiv& (\ve{c})(E'[A]\para P') &\R'& 
+ (\ve{d})(E'[B]\para Q') &\equiv& (\ve{d})(R''\para Q') 
+\end{array}
+\]
+
+\item $P$ makes an input and $R$ makes an output. That is, $P \st{a(A)} P'$, $R \st{(\ve{c})\overline{a}A} R'$, and $C[P] \st{\tau} (\ve{c})(R'\para P')$. Since $P\,\R_{k} Q$, we know that $Q \wt{a(A)} Q'$ and $P'\,\R'\, Q'$. So $C[Q]$ simulates by \\
+$C[Q] \wt{\tau} (\ve{c})(R'\para Q')$. Because $P'\,\R'\, Q'$, we have 
+\[
+\begin{array}{lcl}
+(\ve{c})(R'\para P') &\R'& (\ve{c})(R'\para Q') 
+\end{array}
+\]
+\end{itemize}
+\end{itemize}
+
+\item $C$ is $(d)[\cdot]$. In this case, the action $C[P]\equiv (d)P \st{\tau} (d)P'$  comes from $P \st{\tau} P'$. Since $P\,\R_{k}\, Q$, we know $Q\wt{} Q'$ and $P'\,\R'\, Q'$. So $C[Q]$ simulates by $C[Q] \wt{} (d)Q'$. Because $P'\,\R'\, Q'$, we have the following pair in $\R'$.
+\[
+\begin{array}{lcl}
+(d)P' &\R'& (d)Q'
+\end{array}
+\] 
+
+\end{itemize}
+
+
+\item 
+
+\end{itemize}
+%-------------PROOF BODY END-------------
+\qed
+\end{proof}

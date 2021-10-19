@@ -1,0 +1,8 @@
+
+This paper studies higher-order processes with the capacity of parameterization (or abstraction) on names and process themselves. Two aspects are touched on: one is about the relationship with first-order (name-passing) processes, and the other is about the characterization of the standard context bisimulation. Correspondingly we present, as the novel contribution, how to encode name-passing with the help of parameterization in an elegant manner by demonstrating two encodings, and how to obtain normal bisimulation that characterizes context bisimulation. 
+A preliminary version of this work was presented at EXPRESS/SOS 2016. This paper extends that version with full-fledged proofs and more (refined) discussions (more than half materials new), and moreover, the detailed analysis of a variant encoding of interest. This encoding, mentioned only as a further direction in the preliminary version, is given thorough examination in this work.
+I hereby acknowledge the useful comments from the anonymous referees at EXPRESS/SOS 2016.
+
+Contact: xuxian@ecust.edu.cn, xuxian2004@gmail.com
+
+

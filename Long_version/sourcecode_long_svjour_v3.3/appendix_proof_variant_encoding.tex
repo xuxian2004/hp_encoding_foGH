@@ -1,0 +1,450 @@
+%\section{Proofs for Section \ref{s:conclusion}}\label{appendix:variant_encoding}
+% \rc{
+% The remainder of this section is devoted to a full analysis of this encoding.
+% Details are in Appendix \ref{appendix:variant_encoding}.
+% \nts{\fbox{move the appendix here and adjust/refactor the stuff}}
+% }
+
+%***************************************************
+%NOW in the body, used by "encoding_variant.tex"
+
+\sepp
+
+The remainder of this section is devoted to a full analysis of this encoding.
+%Particularly, we examine the static and dynamic properties of the variant encoding given above. %in Section \ref{s:conclusion}. 
+%For convenience, we reuse the encoding notation $\enc{}$ and there should be no confusion in context. 
+We first note that, similar to Lemma \ref{l:syn-pro-encoding}, the encoding comes with compositionality and divergence-reflection, and preserves name substitution (i.e., name invariant) and structural congruence; these properties will be used implicitly in the arguments of this section. We also point out that since the encoding is compositional, it makes sense to extend the definition of the encoding to be over contexts, with a hole translated to a hole.
+
+%\nts{
+%\begin{itemize}
+%\item[DONE] Operational correspondence (not directly true at least)
+%\item[DONE] Soundness's couterexample (the original counterexample (Section \ref{s:encoding_soundness}) or its light variant seems still applicable)
+%\item[DONE] Weak soundness
+%\item[DONE] Completeness
+%\end{itemize}
+%}
+
+\subsection{Operational correspondence}
+It is pronounced that the operational correspondence does not hold in a direct fashion, because the encoding now has two swaps: one is between input and output; the other between synchrony and asynchrony. From a certain perspective, this encoding is more of a conceptual one,
+% and it is unequivocally a great step in the right direction, though 
+and its analysis is more tricky than the encoding in Section \ref{ss:encoding_def}. 
+\xxrmcolor{That said, as for the encoding in Section \ref{ss:encoding_def}, from the operational correspondence below (Lemma \ref{l:opcor_var} and Lemma \ref{l:opcor-conv_var}), we can still see that an encoding always evolves into another one (think of $A$ in these two lemmata as an encoding abstracted on a name, i.e., $\lrangle{x}\enc{P}$). So the image of the translation somehow yields a closed (sub)range in the target model.}
+%\nts{TODO (ref. Section \ref{s:encoding_operational})}
+
+\begin{lemma}\label{l:opcor_var}
+Suppose $P$ is a \FOPi\ process and $A$ is a name abstraction. % (typically, an encoding abstracted on a name, i.e., $\lrangle{x}\enc{P}$).
+\begin{enumerate}
+%\item If $P \st{a(b)} P'$, then $P\SCB C[a(x).P_1]$ and $P'\SCB C[P_1\fosub{b}{x}]$ for some context $C$ and $P_1$, and \\
+%$\enc{P} \st{\overline{a}[\lrangle{x}(\enc{P_1})]} T$ and $T\SCB \enc{C[0]}$;
+\item If $P \st{a(b)} P'$, then $P\SGB (\ve{e})C[a(x).P_1]$ and \\
+$P'\equiv (\ve{e})C[P_1\fosub{b}{x}] \equiv (\ve{e})(C[0]\para P_1\fosub{b}{x})$ for some context $C$, $P_1$ and $\ve{e}$ being the bound names shared between $P_1$ and its context, and \\
+$\enc{P} \st{(\ve{e})\overline{a}[\lrangle{x}(\enc{P_1})]} T\SSEQV \enc{C[0]}$;
+\item If $P \st{\overline{a}b} P'$, then $\enc{P} \st{a(A)} T \SSEQV A\lrangle{b} \para \enc{P'}$;
+\item If $P \st{\overline{a}(b)} P'$, then $\enc{P} \st{a(A)} T \SSEQV (b)(A\lrangle{b} \para \enc{P'})$; %\nts{??}
+%\item If $P \st{a(b)} P'$, then $\enc{P} \st{a(\lrangle{Z}(Z\lrangle{b}))} T$ and $T\SCB \enc{P'}$; ~
+%\item If $P \st{a(b)} P'$, then $\enc{P} \st{a(\triggerD)} T$ and $(m)(T \para !m(Y).Y\lrangle{b}) \WCB \enc{P'}$; ~
+%\item If $P \st{\overline{a}b} P'$, then $\enc{P} \st{\overline{a}[\lrangle{Z}(Z\lrangle{b})]} T$ and $T\SCB \enc{P'}$; ~
+%\item If $P \st{\overline{a}(b)} P'$, then $\enc{P} \st{(b)\overline{a}[\lrangle{Z}(Z\lrangle{b})]} T$ and $T\SCB \enc{P'}$; ~
+\item If $P \st{\tau} P'$, then $\enc{P} \st{\tau} T \SSEQV \enc{P'}$.
+\end{enumerate}
+\end{lemma}
+
+The converse is as below.
+\begin{lemma}\label{l:opcor-conv_var}
+Suppose $P$ is a \FOPi\ process and $A$ is a name abstraction.
+\begin{enumerate}
+%\item If $\enc{P} \st{\overline{a}[\lrangle{x}(\enc{P_1})]} T$, then $P \st{a(b)} P'$, with $P\SCB C[a(x).P_1]$ and $P'\SCB C[P_1\fosub{b}{x}]$ for some context $C$ and $P_1$, and $T\SCB \enc{C[0]}$;
+\item If $\enc{P} \st{(\ve{e})\overline{a}[\lrangle{x}(\enc{P_1})]} T$, then $P \st{a(b)} P'$, with $P\SGB (\ve{e})C[a(x).P_1]$ and \\
+$P'\equiv (\ve{e})C[P_1\fosub{b}{x}] \equiv (\ve{e})(C[0]\para P_1\fosub{b}{x})$ for some context $C$ with $\ve{e}$ being the bound names shared between $P_1$ and its context, and $T\SSEQV \enc{C[0]}$;
+\item If $\enc{P} \st{a(A)} T$, then
+\begin{enumerate}
+\item[(i)] $P \st{\overline{a}b} P'$, and $T\SSEQV A\lrangle{b} \para \enc{P'}$, or
+\item[(ii)] $P \st{\overline{a}(b)} P'$, and $T\SSEQV (b)(A\lrangle{b} \para \enc{P'})$; %\nts{??}
+\end{enumerate}
+%\item If $\enc{P} \st{a(\lrangle{Z}(Z\lrangle{b}))} T$, then $P \st{a(b)} P'$ and $T\SCB \enc{P'}$; ~
+%\item If $\enc{P} \st{a(\triggerD)} T$, then $P \st{a(b)} P'$ and $(m)(T \para !m(Y).Y\lrangle{b}) \WCB \enc{P'}$; ~
+%\item If $\enc{P} \st{\overline{a}[\lrangle{Z}(Z\lrangle{b})]} T$, then $P \st{\overline{a}b} P'$ and $T\SCB \enc{P'}$; ~
+%\item If $\enc{P} \st{(b)\overline{a}[\lrangle{Z}(Z\lrangle{b})]} T$, then $P \st{\overline{a}(b)} P'$ and $T\SCB \enc{P'}$; ~
+\item If $\enc{P} \st{\tau} T$, then $P \st{\tau} P'$ and $T\SSEQV \enc{P'}$.
+\end{enumerate}
+\end{lemma}
+
+We below prove Lemma \ref{l:opcor_var}, and Lemma \ref{l:opcor-conv_var} can be similarly proven. We again note that these lemmas can be lifted to the weak case, as for the encoding in Section \ref{ss:encoding_def}.
+\xxx{
+We also notice that the clause (1) of these lemmas uses $\SGB$, instead of $\equiv$, to deal with $P$ because it is needed in discussing the case for replication.
+}
+
+\begin{proof}[Proof of Lemma \ref{l:opcor_var}]
+We prove the clauses by induction on $P$. We caution that for the sake of simplicity, we always assume no name capture up-to $\alpha$-conversion.
+%\nts{TODO (ref. Section \ref{s:encoding_operational})}
+\begin{itemize}
+\item $P$ is $0$. This is trivial.
+\item $P$ is $a(x).P_1 \equiv C[a(x).P_1]$ in which $C\DEF [\cdot]$.
+\begin{itemize}
+\item Input. We have $P\st{a(b)} P_1\fosub{b}{x} \DEF P' \equiv C[P_1\fosub{b}{x}]$ and \\
+$C[0]\para P_1\fosub{b}{x} \equiv P'$. Then $\enc{P} \equiv \overline{a}[\lrangle{x}\enc{P_1}].0 \st{\overline{a}[\lrangle{x}(\enc{P_1})]} 0 \DEF T$,  and $T\SSEQV \enc{C[0]} \equiv 0$.
+\end{itemize}
+
+\item $P$ is $\overline{a}b.P_1$.
+\begin{itemize}
+\item Output. We have $\enc{P} \equiv a(Y).(Y\lrangle{b}\para \enc{P_1}) \st{a(A)} A\lrangle{b}\para \enc{P_1} \DEF T$, as required.
+\end{itemize}
+
+\item $P$ is $P_1\para P_2$. %\nts{TODO (ref. Section \ref{s:encoding_operational})}
+\begin{itemize}
+\item Input. Suppose $P_1\st{a(b)} P_1'$ (the case $P_2$ does is similar) and \\
+$P\st{a(b)} P_1'\para P_2 \equiv P'$. By ind. hyp., $P_1\SGB (\ve{e_1})C'[a(x).P_3]$ and $P_1'\equiv (\ve{e_1})C'[P_3\fosub{b}{x}] \equiv (\ve{e_1})(C'[0]\para P_3\fosub{b}{x})$ for some context $C'$, $P_3$ and $\ve{e_1}$ being the bound names shared between $P_3$ and its context within $P_1$, and $\enc{P_1} \st{(\ve{e_1})\overline{a}[\lrangle{x}(\enc{P_3})]} T_1\SSEQV \enc{C'[0]}$. Defining $C\DEF C'\para P_2$, we have $P\SGB (\ve{e_1})C[a(x).P_3]$ and $P'\equiv (\ve{e_1})C[P_3\fosub{b}{x}] \equiv (\ve{e_1})(C[0] \para P_3\fosub{b}{x})$. Moreover %with $\ve{e_2}$ being the bound names shared between $P_3$ and $P_2$. Moreover
+\[
+\begin{array}{lrl}
+ &\enc{P}\equiv& \enc{P_1}\para \enc{P_2} \\
+ &\st{(\ve{e_1})\overline{a}[\lrangle{x}(\enc{P_3})]}& T_1\para \enc{P_2} \DEF T \\
+ &\SSEQV& \enc{C'[0]}\para \enc{P_2} \\
+ &\equiv& \enc{C'[0]\para P_2} \equiv \enc{C[0]} %\quad \mbox{ in which }
+\end{array}
+\]
+
+\item Output. Suppose $P_1 \st{\overline{a}b} P_1'$ (the case $P_2$ does is similar) and \\
+$P\st{\overline{a}b} P_1'\para P_2 \equiv P'$. By ind. hyp., $\enc{P_1} \st{a(A)} T_1$ and $T_1\SSEQV A\lrangle{b} \para \enc{P_1'}$. Then we have
+\[
+\begin{array}{lrl}
+ &\enc{P}\equiv& \enc{P_1}\para \enc{P_2} \\
+ &\st{a(A)}& T_1\para \enc{P_2} \DEF T\\
+ &\SSEQV& A\lrangle{b} \para \enc{P_1'} \para \enc{P_2} \\
+ &\SSEQV& A\lrangle{b} \para \enc{P_1'\para P_2} \equiv A\lrangle{b} \para \enc{P'}
+\end{array}
+\]
+
+\item Bound output. Suppose $P_1 \st{\overline{a}(b)} P_1'$ and $b\notin \fn{P_2}$, and $P\st{\overline{a}b} P_1'\para P_2 \equiv P'$ (the case $P_2$ does is similar). By ind. hyp., $\enc{P_1} \st{a(A)} T_1$ and $T_1\SSEQV (b)(A\lrangle{b} \para \enc{P_1'})$. Then we have
+\[
+\begin{array}{lrl}
+ &\enc{P}\equiv& \enc{P_1}\para \enc{P_2} \\
+ &\st{a(A)}& T_1\para \enc{P_2} \DEF T \\
+ &\SSEQV& (b)(A\lrangle{b} \para \enc{P_1'}) \para \enc{P_2} \\
+ &\SSEQV& (b)(A\lrangle{b} \para \enc{P_1'} \para \enc{P_2}) \\ %\quad \mbox{ due to } b\notin \fn{P_2} \mbox{ and name invariance } \\
+ &\SSEQV& (b)(A\lrangle{b} \para \enc{P_1'\para P_2}) \\
+ &\equiv& (b)(A\lrangle{b} \para \enc{P'})
+\end{array}
+\]
+
+\item Interaction ($\tau$). The most interesting and hard case is when $P_1$ and $P_2$ engages a communication (of a bound name). Consider, for example, the case $P_1\st{a(b)} P_1'$ and $P_2\st{\overline{a}(b)} P_2'$ ($b\notin \fn{P_2}$ \xxx{wolg}), and $P\st{\tau} P'\equiv (b)(P_1'\para P_2')$. By ind. hyp., $P_1\SGB (\ve{e_1})C'[a(x).P_3]$ and $P_1'\equiv (\ve{e_1})C'[P_3\fosub{b}{x}] \equiv (\ve{e_1})(C'[0] \para P_3\fosub{b}{x})$ for some context $C'$, $P_3$ and $\ve{e_1}$ being the bound names shared between $P_3$ and its context within $P_1$, and $\enc{P_1} \st{(\ve{e_1})\overline{a}[\lrangle{x}(\enc{P_3})]} T_1\SSEQV \enc{C'[0]}$; $\enc{P_2} \st{a(A)} T_2$ and $T_2\SSEQV (b)(A\lrangle{b} \para \enc{P_2'})$. Take $A$ as $\lrangle{x}(\enc{P_3})$, and we have
+\[
+\begin{array}{lrl}
+ &\enc{P}\equiv& \enc{P_1}\para \enc{P_2} \\
+ &\st{\tau}& (\ve{e_1})(T_1 \para T_2) \DEF T \\
+ &\SSEQV& (\ve{e_1})(\enc{C'[0]} \para (b)((\lrangle{x}(\enc{P_3}))\lrangle{b} \para \enc{P_2'})) \\
+ &\SSEQV& (\ve{e_1})(\enc{C'[0]} \para (b)(\enc{P_3}\fosub{b}{x} \para \enc{P_2'})) \\
+ &\SSEQV& (\ve{e_1})(\enc{C'[0]} \para (b)(\enc{P_3\fosub{b}{x}} \para \enc{P_2'})) \\
+ &\SSEQV& (b\ve{e_1})(\enc{C'[0]} \para \enc{P_3\fosub{b}{x}} \para \enc{P_2'}) \\
+ &\SSEQV& (b\ve{e_1})(\enc{C'[0] \para P_3\fosub{b}{x} \para P_2'}) \\
+ &\SSEQV& (b\ve{e_1})(\enc{C'[0] \para P_3\fosub{b}{x} \para P_2'}) \\
+ &\SSEQV& (b)(\enc{(\ve{e_1})(C'[0] \para P_3\fosub{b}{x}) \para P_2'}) \\ %\nts{???} \\
+ %&\SCB& (b)(\enc{(\ve{e_1})(C'[P_3\fosub{b}{x}]) \para P_2'}) \\
+ &\SSEQV& (b)(\enc{P_1' \para P_2'})
+\end{array}
+\]
+\end{itemize}
+
+\item $P$ is $(c)P_1$. %\nts{TODO (ref. Section \ref{s:encoding_operational})}
+\begin{itemize}
+\item Input. %\nts{copy the input case of parallel composition to here and adjust...}
+Suppose $P_1\st{a(b)} P_1'$  and $P\st{a(b)} (c)P_1' \equiv P'$. By ind. hyp., $P_1\SGB (\ve{e_1})C'[a(x).P_3]$ and $P_1'\equiv (\ve{e_1})C'[P_3\fosub{b}{x}] \equiv (\ve{e_1})(C'[0]\para P_3\fosub{b}{x})$ for some context $C'$, $P_3$ and $\ve{e_1}$ being the bound names shared between $P_3$ and its context within $P_1$, and $\enc{P_1} \st{(\ve{e_1})\overline{a}[\lrangle{x}(\enc{P_3})]} T_1\SSEQV \enc{C'[0]}$. There are two subcases.
+\begin{itemize}
+\item[(i)] If $c\in \fn{P_3}$, we set $C\DEF C'$ and have $P\SGB (\ve{e_1}c)C[a(x).P_3]$ and $P'\equiv (\ve{e_1}c)C[P_3\fosub{b}{x}]\equiv (\ve{e_1}c)(C[0] \para P_3\fosub{b}{x})$, and moreover
+\[
+\begin{array}{lrl}
+ &\enc{P}\equiv& (c)\enc{P_1} \\
+ &\st{(\ve{e_1}c)\overline{a}[\lrangle{x}(\enc{P_3})]}& T_1 \DEF T \\
+ &\SSEQV& \enc{C'[0]} \equiv \enc{C[0]} %\quad \mbox{ in which }
+\end{array}
+\]
+\item[(ii)] If $c\notin \fn{P_3}$, we set $C\DEF (c)C'$. Then we have $P\SGB (\ve{e_1})C[a(x).P_3]$ and $P'\equiv (\ve{e_1})C[P_3\fosub{b}{x}]\equiv (\ve{e_1})((c)C'[0] \para P_3\fosub{b}{x})$ \\ 
+$\equiv (\ve{e_1})(C[0] \para P_3\fosub{b}{x})$, and moreover
+\[
+\begin{array}{lrl}
+ &\enc{P}\equiv& (c)\enc{P_1} \\
+ &\st{(\ve{e_1})\overline{a}[\lrangle{x}(\enc{P_3})]}& (c)T_1 \DEF T \\
+ &\SSEQV& (c)\enc{C'[0]} \\
+ &\equiv& \enc{(c)C'[0]} \equiv \enc{C[0]} %\quad \mbox{ in which }
+\end{array}
+\]
+\end{itemize}
+
+\item Output. %\nts{copy the output case of parallel composition to here and adjust...}
+There are two subcases.
+\begin{itemize}
+\item[(i)] $P_1 \st{\overline{a}b} P_1'$ and $P\st{\overline{a}b} (c)P_1' \equiv P'$. By ind. hyp., $\enc{P_1} \st{a(A)} T_1\SSEQV A\lrangle{b} \para \enc{P_1'}$. Then we have
+\[
+\begin{array}{lrl}
+ &\enc{P}\equiv& (c)\enc{P_1} \\
+ &\st{a(A)}& (c)T_1 \DEF T\\
+ &\SSEQV& (c)(A\lrangle{b} \para \enc{P_1'}) \\
+ &\SSEQV& A\lrangle{b} \para (c)\enc{P_1'} \\
+ &\equiv& A\lrangle{b} \para \enc{(c)P_1'} \equiv A\lrangle{b} \para \enc{P'}
+\end{array}
+\]
+\item[(ii)] $P_1 \st{\overline{a}c} P_1'$ and $P\st{\overline{a}(c)} P_1' \equiv P'$. By ind. hyp.,  we know $\enc{P_1} \st{a(A)} T_1\SSEQV A\lrangle{c} \para \enc{P_1'}$. Then we have
+\[
+\begin{array}{lrl}
+ &\enc{P}\equiv& (c)\enc{P_1} \\
+ &\st{a(A)}& (c)T_1 \DEF T\\
+ &\SSEQV& (c)(A\lrangle{c} \para \enc{P_1'}) \\
+ &\equiv& (c)(A\lrangle{c} \para \enc{P'})
+\end{array}
+\]
+
+\end{itemize}
+
+\item Bound output. %\nts{copy the bound output case of parallel composition to here and adjust...}
+Suppose $P_1 \st{\overline{a}(b)} P_1'$ and $P\st{\overline{a}(b)} (c)P_1' \equiv P'$. By ind. hyp., $\enc{P_1} \st{a(A)} T_1\SSEQV (b)(A\lrangle{b} \para \enc{P_1'})$. Then we have
+\[
+\begin{array}{lrl}
+ &\enc{P}\equiv& (c)\enc{P_1} \\
+ &\st{a(A)}& (c)T_1 \DEF T \\
+ &\SSEQV& (c)(b)(A\lrangle{b} \para \enc{P_1'}) \\
+ &\SSEQV& (b)(A\lrangle{b} \para (c)\enc{P_1'}) \\
+ &\equiv& (b)(A\lrangle{b} \para \enc{(c)P_1'}) \\
+ &\equiv& (b)(A\lrangle{b} \para \enc{P'})
+\end{array}
+\]
+
+\item Interaction ($\tau$). Suppose $P_1\st{\tau} P_1'$ and $P\st{\tau} (c)P_1'\equiv P'$. By ind. hyp., $\enc{P_1} \st{\tau} T_1 \SSEQV \enc{P_1'}$. Then we have
+\[
+\begin{array}{lrl}
+ &\enc{P}\equiv& (c)\enc{P_1} \\
+ &\st{\tau}& (c)T_1 \DEF T \\
+ &\SSEQV& (c)\enc{P_1'} \\
+ &\equiv& \enc{(c)P_1'} \equiv \enc{P'}
+\end{array}
+\]
+\end{itemize}
+
+\item $P$ is $!a(x).P_1 \SGB C[a(x).P_1]$ in which $C\DEF [\cdot]\para !a(x).P_1$.
+\begin{itemize}
+\item Input. We have $P \st{a(b)} P_1\fosub{b}{x}\para !a(x).P_1 \DEF P' \equiv C[P_1\fosub{b}{x}]$ and $P' \equiv C[0]\para P_1\fosub{b}{x}$. Then $\enc{P} \equiv !\overline{a}[\lrangle{x}\enc{P_1}] \st{\overline{a}[\lrangle{x}(\enc{P_1})]} 0\para !\overline{a}[\lrangle{x}\enc{P_1}] \DEF T$, and $T\SSEQV \enc{C[0]}$.
+\end{itemize}
+
+\end{itemize}
+\myqed
+\end{proof}
+
+
+
+\subsection{Soundness}
+We reuse the \ground bisimilar processes $R_1$ and $R_2$ in Section \ref{s:encoding_soundness}, and see what happens to their new encodings. The CCS-like prefixes are defines as there.
+\[
+\begin{array}{lcllcl}
+R_1 &\DEF& (b)(a.\overline{b} \para b.\overline{c}) &\qquad\quad R_2 &\DEF& (b)(a.\overline{b} \para b.\overline{c} \para b.\overline{c})
+\end{array}
+\]
+%(The synchronizations are defined as usual. )
+Now we examine their encodings. %\overline{a}[\lrangle{x}\enc{P}]   ;      a(Y).(Y\lrangle{b}\para \enc{Q})
+\[
+\begin{array}{lcl}
+\enc{R_1} &\equiv& (b)(\overline{a}[\lrangle{x}\enc{\overline{b}}] \para \overline{b}[\lrangle{x}\enc{\overline{c}}]) \\
+\enc{R_2} &\equiv& (b)(\overline{a}[\lrangle{x}\enc{\overline{b}}] \para \overline{b}[\lrangle{x}\enc{\overline{c}}] \para \overline{b}[\lrangle{x}\enc{\overline{c}}]) \\
+\mbox{in which} && \\
+\enc{\overline{b}} &\equiv& (f)(b(Y).(Y\lrangle{f}\para 0)) \\
+\enc{\overline{c}} &\equiv& (g)(c(Z).(Z\lrangle{g}\para 0))
+\end{array}
+\] Take $T\DEF a(X).(X\lrangle{d} \para X\lrangle{d})$.
+Then $(a)(\enc{R_1}\para T)$ and $(a)(\enc{R_2}\para T)$ can be distinguished, as shown below. This demonstrates that $\enc{R_1}$ and $\enc{R_2}$ are not context bisimilar. Particularly, the latter can do two inputs on $c$, while the former cannot.
+\[
+\begin{array}{lrl}
+ &(a)(\enc{R_1}\para T) \quad \st{\tau}\SCB& (ab)(\enc{\overline{b}} \para \enc{\overline{b}} \para \overline{b}[\lrangle{x}\enc{\overline{c}}]) \\
+&\equiv& (ab)((f)(b(Y).(Y\lrangle{f}\para 0)) \para \enc{\overline{b}} \para \overline{b}[\lrangle{x}\enc{\overline{c}}]) \\
+&\st{\tau}\SCB& (b)(\enc{\overline{c}} \para \enc{\overline{b}}) \\
+&\equiv& (b)((g)(c(Z).(Z\lrangle{g}\para 0)) \para \enc{\overline{b}}) \\
+&\st{c(\lrangle{z}0)}\SCB& 0 \\\\ %\\\\
+%\end{array}
+%\]
+%\[
+%\begin{array}{lrl}
+ &(a)(\enc{R_2}\para T) \quad \st{\tau}\SCB& (ab)(\enc{\overline{b}} \para \enc{\overline{b}} \para \overline{b}[\lrangle{x}\enc{\overline{c}}] \para \para \overline{b}[\lrangle{x}\enc{\overline{c}}]) \\
+&\equiv& (ab)((f)(b(Y).(Y\lrangle{f}\para 0)) \para (f)(b(Y).(Y\lrangle{f}\para 0)) \para \overline{b}[\lrangle{x}\enc{\overline{c}}] \\
+& & \qquad\qquad\qquad\qquad\qquad\,\,\,\, \para \overline{b}[\lrangle{x}\enc{\overline{c}}]) \\
+&\st{\tau}\st{\tau}\SCB& \enc{\overline{c}} \para \enc{\overline{c}} \\
+&\equiv& (g)(c(Z).(Z\lrangle{g}\para 0)) \para (g)(c(Z).(Z\lrangle{g}\para 0)) \\
+&\st{c(\lrangle{z}0)}\SCB& (g)(c(Z).(Z\lrangle{g}\para 0)) \\
+&\st{c(\lrangle{z}0)}\SCB& 0
+\end{array}
+\]
+
+\subsubsection{Weak soundness}
+Short of soundness, one might expect that the encoding at least has weak soundness, {i.e., sound w.r.t. $\WWCB$, as defined in Section \ref{s:preliminary} and used in Section \ref{s:encoding_soundness}}. %(We recall that weak soundness means the soundness confined to the images of the encoding in \HOPiDd, i.e., processes in \HOPiDd\ that are the encoding of \FOPi\ processes; these processes merely communicate terms of the form $\lrangle{x}(\enc{P})$ in which $P$ is a \FOPi\ process).
+We demonstrate that it is not the case. We carry out the analysis with a new counterexample below.
+%(i.e., the processes in the target model that have reverse-image w.r.t. the encoding).
+%\sep
+%\nts{\Large See the note jpg file ``nt20170609.JPG" in the ``Long\_version" subfolder; typeset it here}
+%\sep
+
+Fix two \FOPi\ processes $R_3$ and $R_4$. That they are \ground bisimilar is in the clear. We now show that their encodings are not related by $\WWCB$. %, which is similarly defined as that in Section \ref{s:encoding_soundness}.
+\[
+R_3 \DEF (b)(a.b\para \overline{b}.\overline{c}) \qquad\qquad R_4 \DEF (b)(a.b\para \overline{b}.\overline{c}\para \overline{b}.\overline{c})
+\]
+Their encodings should have the follow-up simulation.
+%\[\nsepvs{.2}
+%\xymatrix{
+% & P \ar@{.}[rr]|-{\mathcal{R}}\ar@{->}[d]_{\overline{a}A}  &  & Q \ar@{=>}[d]^{\overline{a}B}  &   \\
+% P'\para !m.A \ar@/_1.6pc/@{.}[0,4]|{\mathcal{R}} & P'  & &  Q'  & Q'\para !m.B
+%}
+%\]
+\[\nsepvs{.2}
+\xymatrix@C=10pt{
+\enc{R_3}\ar@{}[r]|-{\equiv} & (b)(\overline{a}[\lrangle{x}(\enc{b})] \para \enc{\overline{b}.\overline{c}}) \ar@{->}[d]_{(b)\overline{a}[\lrangle{x}(\enc{b})]}  &  &  (b)(\overline{a}[\lrangle{x}(\enc{b})] \para \enc{\overline{b}.\overline{c}} \para \enc{\overline{b}.\overline{c}}) \ar@{->}[d]^{(b)\overline{a}[\lrangle{x}(\enc{b})]} & \enc{R_4}\ar@{}[l]|-{\equiv}   \\
+ & 0\para \enc{\overline{b}.\overline{c}}  &  &  0 \para  \enc{\overline{b}.\overline{c}} \para \enc{\overline{b}.\overline{c}} &
+}
+\]
+In terms of context bisimulation, we choose $E[X] \DEF X\lrangle{e} \para X\lrangle{e}$ and have
+\[
+\begin{array}{rcl}
+E[\lrangle{x}(\enc{b})] &\equiv& \enc{b}\para \enc{b} \\
+\enc{b} &\equiv& \overline{b}[\lrangle{x}0] \\
+\enc{\overline{b}.\overline{c}} &\equiv& (f)(b(Y).(Y\lrangle{f} \para (g)(c(Z).(Z\lrangle{g}\para 0))))
+\end{array}
+\]
+We note that $E[\lrangle{x}(\enc{b})]$ corresponds to the \FOPi\ process $b\para b$ so it is legal for $\WWCB$.
+We now argue that $(b)(E[\lrangle{x}(\enc{b})] \para \enc{\overline{b}.\overline{c}})$ and $(b)(E[\lrangle{x}(\enc{b})] \para \enc{\overline{b}.\overline{c}}\para \enc{\overline{b}.\overline{c}})$ are not bisimilar as regard to $\WWCB$, i.e.,
+\[
+(b)(\enc{b}\para \enc{b}\para \enc{\overline{b}.\overline{c}})  \;\;\;\;\;\bcancel{\WWCB}\;\;\;\;\; (b)(\enc{b}\para \enc{b}\para \enc{\overline{b}.\overline{c}}\para \enc{\overline{b}.\overline{c}})
+\] thus violating the output requirement of context bisimulation.
+To see this, fix a \HOPiDd\ abstraction $B$, e.g., $\lrangle{x}0$. We then have the following chasing diagram showing the inequality above. 
+%For the sake of conciseness, we use $\cdot$ to denote certain existent process.
+\xxx{
+Here, $\cdot$ is some unspecified process.
+}
+\[\nsepvs{.2}
+\xymatrix{
+  (b)(\enc{b}\para \enc{b}\para \enc{\overline{b}.\overline{c}})  \ar@{->}[d]_{\tau}  &  &  (b)(\enc{b}\para \enc{b}\para \enc{\overline{b}.\overline{c}}\para \enc{\overline{b}.\overline{c}}) \ar@{->}[d]^{\tau}    \\
+  \cdot \ar@{->}[d]_(.3){c(B)}  &  &  \cdot \ar@{->}[d]^{c(B)} \\
+  {\begin{array}{c}\cdot \\[-.3cm] \rotatebox{-90}{\SCB} \\ 0 \end{array}}  &  & \cdot \ar@{->}[d]^{\tau} \\
+   & & \cdot \ar@{->}[d]^(.3){c(B)} \\
+   & & {\begin{array}{c}\cdot \\[-.3cm] \rotatebox{-90}{\SCB} \\ 0 \end{array}}
+}
+\]
+We thus conclude that $\enc{R_3} \;\;\bcancel{\WWCB}\;\; \enc{R_4}$.
+
+
+
+\sepp
+%To summary, 
+\xxx{To summarize, }
+we have the following lemma.
+\begin{lemma}\label{l:soundness_var}
+Assume $P$ is a \FOPi\ process. Then $P\WGB Q$ implies neither $\enc{P} \,\WCB\, \enc{Q}$ nor $\enc{P} \,\WWCB\, \enc{Q}$.
+\end{lemma}
+%\begin{proof}
+%\nts{TODO (ref. Section \ref{s:encoding_soundness})}
+%\end{proof}
+
+
+\subsection{Completeness}
+Though soundness fails, the encoding indeed has completeness. It is worth noting that we need Theorem \ref{factor-bigd-smalld} in the proof. This not only exhibits somewhat the use of that theorem, but also confers upon in a sense the synergy of the two kinds of abstractions. 
+\xxrmcolor{For the sake of modular organization (i.e., putting the two encodings in neighbouring sections), the statement and proof of Theorem \ref{factor-bigd-smalld} is deferred until Section \ref{s:normal}.
+Basically, that theorem states that a sub-process of a process can be replaced with the so-called trigger, and moved to a new parallel position, which is accessible using the trigger acting as a messenger that faithfully transmits the information at the original position to the new positition, thus retaining the equivalence with the original process. Interested readers are encouraged to have a quick look at the statement of the theorem so as to understand the proof of completeness. 
+More details of the theorem and its proof can be consulted later.
+}
+% Basically this theorem states that in \HOPiDd, there is the so-called normal bisimulation 
+% %We note that the proof of completeness uses the normal bisimulation of \HOPiDd. 
+% that characterizes context bisimulation but has a light requirement of checking equivalence. The definition of normal bisimulation and its coincidence with context bisimulation is given in Section \ref{s:normal}. 
+% %This is actually an application of the normal bisimulation. 
+% Interested readers are encouraged to have a quick look at the definition of normal bisimulation so as to understand the proof of completeness. 
+% The details of the coincidence between normal bisimulation and context bisimulation can be consulted later.
+
+\begin{lemma}\label{l:completeness_var}
+Assume $P$ is a \FOPi\ process. Then $\enc{P} \WCB \enc{Q}$ implies $P\WGB Q$.
+\end{lemma}
+\begin{proof}
+We show that relation $\mathcal{R}$ below is a local bisimulation up-to $\equiv$. %$\SGB$.
+%>>>>>> This up-to technique for \FOPi\ processes is defined in a way similar to that in \HOPiDd. We note that up-to techniques for first-order processes are well-established in the field; more details can be referred to \cite{SW01a,PS11}.
+\[
+\mathcal{R} \DEF \{(P,Q) \,|\, \enc{P}\WCB \enc{Q} \} \,\cup\, \WGB
+\]
+Assume $P\mathcal{R} Q$ and $P\st{\lambda}P'$. We proceed by a case analysis.
+%\nts{TODO (ref. Section \ref{s:encoding_completeness})}
+%\nts{Standard bisimulation game arguments? }
+\begin{itemize}
+\item Input: $P\st{a(b)}P'$. %This is relatively the most involved case. We need to setup the context in \HOPiDd\ carefully so as to close the bisimulation game. \nts{TODO}
+%By Lemma \ref{l:opcor_var},
+%By Lemma \ref{l:opcor-conv_var},
+By Lemma \ref{l:opcor_var}, we know that $P\SGB (\ve{e})C[a(x).P_1]$ and $P'\equiv (\ve{e})C[P_1\fosub{b}{x}] \equiv (\ve{e})(C[0]\para P_1\fosub{b}{x})$ for some context $C$, $P_1$ and $\ve{e}$ being the bound names shared between $P_1$ and its context, and $\enc{P} \st{(\ve{e})\overline{a}[\lrangle{x}(\enc{P_1})]} T\SSEQV \enc{C[0]}$. Since $\enc{P}\WCB \enc{Q}$, we know that $\enc{Q}\wt{(\ve{e'})\overline{a}[\lrangle{x}(\enc{Q_1})]} T'$ and for every $E[X]$ with $\fn{E}\cap \ve{e}\ve{e'} {=} \emptyset$, it holds that
+\begin{equation}\label{eq:com_var_1}
+(\ve{e})(E[\lrangle{x}(\enc{P_1})] \para T) \,\WCB\, (\ve{e'})(E[\lrangle{x}(\enc{Q_1})] \para T')
+\end{equation}
+By Lemma \ref{l:opcor-conv_var}, we know that $Q \wt{a(b)} Q'$ with $Q\SGB (\ve{e'})C'[a(x).Q_1]$ and $Q'\equiv (\ve{e'})C'[Q_1\fosub{b}{x}] \equiv (\ve{e'})(C'[0]\para Q_1\fosub{b}{x})$ for some context $C'$ with $\ve{e}$ being the bound names shared between $Q_1$ and its context, and
+$\enc{C'[0]} \wt{} T'' \WCB T'$, where we notice that there might be a few $\tau$'s distance between $\enc{C'[0]}$ and $T'$ due to the weak transition by $\enc{Q}$. Still by Lemma \ref{l:opcor-conv_var}, we know that there exists some context $C''$ s.t. $C'[0] \wt{} C''[0]$ with $\enc{C''[0]}\WCB T'' \WCB T'$, and as such we also know that $Q' \wt{} (\ve{e'})(C''[0]\para Q_1\fosub{b}{x}) \DEF Q''$, so $Q \wt{a(b)} Q''$. We need to prove $P' \mathcal{R} Q''$, i.e., $\enc{P'} \WCB \enc{Q''}$. Through setting $E[X]$ as $X\lrangle{b}$, equation (\ref{eq:com_var_1}) turns into
+\[
+(\ve{e})((\lrangle{x}(\enc{P_1}))\lrangle{b} \para T) \,\WCB\, (\ve{e'})((\lrangle{x}(\enc{Q_1}))\lrangle{b} \para T')
+\] which is exactly
+\[
+(\ve{e})(\enc{P_1\fosub{b}{x}} \para T) \,\WCB\, (\ve{e'})(\enc{Q_1\fosub{b}{x}} \para T')
+\] Since we already know that $T\SSEQV \enc{C[0]}$ and $T'\WCB \enc{C''[0]}$, we have as needed
+\[
+\enc{P'}\;\equiv\; (\ve{e})(\enc{P_1\fosub{b}{x}} \para \enc{C[0]}) \,\WCB\, (\ve{e'})(\enc{Q_1\fosub{b}{x}} \para \enc{C''[0]}) \;\equiv\; \enc{Q''}
+\]
+
+
+\item Output: $P\st{\overline{a}b}P'$. %\nts{TODO}
+%By Lemma \ref{l:opcor_var},
+%By Lemma \ref{l:opcor-conv_var},
+By Lemma \ref{l:opcor_var}, $\enc{P} \st{a(A)} T \SSEQV A\lrangle{b} \para \enc{P'}$. Since $\enc{P}\WCB \enc{Q}$, we know that $\enc{Q} \wt{a(A)} T' \WCB T$. By Lemma \ref{l:opcor-conv_var}, it must be that $Q \wt{\overline{a}b} Q'$ (otherwise $\enc{P}$ and $\enc{Q}$ would be distinguishable), and \\
+$A\lrangle{b} \para \enc{Q'} \wt{} T'' \WCB T'$. Setting $A$ to be $\lrangle{x}0$, we have
+\begin{eqnarray}
+\enc{P} \st{a(\lrangle{x}0)} T \SSEQV 0 \para \enc{P'} \SSEQV \enc{P'} \nonumber \\ %\label{eq:com_var_2} \\
+\enc{Q'} \equiv 0 \para \enc{Q'} \wt{} T'' \WCB T' \label{eq:com_var_3}
+\end{eqnarray}
+From (\ref{eq:com_var_3}) and Lemma \ref{l:opcor-conv_var}, we know that $Q'\wt{} Q''$ and $\enc{Q''} \WCB T'' \WCB T'$. So we have $Q\wt{\overline{a}b} Q''$ and need to prove $P' \mathcal{R} Q''$, i.e., $\enc{P'} \WCB \enc{Q''}$. This is immediate from the following equations.
+\[
+\enc{P'} \;\WCB\; T \;\WCB\; T' \;\WCB\; T'' \;\WCB\; \enc{Q''}
+\]
+
+
+\item Bound output: $P\st{\overline{a}(b)}P'$. %In contrast to the input case, one has to collude with the inputted process to the encoding in order to make the bisimulation closed. \nts{Use the local bisimulation's corresponding clause; TODO}
+%By Lemma \ref{l:opcor_var},
+%By Lemma \ref{l:opcor-conv_var},
+By Lemma \ref{l:opcor_var}, $\enc{P}$ can make an input over $a$; we set the input as the trigger $\triggerd \equiv \lrangle{z}\overline{m}[\lrangle{Y}(Y\lrangle{z})]$ ($m$ fresh). Then we have $\enc{P} \st{a(\triggerd)} T \SSEQV (b)(\triggerd\lrangle{b} \para \enc{P'})$. Since $\enc{P}\WCB \enc{Q}$, we know that $\enc{Q} \wt{a(\triggerd)} T' \WCB T$. By Lemma \ref{l:opcor-conv_var}, it must be that $Q \wt{\overline{a}(b)} Q'$ (otherwise $\enc{P}$ and $\enc{Q}$ would be distinguishable), and $(b)(\triggerd\lrangle{b} \para \enc{Q'}) \wt{} T'' \WCB T'$. Thus we have $\enc{Q'} \wt{} T'''$ and $(b)(\triggerd\lrangle{b} \para \enc{Q'})\wt{} (b)(\triggerd\lrangle{b} \para T''') \WCB T'' \WCB T'$. By Lemma \ref{l:opcor-conv_var}, we know that $Q'\wt{} Q''$ and $\enc{Q''} \WCB T'''$. %$\enc{Q''} \WCB T'''$.
+So we have $Q \wt{\overline{a}(b)} Q''$ and $(b)(\triggerd\lrangle{b} \para \enc{Q''}) \WCB T'' \WCB T'$. The above boils down to the following equation.
+\[
+(b)(\triggerd\lrangle{b} \para \enc{P'}) \;\WCB\; T\;\WCB\; T'\;\WCB\; T'' \;\WCB\; (b)(\triggerd\lrangle{b} \para \enc{Q''})
+\]
+Since $\WCB$ is a congruence, we can derive that
+\[
+\begin{array}{l}
+(m)(\;(b)(\triggerd\lrangle{b} \para \enc{P'})\; \para !m(Z).Z\lrangle{A}) \\
+\qquad\qquad\qquad\qquad\qquad\qquad \;\WCB\; (m)(\;(b)(\triggerd\lrangle{b} \para \enc{Q''})\; \para !m(Z).Z\lrangle{A})
+\end{array}
+\]
+Using Theorem \ref{factor-bigd-smalld}, we have
+\begin{equation}\label{eq:com_var_4}
+(b)(\enc{P'}\para A\lrangle{b}) \;\WCB\; (b)(\enc{Q''} \para A\lrangle{b})
+\end{equation}
+We now recall that since $P\st{\overline{a}(b)}P'$ and $Q \wt{\overline{a}(b)} Q''$, our goal is to prove that for every $R$ it holds
+\[
+(b)(P' \para R) \;\mathcal{R}\; (b)(Q'' \para R)
+\] That is,
+\begin{equation}\label{eq:com_var_5}
+(b)(\enc{P'} \para \enc{R}) \;\WCB\; (b)(\enc{Q''} \para \enc{R})
+\end{equation}
+Comparing (\ref{eq:com_var_4}) and (\ref{eq:com_var_5}), we can observe that since the image of the encoding is contained by the target model \HOPiDd\ and $A$ is arbitrary (it has the knowledge of $b$ as well), if we traverse all possibility of $A$ then $\enc{R}$ must be hit somewhere. We thus conclude that (\ref{eq:com_var_5}) is true and the simulation is closed.
+
+\item $\tau$ action: $P\st{\tau}P'$. %\nts{TODO}
+%By Lemma \ref{l:opcor_var},
+%By Lemma \ref{l:opcor-conv_var},
+By Lemma \ref{l:opcor_var}, $\enc{P} \st{\tau} T \SSEQV \enc{P'}$. Since $\enc{P}\WCB \enc{Q}$, we know that $\enc{Q} \wt{} T' \WCB T$. By Lemma \ref{l:opcor-conv_var}, $Q \wt{} Q'$ and $T'\WCB \enc{Q'}$. %$T'\WCB \enc{Q'}$
+We need to prove $P'\,\mathcal{R}\, Q'$, i.e., $\enc{P'} \,\WCB\, \enc{Q'}$. This is straightforward because
+\[
+\enc{P'} \;\WCB\; T \;\WCB\; T' \;\WCB\; \enc{Q'}
+\]
+\end{itemize}
+The proof is now completed.
+\myqed
+\end{proof}
+
+
+
+
+
+%---------------------------
+% Local Variables:
+% mode: LaTeX
+% TeX-master: "main.tex"
+% End:

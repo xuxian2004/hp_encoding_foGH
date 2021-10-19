@@ -1,0 +1,232 @@
+** Summary **
+
+This paper studies the relationship between the pi-calculus and the higher-order pi-calculus equipped with parameterization. The ability to pass processes 
+that are parameterized is called in the literature 'abstraction-passing'.
+
+The contribution of the paper could be summarized as follows: name-passing can be emulated with the ability to pass processes that are parameterized over names and processes.
+The author also provides a characterization of context bisimulation as normal form bisimulation for this calculus with parameterization, as it has been done for similar 
+calculi. 
+
+
+** Evaluation **
+
+The paper is poorly written, and sometimes sloppy in its conception. There are many examples of incorrect english or poorly phrased 
+explanations, some of which are in the 'minor comments' section below. There are too many, however, to be exhaustive. Some technical issues 
+are also discussed below.
+
+The main idea is quite natural: we can reasonably expect to capture name passing by having abstraction-passing, for both names and processes.
+However, the author already published a paper [2] showing name passing can be encoded through abstraction-passing, with only name abstractions. 
+Therefore, there is really no surprise in the main results. The encodings presented in the paper are more natural, more concise; but this is not 
+clear to me anything meaningful has been accomplished in this paper.
+
+Furthermore, the results regarding normal form bisimulation are already known for abstraction-passing calculi, with just one type of abstraction. 
+Therefore, it is clear that by adding constructs to the language, thus making the contexts stronger, this characterisation would still hold
+(the addition of a new type of abstraction does not change the bisimulation itself).
+
+A lot of the proofs do not seem meaningful, and consist of just sequences of algebraic calculations.
+Those proofs could go in an appendix, however I am not convinced much would be left.
+
+I would advise against publication. For me, to be even considered, the paper should be almost entirely rewritten, and some convincing arguments 
+should be given about its contribution and novelty.
+
+
+** Technical issues **
+
+The use of structural congruence to define abstraction and application (and substitution) is a problem: 
+with such a rule, it is very easy to build an infinite derivation tree.
+
+Care has also to be taken in order to ensure that the 'normalization' of a substitution terminates.
+In [1], Sangiorgi uses a sorting/type system to ensure that substitutions terminate.
+It would seem important here, however it is barely refered to. 
+Otherwise it is possible to write a diverging terms: <X>(X<X>)<<Y>(Y<Y>)> (this is basically Omega).
+Xu, X., Yin, Q., Long, H.: On the computation power of name parameterization in
+higher-order processes. In: Proceedings of 8th Interaction and Concurrency Experience
+(ICE 2015),
+
+** General comments **
+
+The proof of a lemma or theorem should be right after its statement, not after other lemmas, or 
+a page of additional explanations.
+
+"Bisimulation" is sometimes used instead of "bisimilarity".
+
+
+About 'computational expressiveness': 
+"higher-order processes equipped with parameterization are computationally more expressive."
+"it appears reasonable for such an extension to be able to
+express first-order processes since lambda-calculus is universal in computation."
+
+I'm not sure I understand these remarks; what does "computational expressiveness" mean here? 
+I assume it is not computability. Furthermore, the lambda-calculus can be encoded 
+in the higher-order pi-calculus, so I'm not sure what this means.
+
+
+** Minor comments **
+
+
+p.2
+
+Incorrect use of "i.e.":
+
+"but is very hard to analyze for
+full abstraction (i.e., the first-order processes are equivalent if and only if their
+encodings are; the ‘if only’ direction is called soundness and the other direc-
+tion is called completeness)."
+
+
+
+"the encoding has a correct operational correspondence (i.e., the correspondence between
+the processes before and after the encoding),"
+-> We establish an operational correspondence between the reductions of a process and its encoding.
+(incorrect use of "i.e.")
+
+p.3
+
+"This encoding depends heavily on the notions of ‘localized’ which means only
+the output capability of a name can be communicated during interactions, and
+‘asynchronous’ which means the output is non-blocking."
+-> This encoding relies heavily on output capability ... 
+
+
+"Though technically a nice reference, intuitively because this variant of π-calculus is less expressive
+than the full π-calculus, it is not very surprising that the higher-order processes
+with parameterization on names can interpret it faithfully, i.e., fully abstract
+with respect to barbed congruence."
+-> remove
+
+"In that effort, which somewhat precipitates the work here, [...]"
+To that end, [...]. This inspired the present work.
+
+"This question is important in two aspects."
+-> respects
+
+p.4
+
+bisimulation is used but not explained
+
+
+"here | denotes concurrency,"
+-> We write | for the parallel composition
+
+"E[A] means putting A in the environment E."
+-> E[A] is a shorthand for E where the hole [.] is substituted by A.
+
+"To meet this challenge, a crucial so-called factorization theorem is used to circumvent technical difficulty."
+-> A crucial ingredient is a 
+
+"how normal bisimulation is designed in the basic higher-order processes."
+
+"In particular, the factorization states the following property,"
+
+
+p.5
+
+"(i.e., not clear if the characterization remains true in a strictly higher-order setting without name-passing),"
+Incorrect use of i.e.
+
+"Such kind of encoding"
+-> This kind of encoding
+
+p. 7
+
+"2.1 Calculus π"
+-> $\pi$-calculus
+
+
+"Usually closed processes are considered by default"
+In pi, I'm don't think it makes a lot of sense.
+
+
+p.12
+"We define a notion of encoding"
+
+p.14
+
+Example:
+Put the example in an "example" block.
+
+Conclusion:
+
+"proper uniform-looking ‘trigger’"
+Does not make much sense to me
+
+p. 18
+
+"the soundness of the encoding is not true."
+-> the encoding is not sound 
+
+
+p. 22
+
+"though its properties are not
+clear before this work 1"
+-> were not clear?
+-> avoid footnote
+
+
+"This encoding was suggested by Alan Schmitt 
+during the communication concerning
+another work."
+-> "when discussing a different subject"?
+-> no point in that: just say the encoding was 
+suggested by A. Schmitt
+
+
+p. 28
+
+"For the sake of conciseness, we use · to denote certain existent process."
+-> Here, . is some unspecified process.
+
+p.29
+
+"To summary,"
+-> To summarize
+
+
+p. 33
+"(i) if E[Trm] is <U>E' for some non-abstraction 
+E' (here and below, <U> 
+denotes the abstractions prefixing E ), then..."
+-> Simply replace E[Trm] by <~U>E[Trm] so you don't need E'...
+It feels like we should assume <~U>E' to be closed or something similar here. 
+
+
+"(ii) particularly, if E[T r m ] is not an abstraction, then..."
+Remove this
+
+
+p.34 
+
+"The proof is similar to those in the references [2, 22, 29, 34]."
+-> is similar to the congruence proofs in [2,...]
+
+"We note that although we have a new form of triggers here, the proof approach is exactly the
+same."
+Not very useful.
+The whole paragraph should be rewritten.
+
+p. 35
+"We only need to prove ≈_nr implies ≈_ct , since ≈ ct is obviously finer than ≈_nr."
+Explain why.
+
+
+"and leave out the similar (and simpler) rest."
+-> leave out the other cases.
+
+
+
+
+
+
+
+
+** References **
+
+1. Sangiorgi, D.: Expressing mobility in process algebras: First-order and higher-order
+paradigms. Phd thesis, University of Edinburgh (1992)
+
+2. Xu, X., Yin, Q., Long, H.: On the computation power of name parameterization in
+higher-order processes. In: Proceedings of 8th Interaction and Concurrency Experience
+(ICE 2015)
+
+

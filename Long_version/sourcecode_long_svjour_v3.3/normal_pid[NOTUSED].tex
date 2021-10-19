@@ -1,0 +1,220 @@
+%NOT USED now!
+
+
+\subsection{Discussion on \emph{normal} bisimulation in $\Pi^d$}\label{smalld-charac} %\xx{REFINE...SEE NOTES...}
+%\oo{\large \fbox{\#\#\#\# DONE: REFINE this section below (red part, from here to before the bibliograph)!}}
+
+\oo{\large \fbox{\#\#\#\# TODO (not now):
+\begin{tabular}{l}
+MAYBE (hard!) consider using some (expressive) criteria \\
+to show the non-existence of normal characterization in $\Pi^d$!
+\end{tabular}}}
+\sepp
+
+\nts{\large FROM here TODO: simplify and shorten this subsection; CONSIDER use a single example (e.g., from below) to explain the core idea.}\sep
+
+%\vspace*{-.2cm}
+%In this section, we examine context bisimulation in $\Pi^d_n$, focusing on $\Pi^d_1$ for simplicity.
+%; the result can be readily generalized to $\Pi^d_n$ (and $\Pi^d$).
+% We show that, unlike that in $\Pi^D_1$, there is no obvious normal bisimulation in a similar way that characterizes context bisimulation, with some counterexample. We discuss the possible form of normal bisimulation following the approach in \cite{San92}\cite{San94}, and exhibit it is not trivially known to exist, let alone coincide with context bisimulation. Notice this section does not provide a formal proof of the negative result that context bisimulation in $\Pi^d_n$ cannot be characterized in a simpler way, instead we essentially say that the well-known technique based on triggers is not useful in its original form. To this end, finding a light characterization may amount to exploiting further the expressiveness of $\Pi^d_n$.
+%We informally discuss that, unlike that in $\Pi^{D,d}$ and $\Pi^{D}$, the method of normal bisimulation as described in \cite{San92,San94}  may not be readily extended to $\Pi^{d}$ that has name parameterization instead of process parameterization.
+%To this end, we show the negative fact in two steps.
+%Firstly, we discuss the possible form of normal bisimulation, toward giving some intuition. Even worse, we then provide a counterexample, to exhibit that the expected form of normal bisimulation does not work.
+
+In this section, we exhibit the difficulty in finding a normal-like characterization for context bisimulation in $\Pi^{d}$, in which only the parameterization on names are allowed. The aim is not to provide a formal proof, but instead some circumstantial evidence indicating that there is probably not a direct such characterization.
+To this point, finding a useful characterization of context bisimulation amounts to exploiting further the expressiveness of parameterization on names; otherwise, showing the impossibility of characterizing context bisimulation in a simpler way should rest on some precisely formulated criteria. % (see some discussion at the end of this section).
+%We note that, we are not trying to prove that there is no simplification of context bisimulation in $\Pi^d$. Rather, we are trying to provide some circumstantial evidence that as it is, the method of normal bisimulation cannot be applied in presence of name-parameterization in a higher-order setting. Thus truly the argument is not fully formal.
+%we are not aware of how to express this in a completely formal way; this is
+%Showing that a bisimulation cannot be generally simplified is a challenging task,
+%and is likely to need some kind of precisely formulated criteria that stipulate the impossibility of applying certain technique.
+%and it must rest on some precisely formulated criteria, assuming which one can show the impossibility of applying certain techniques.
+The discussion may offer some clues likely to be leveraged for resolving this conundrum.
+
+
+%\subsubsection*{Possible form of normal bisimulation}
+%\subsubsection*{Analysis}
+%Along the lines of the very original idea of normal bisimulation \cite{San92,San94}, as a thought experiment, we pretend trying to build the `normal bisimulation'.
+%%, among which the largest one is denoted by $\cong'$.
+%This would lead to the argument below about how to recover context bisimulation, particularly pertaining to whether the experimental `normal bisimulation' implies context bisimulation. The other direction, i.e., context bisimulation is no coarser, would be direct since context bisimulation has universal quantifiers in the input/output clauses.
+We extend the discussion by exploring the possibility of reusing the very original idea of normal bisimulation \cite{San92,San94}.
+As an experiment, we try to build the `normal bisimulation', particularly pertaining to whether the context bisimulation can be recovered thereof.
+
+As shown above, the core of a normal-like characterization is the factorization property. Specifically, in order to recover the context bisimulation, one needs to work out some special form of processes to take the place of the general ones communicated during the simulation of input and output, without loss of any discriminating capability. Then by all means, the factorization property can be used to guide the design of a normal bisimulation.
+
+%\rc{\scriptsize
+%\xx{ FMI.}\\
+%The core of a normal-like characterization is some property similar to factorization. The reason is that in order to design some special form of `small' process to {represent} the general ones during the simulation of input and output, such a process has to be endowed with the capability of retrieving the general requirement of context bisimulation. Such a kind of retrieval is, by all means, bound to attaching in parallel some `small' context containing a general process. This actually leads to some factorization-like property. Specifically,
+\begin{itemize}
+\item We recall the input clause of context bisimulation below in which $A$ is assumed to be an abstraction on a name.
+\[
+\mbox{If $P \st{a(A)} P'\DEF E[A]$, then $Q \wt{a(A)} Q'\DEF E'[A]$ for some $Q'$, and $E[A]\,\mathcal{R}\, E'[A]$}
+\] %For convenience we assume $E$ and $E'$ is the receiving environments respectively corresponding to $P$ and $Q$.
+In the very first spirit of normal bisimulation \cite{San92}, the general challenge using $A$ as the input calls for an representation by, say, a special simple term $T$. Accordingly, the requirement of relating $E[A]$ and $E'[A]$ is represented by that on $E[T]$ and $E'[T]$.
+Suppose $F$ is the context where we put the represented $A$.
+%aimed at retrieving $E[A]$ (respectively $E'[A]$) using $(\ve{n})(E[T]\para F[A])$ (respectively $(\ve{n})(E'[T]\para F[A])$) where $\ve{m}$ are the (local) names possibly shared by $E[T]$ (respectively $E'[T]$) and $F$.
+The desired property would be that $(\ve{n})(E[T]\para F[A])$ is equivalent with $E[A]$ w.r.t. some bisimulation congruence (at least as fine as context bisimilarity), i.e., the factorization-like property below.
+\begin{equation}\label{eq:normal_pid_1_faclike_prop}
+(\ve{n})(E[T]\para F[A]) \approx E[A] \qquad (\mbox{respectively } (\ve{n})(E'[T]\para F[A]) \approx E'[A])
+\end{equation}
+As such, the gadget $T$ is responsible for activating $A$ in $F[A]$ in need (playing a role similar to `triggers').
+%As such the factorization-like property (\ref{eq:normal_pid_1_faclike_prop}) is somewhat the core of a simpler characterization of context bisimulation.
+
+\item In the case of output, the context bisimulation requires that
+\begin{center}
+If $P \st{(\ve{c})\overline{a}A} P'$ then $Q \wt{(\ve{d})\overline{a}B} Q'$ for some $\ve{d},B,Q'$, and for every $E[X]$ ($\{\ve{c},\ve{d}\}\cap fn(E)=\emptyset$) it holds
+$(\ve{c})(E[A]\para P') \; \approx\;  (\ve{d})(E[B]\para Q')$.
+\end{center}
+In line with the way a normal bisimulation works, %as explained at the beginning of this section, % (and the section of introduction),
+and in accordance with the case of input, we are urged to apply (\ref{eq:normal_pid_1_faclike_prop}) to obtain the following transformation of closing statement of the output clause.
+\begin{equation}\label{eq:normal_pid_2}
+(\ve{c})((\ve{n})(E[T]\para F[A]) \para P') \; \approx\;  (\ve{d})((\ve{n})(E[T]\para F[B]) \para Q') \nonumber
+\end{equation}
+Then by isolating the different fragments on either side of (\ref{eq:normal_pid_2}), one has below the simplified requirement, which is more convenient work with since $F$ is a specific context.
+\[
+(\ve{c})(F[A]\para P') \; \approx\;  (\ve{d})(F[B]\para Q')
+\] %Since $F$ is closely related to $T$ and does not have universal quantifier before it, this clause is supposed to be more convenient to use.
+
+\item For our purposes, the crucial point is to conceive the shape of $T$ (and subsequently $F$) subject to the capability of the calculus.
+%By analyzing the shape of $T$ based on the desired factorization-like property (\ref{eq:normal_pid_1_faclike_prop}),
+An easy fact is that it should be a name-parameterized process, so that it can take the place of the abstraction $A$. %because otherwise the substitution would not be .
+A tough job of $T$ is to transmit a concrete name, which it receives upon application over its parameterized name, to $F$ so as to be fed to $A$ therein such that $A$ eventually gets the right instantiation. This concrete name is provided by $E$ dynamically, i.e., during run-time.
+%(provided by $E$ dynamically, i.e., during run-time) to $A$ in the customized context $F$, otherwise the instantiation would not be fulfilled correctly, and obviously $E$ would not take care of this in general.
+Put as a whole, $T$ should take the following form in which $m\in\ve{n}$ but $m\notin\ve{n'}$ ($\ve{n}$ is from equation (\ref{eq:normal_pid_1_faclike_prop}) and $\ve{n'}$ is some local names possibly used by $T$). %for some $\ve{n'},T'$
+\begin{equation}\label{eq:normal_pid_3}
+\lrangle{z}((\ve{n'})(\overline{m}z\para T'))
+\end{equation}
+%This actually implies that non-parameterized processes and non-name-passing processes cannot play the role of $T$.
+However, this is not possible in $\Pi^d$ since by no %(explicitly)
+means can a name be transmitted (at best abstraction is allowed to be communicated), so $T$ cannot be a member of $\Pi^d$.
+Therefore, this indicates that one has to expand the search area (possibly beyond $\Pi^d$) for such $T$.
+\end{itemize}
+%}%end \scriptsize
+
+
+%Below we provide a (counter-intuitive) example.
+
+%\sepp
+%\xx{\tofin
+%BELOW RE-organize (add/remove stuff) this subsection to make it logically smooth (SEE notes). \\
+%%(AGAIN the arguments here does not rule out  some possible 'novel' form of bisimulation that simplifies context bisimulation, the crux here is that the original idea of normal bisimulation does not work here) \\
+%(See reviewer 2's comments,e.g. \oo{``Couldn't you state what normal bisimulation would be like (forgetting the exact shape of triggers) and then show particular choices for triggers would not work?"}).
+%}
+
+
+%\begin{itemize}
+%\item A trigger now should be defined as $Tr_m\DEF \lrangle{z}\overline{m}z$, because it is supposed to carry names rather than processes. This immediately brings about a critical problem. That is, name-passing is not allowed in $\Pi^d_1$, and we only admit abstraction-passing.
+
+%\item In the definition of $\cong'$, the output clause should take the following form.
+%\begin{flushleft}
+%If $P \st{(\ve{c})\overline{a}A} P'$ then $Q \wt{(\ve{d})\overline{a}B} Q'$ for some $\ve{d},B,Q'$,
+%and it holds that ($m$ is fresh)
+%\[(\ve{c})(P'\para E[A]) \; \mathcal{R}\;  (\ve{d})(Q'\para  E[B])
+%\]
+%\end{flushleft}
+%where particularly it should be that $E[X]\DEF !m(z).X\lrangle{z}$ in line with the trigger form.
+%Again, the special environment $E[X]$ does not belong to the calculus $\Pi^d_1$.
+
+
+% \begin{definition}\label{normal-bisi-bigd} %[Normal bisimulation]
+% A symmetric binary relation $\mathcal{R}$ on closed processes of $\Pi^d_1$ is a normal bisimulation, if
+% %it is closed under substitution of names, and
+% whenever $P\,\mathcal{R}\, Q$ the following properties hold:
+% \begin{enumerate}
+% \item If $P \st{\tau} P'$, then $Q \wt{} Q'$ for some $Q'$ and $P'\,\mathcal{R}\, Q'$;
+
+% \item If $P \st{a(Tr_m)} P'$ and $Tr_m\equiv \lrangle{z}\overline{m}z$ ($m$ is fresh), then $Q \wt{Tr_m} Q'$ for some $Q'$ and $P'\,\mathcal{R}\, Q'$;
+
+% \item If $P \st{(\ve{c})\overline{a}A} P'$ then $Q \wt{(\ve{d})\overline{a}B} Q'$ for some $\ve{d},B,Q'$,
+% and it holds that ($m$ is fresh)
+% \[(\ve{c})(P'\para !m(z).A\lrangle{z}) \; \mathcal{R}\;  (\ve{d})(Q'\para  !m(z).B\lrangle{z})
+% \] where the $E[X]\DEF !m(z).X\lrangle{z}$ is special, compared to that in context bisimulation.
+% %and for every process $E[X]$  s.t. $\{\ve{c},\ve{d}\}\cap fn(E)=\emptyset$ it holds that $(\ve{c})(E[A]\para P') \; \mathcal{R}\;  (\ve{d})(E[B]\para Q')$.
+% \end{enumerate}
+% Process $P$ is normal bisimilar to $Q$, written $P\,\cong', Q$, if $P\,\mathcal{R}\, Q$ for some normal bisimulation $\mathcal{R}$. Relation $\cong'$ is called context bisimilarity.
+% %Normal bisimilarity, written $\cong$, is the largest context bisimulation.
+% \end{definition}
+
+%\item As for the input clause of $\cong'$, one meets with similar obstacle.
+%\end{itemize}
+
+% Therefore intuitively, the failure of trigger technique, and consequently the failure of the factorization theorem (\xx{and related techniques in general?}), deprives $\Pi^d_1$ of the normal bisimulation. Furthermore, below we provide a counterexample to exhibit the deprival of normal bisimulation in $\Pi^d_1$.
+
+%\subsection*{Non-coincidence with context bisimulation: a counterexample}
+%\vspace*{-.2cm}
+%\subsubsection*{A counterexample}
+%\subsubsection*{An example}
+%\subsubsection*{A counter-intuitive example}
+%\vspace*{-.3cm}
+
+%Therefore, the method of normal bisimulation as in \cite{San92} does not appear to be directly applicable in $\Pi^d$.
+We stress that the arguments above do not intend to rule out any possible form of (normal-like) bisimulation that simplifies context bisimulation, though that is what we believe.
+The crux here is that the original method of normal bisimulation does not appear to work in $\Pi^d$ by all means, probably due to the loss of a factorization property in nature.
+To understand this further, we explore an example. Define a $\Pi^d$ process $W\DEF A\lrangle{d}, \mbox{ in which } A\DEF \lrangle{x}\overline{x}$, and clearly $W\equiv \overline{d} \,\st{\overline{d}}\, 0$.
+%However if one tries to factorize out the subprocess $A$, some contradiction arises by the examining below.
+Now with regard to (\ref{eq:normal_pid_1_faclike_prop}), we expect to have
+$
+(\ve{n})(T\lrangle{d} \para F[A]) \approx A\lrangle{d}
+$. % (here $E[X]$ is $X\lrangle{d}$),
+%and by (\ref{eq:normal_pid_3})  %
+Assuming $T\equiv \lrangle{z}T''$, we have
+%$
+% (\ve{n})((\lrangle{z}T'')\lrangle{d} \para F[A]) \approx A\lrangle{d}
+%$ for some $T''$ s.t. $T\equiv \lrangle{z}T''$. Then we have
+%%\begin{equation}\label{eq:normal_pid_4}
+%%(\ve{n}\ve{n'})(\overline{m}d\para T'\fosub{d}{z} \para F[A]) \approx \overline{d} \qquad m\in\ve{n},m\notin\ve{n'}
+%%\end{equation}
+\begin{equation}\label{eq:normal_pid_4}
+(\ve{n})(T''\fosub{d}{z} \para F[A]) \approx \overline{d}
+\end{equation}
+On the face of (\ref{eq:normal_pid_4}), the left hand side of it is supposed to have a transition $\wt{\overline{d}}$, which should result from the internal interactions between its components (i.e., $T''\fosub{d}{z}$ and $F[A]$), and during these interactions $d$ must be received by $F$ so as to be fed to $A$ in its own (uniform) setting. However, there appears no hope that $T''$ can finish this job with only name parameterization in a purely higher-order realm, strikingly different from the case of $\Pi^{D,d}$. This might take us one step further to scrutinize the discrepancy in the role of names in higher-order models.
+
+%the crux here is that there is no way for $T''$ to transmit the concrete name $d$ to the newly-assigned place (i.e., $F$) for future use (i.e., for instantiation of the abstraction $A$), because all the processes here are strictly higher-order.
+
+%\begin{enumerate}
+%\item[1)] One is supposed to replace $A$ with a trigger of certain (general) form, say $T$, which has to be an abstraction \emph{on a name} (to remain well-typed); so $T$ must take the shape $\lrangle{z}T'$, and we have after a substitution
+%\begin{equation}\label{smalld-counterex-1}
+%W\hosub{T}{A}\equiv T'\fosub{d}{z}
+%\end{equation}  Now some sugar should be added, i.e. some context $F$ is needed to contain $W\hosub{T}{A}$ so that the resulting process bi-simulates $W$. Let us suppose $F$ is of the form
+%\[
+%(\ve{c})([\cdot] \para G[A])
+%\] in which $G$ should have $A$, in conformance to the rationale of factorization. Then generally, in terms of bisimulation, $F[T'\fosub{d}{z}]$ should engage in some internal moves between $T'\fosub{d}{z}$ and $G[A]$, so that in its current (different) position, $A$ can do the same action $\overline{d}$ after an instantiation on $x$. It is the responsibility of $T'$ to convey the particular information of $d$ to $G$.
+%
+%\item[2)] Holding back a little bit, a crux is that there is no way to transmit, with the help of any process (let alone a trigger), a concrete name for instantiation of the abstraction (e.g. in (\ref{smalld-counterex-1})) to the newly-assigned place for future access, because all the processes here are strictly higher-order.
+%\end{enumerate}
+
+%\subsubsection*{Further discussion}
+%\subsubsection*{Discussion}
+%In this subsection, we argue that there appears no way of directly extending the method of normal bisimulation from \cite{San92} to $\Pi^d$. %(at least in a direct fashion)
+%Note that, we are not trying to prove that there is no simplification of context bisimulation in $\Pi^d$. Rather, we are trying to convince (or provide some circumstantial evidence) that as it is, the method of normal bisimulation cannot be applied in presence of name-parameterization in a higher-order setting. Thus truly the argument is not fully formal. To this point, %we are not aware of how to express this in a completely formal way; this is
+%showing that a bisimulation cannot be generally simplified is a challenging task,
+%%and is likely to need some kind of precisely formulated criteria that stipulate the impossibility of applying certain technique.
+%and it must rest on some precisely formulated criteria, assuming which one can show the impossibility of applying certain techniques.
+
+%A similar work can be found in \cite{LSS09, LSS11}, in which higher-order processes with passivation is studied.
+%In that work, Lenglet et al. show that, among others, abstraction-free processes (as well as some other form of processes) are insufficient in distinguishing abstractions by context bisimulation, and this actually implies that using non-parameterized processes (e.g., the trigger $\overline{m}.0$) would not give rise to a simpler normal-like characterization of context bisimulation. This somewhat corresponds well with our normal characterization in $\Pi^D_n$, for the trigger there is an abstraction $\lrangle{Z}\overline{m}Z$.
+%Unfortunately, the technique used in \cite{LSS09, LSS11} cannot be applied here to show the
+%non-existence of normal-like characterization in $\Pi^d_n$ (actually as mentioned in \cite{LSS11},
+%it is not intended to show the impossibility of simplifying context bisimulation either); moreover, the
+%languages used are quite different (their relative expressiveness is not clear). Passivation
+%behaves like some dynamic (asynchronous) process emission, i.e., the process at the output
+%position may evolve (akin to ambient calculus in a sense \cite{CG00}). This makes the interaction between
+%processes more involved and thus somewhat short of normal bisimulation (only a restriction-free
+%sub-calculus is reported to have one, but the bisimulation is not exactly context bisimulation
+%but rather a higher-order bisimulation similar to that proposed by Thomsen
+%\cite{Tho93}). Moreover, the calculus used in \cite{LSS09, LSS11} is purely process-passing (i.e., no abstraction-passing), and the failure trial of normal bisimulation is discussed in such a setting and not extended to some richer setting such as one allowing abstraction-passing (this would probably render the bisimulation even more intricate in presence of passivation).
+%So a simpler characterization of higher-order processes with name-parameterization is still an open issue. This is quite an important topic, but would probably need a new round of thorough research. Our discussion here may provide some insight hopefully toward a potential solution.
+
+%...
+%\sepp
+%According to the above discussion, we conclude that the technique of normal bisimulation does not work for $\Pi^d_n$.
+%The results in this section shed light on the expressiveness of $\Pi^d_n$. Roughly speaking, it reflects that name parameterization offers more flexibility than process parameterization in expressiveness so that it is not obvious how to achieve a simpler characterization of context bisimulation. We discuss this point in more detail in Section \ref{sec:expressiveness}.
+
+
+
+
+
+
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: "main"
+%%% End:

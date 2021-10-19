@@ -1,0 +1,108 @@
+\section{Another approach of encoding \FOPi\ into \HOPiDd}\label{s:encoding_variant}
+In this section, we present another way of encoding \FOPi\ with \HOPiDd. This encoding, from which the encoding in the previous section borrows some inspiration, appears more natural in some sense, though its properties are not clear before this work \footnote{This encoding was suggested by Alan Schmitt during the communication concerning another work.}. 
+We note that the discussion of this section, among others, extends the preliminary work \cite{Xu16} and offers more insight into the `first-order' programming capacity of \HOPiDd. 
+
+%\nts{\fbox{move the discussion from section conclusion to here}}
+%\nts{\fbox{refactor the following and the appendix it points to (move here)}}
+
+%\rc{
+%The encoding of this work is inspired by a seemingly similar one proposed by . 
+The encoding, as given below skipping the homomorphic parts, somewhat swaps the roles of input and output and treats $a(x).P$ somehow as $a.\lrangle{x}P$ (like those calculi admitting abstractions and concretions \cite{San92}). For convenience, we reuse the encoding notation $\enc{\,}$ and there should be no confusion in context. 
+% \[
+% \begin{array} {rcl}
+% \enc{a(x).P} & \DEF & \overline{a}[\lrangle{x}\enc{P}] \\
+% \enc{\overline{a}b.Q} &\DEF & a(Y).(Y\lrangle{b}\para \enc{Q}) \\%\quad \quad (Y \mbox{ is fresh})
+% \end{array}
+% \]
+\[
+\begin{array} {rcl}
+\enc{m(x).P} & \DEF & \overline{m}[\lrangle{x}\enc{P}] \\
+\enc{\overline{m}n.Q} &\DEF & m(Y).(Y\lrangle{n}\para \enc{Q}) \\%\quad \quad (Y \mbox{ is fresh})
+\end{array}
+\]
+
+%\[
+%\mbox{ \begin{tabular}{l} 
+%\rc{[Optional] EXTEND the discussion of this encoding (to some extent) ? in Appendix \ref{appendix:variant_encoding}! } \\
+%\rc{(maybe without much proof) (1) operational correspodence: apparently not satisfied directly,}\\
+%\rc{(2) (counter)-example: try the original counterexample (Section \ref{s:encoding_soundness}) or its variant, } \\
+%\rc{(3) (partial) soundness: if the counterexample still applies (\bc{which seems the case}),} \\
+%\rc{then soundness is (similarly) compromised to the image,} \\
+%\rc{(4) completeness: may be still depend on the sujection of the reverse mapping of the encoding.}
+%\end{tabular}
+%}
+%\]
+\xx{The encoding strategy above only employs parameterization on name. One might wonder why not use \HOPiDd\ with process parameterization eliminated. We will comment on this at the end of this section. 
+From the angle of achieving first-order interaction, the encoding makes full use of the name-abstraction mechanism and is truly appealing. 
+Based on the results in Section \ref{s:encoding}, it is tempting to expect that this encoding have (nearly) the  same properties. %, and 
+%}
+However at first sight, it appears not to satisfy some usual operational correspondence (say, in \cite{Gor08a} or \cite{LPSS10}), and full abstraction is thus not quite clear. % with similar effort.
+This is indeed worthwhile for more investigation. 
+}
+\xx{Below first give an example of the encoding by reusing the instances in the last section, and then move on with the discussion of the encoding.
+}
+
+%\nts{\fbox{TODO: Give an example; reuse the example from Section \ref{s:encoding}}}
+
+We recall the two processes $P\DEF (c)(a(x).\overline{x}c.P_1)$ and $Q\DEF (d)(\overline{a}d.d(y).Q_1)$. Their composition has the folliwng transitions.
+\[
+\begin{array}{lcl}
+P\para Q &\st{\tau}& (d)((c)(\overline{d}c.P_1\fosub{d}{x})\para d(y).Q_1) \\
+&\st{\tau}& (dc)(P_1\fosub{d}{x}\para Q_1\fosub{c}{y})
+\end{array}
+\] 
+Now the encoding $\enc{P\para Q}$ and its corresponding transitions are given below. %For clarity, we use \textbf{bold font} to indicate the evolving part during a communication.
+\[
+\begin{array}{lrl}
+\enc{P\para Q} &\equiv& (c)(\overline{a}[\lrangle{x}\enc{\overline{x}c.P_1}]) \para (d)(a(Y).(Y\lrangle{d}\para \enc{d(y).Q_1})) \\
+&\st{\tau} \equiv& (c)(d)((\lrangle{x}\enc{\overline{x}c.P_1})\lrangle{d}\para \enc{d(y).Q_1}) \\
+&\equiv& (c)(d)(\enc{\overline{x}c.P_1})\fosub{d}{x} \para \enc{d(y).Q_1}) \\
+&\equiv& (c)(d)((x(Y).(Y\lrangle{c}\para \enc{P_1}))\fosub{d}{x} \para \overline{d}[\lrangle{y}\enc{Q_1}]) \\
+&\equiv& (c)(d)(d(Y).(Y\lrangle{c}\para \enc{P_1}\fosub{d}{x}) \para \overline{d}[\lrangle{y}\enc{Q_1}]) \\
+&\st{\tau} \equiv& (c)(d)((\lrangle{y}\enc{Q_1})\lrangle{c}\para \enc{P_1}\fosub{d}{x}) \\
+&\equiv& (dc)(\enc{P_1}\fosub{d}{x} \para \enc{Q_1})\fosub{c}{y}) \\
+&\equiv& (dc)(\enc{P_1\fosub{d}{x}} \para \enc{Q_1}\fosub{c}{y})) \\
+% (c)(a(Y).Y\lrangle{\lrangle{x}\enc{\overline{x}c.P_1}}) \,\para\, (d)(\overline{a}[\lrangle{Z}(Z\lrangle{d})].\enc{d(y).Q_1}) \\
+%  &\st{\tau}& (d)\big((c)(\bm{(\lrangle{Z}(Z\lrangle{d}))\lrangle{\lrangle{x}\enc{\overline{x}c.P_1}}}) \,\para\, \enc{d(y).Q_1} \big) \\
+%  &\equiv& (d)\big((c)( \bm{\enc{\overline{x}c.P_1}\fosub{d}{x}}) \,\para\, \enc{d(y).Q_1} \big) \\
+%  &\equiv& (d)\big((c)( \bm{ (\overline{x}[\lrangle{Z}(Z\lrangle{c})].\enc{P_1}) \fosub{d}{x}}) \,\para\, d(Y).Y\lrangle{\lrangle{y}\enc{Q_1}}  \big) \\
+%  &\equiv& (d)\big((c)( \bm{ (\overline{d}[\lrangle{Z}(Z\lrangle{c})].\enc{P_1}\fosub{d}{x}) }) \,\para\, d(Y).Y\lrangle{\lrangle{y}\enc{Q_1}}  \big) \\
+%  &\st{\tau}&  (dc)\big(\enc{P_1}\fosub{d}{x} \,\para\, \bm{(\lrangle{Z}(Z\lrangle{c}))(\lrangle{\lrangle{y}\enc{Q_1}})} \big) \\
+%  &\equiv&  (dc)\big(\enc{P_1}\fosub{d}{x} \,\para\, \enc{Q_1}\fosub{c}{y} \big) \\
+%  &\equiv&  (dc)\big(\enc{P_1\fosub{d}{x}} \,\para\, \enc{Q_1\fosub{c}{y}} \big)
+\end{array}
+\]
+
+
+
+
+
+
+%moved from appendix in the previous version
+\input{appendix_proof_variant_encoding.tex}
+%
+
+
+\paragraph{Remark.}
+Basically, the discussion of this section shows that the variant encoding is not weakly sound, let alone sound, although fortunately it is still complete. This warns us that a seemingly small difference in encoding strategy, e.g., swapping the input and output, can lead to rather unexpected results (notice also that because of this swapping, the counterexample for weak soundness in this section does not work for the encoding in Section \ref{s:encoding}).
+\xx{A closely relevant issue is whether we can use \HOPid\ instead of \HOPiDd (\HOPid\ denotes the expectable calculus, i.e., \HOPi\ with parameterization only on names). The point is that this would not bring back (weak) soundness (the counterexamples still work), rather causes us to lose the factorization property -- as far as we can see. Thus the completeness would become unclear, if not impossible.
+}
+Therefore it leaves open the problem of designing a (weakly) sound encoding of name-passing using parameterization on names alone.
+
+
+
+
+
+
+
+
+
+
+
+
+
+%---------------------------
+% Local Variables:
+% mode: LaTeX
+% TeX-master: "main.tex"
+% End:

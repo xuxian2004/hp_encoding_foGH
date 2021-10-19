@@ -1,0 +1,86 @@
+﻿%\section{Proofs for Section \ref{s:encoding}}\label{a:proofs-encoding}
+%***************************************************
+%NOW in the body, used by "encoding.tex"
+
+
+
+\begin{proof}[Proof of Lemma \ref{l:syn-pro-encoding}]
+It is straightforward to check that the encoding is compositional since the designated contexts are easy to capture. For the core of the encoding, the contexts for input and output are respectively $m(Y).Y\lrangle{\lrangle{x}[\cdot]}$ and $\overline{m}[\lrangle{Z}(Z\lrangle{n})].[\cdot]$. 
+%Also the encoding is divergence-reflecting, for the reason that it does not bring about any divergence. 
+As such, it is a simple induction, on the rules deriving $\equiv$, to show that the encoding preserves structural congruence. Below we prove by induction on the structure of $P$ that $\enc{P}\sigma \equiv \enc{P\sigma}$ in which $\sigma$ is a substitution (recall that $\sigma$ is a mapping on names).
+%\oo{\large \fbox{\#\#\#\# TODO}}
+\begin{itemize}
+\item $P$ is $0$. This is trivial.
+\item $P$ is $m(x).Q$. Then %m(Y).Y\lrangle{\lrangle{x}\enc{Q}}
+\[
+\begin{array}{lcll}
+\enc{P}\sigma &\equiv& (m(Y).Y\lrangle{\lrangle{x}\enc{Q}})\sigma & \quad \\
+ &\equiv& m'(Y).Y\lrangle{\lrangle{x}(\enc{Q}\sigma)} & \quad m' \mbox{ is } \sigma(m) \\
+ &\equiv& m'(Y).Y\lrangle{\lrangle{x}(\enc{Q\sigma})} & \quad \mbox{ind. hyp. (short for induction hypothesis)}\\
+ &\equiv& \enc{m'(x).Q\sigma} & \quad \\
+ &\equiv& \enc{(m(x).Q)\sigma} & \quad \\ 
+ &\equiv& \enc{P\sigma} & \quad
+\end{array}
+\]
+\item $P$ is $\overline{m}n.Q$. Then %\overline{m}[\lrangle{Z}(Z\lrangle{n})].\enc{Q}
+\[
+\begin{array}{lcll}
+\enc{P}\sigma &\equiv& (\overline{m}[\lrangle{Z}(Z\lrangle{n})].\enc{Q})\sigma & \quad \\
+ &\equiv& \overline{m'}[\lrangle{Z}(Z\lrangle{n'})].(\enc{Q}\sigma) & \quad m',n' \mbox{ are respectively } \sigma(m),\sigma(n) \\
+ &\equiv& \overline{m'}[\lrangle{Z}(Z\lrangle{n'})].(\enc{Q\sigma}) & \quad \mbox{ind. hyp.} \\
+ &\equiv& \enc{\overline{m'}n'.(Q\sigma)} & \quad \\
+ &\equiv& \enc{(\overline{m}n.Q)\sigma} & \quad \\
+ &\equiv& \enc{P\sigma} & \quad
+\end{array}
+\]
+\item $P$ is $(c)Q$. Then 
+\[
+\begin{array}{lcll}
+\enc{P}\sigma &\equiv& ((c)\enc{Q})\sigma & \quad  \\
+ &\equiv& (c)\enc{Q}\sigma & \quad  \\
+ &\equiv& (c)\enc{Q\sigma} & \quad \mbox{ind. hyp.} \\
+ &\equiv& \enc{(c)(Q\sigma)} & \quad  \\
+ &\equiv& \enc{((c)Q)\sigma} & \quad  \\
+ &\equiv& \enc{P\sigma} & \quad  
+\end{array}
+\]
+\item $P$ is $Q\para R$. Then 
+\[
+\begin{array}{lcll}
+\enc{P}\sigma &\equiv& (\enc{Q}\para \enc{R})\sigma  & \quad \\
+ &\equiv& \enc{Q}\sigma\para \enc{R}\sigma  & \quad \\
+ &\equiv& \enc{Q\sigma}\para \enc{R\sigma}  & \quad \mbox{ind. hyp.} \\ 
+ &\equiv& \enc{Q\sigma \para R\sigma}  & \quad  \\ 
+ &\equiv& \enc{(Q\para R)\sigma}  & \quad  \\ 
+ &\equiv& \enc{P\sigma}  & \quad 
+\end{array}
+\]
+\item $P$ is $!m(x).Q$. Then %!\enc{m(x).Q}
+\[
+\begin{array}{lcll}
+\enc{P}\sigma &\equiv& (!\enc{m(x).Q})\sigma & \quad \\
+ &\equiv& !(\enc{m(x).Q})\sigma & \quad \\
+ &\equiv& !(\enc{(m(x).Q)\sigma}) & \quad \mbox{similar to the input case} \\
+ &\equiv& \enc{!((m(x).Q)\sigma)} & \quad \\
+ &\equiv& \enc{(!m(x).Q)\sigma} & \quad \\
+ &\equiv& \enc{P\sigma} & \quad 
+\end{array}
+\]
+\end{itemize}
+\myqed
+\end{proof}
+
+
+
+
+
+
+
+
+
+
+%---------------------------
+% Local Variables:
+% mode: LaTeX
+% TeX-master: "main.tex"
+% End:

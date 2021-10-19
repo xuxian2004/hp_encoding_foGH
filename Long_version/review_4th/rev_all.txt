@@ -1,0 +1,433 @@
+From: ita@edpsciences.org
+Date: 27 September 2019 at 01:11:28 GMT+8
+To: xuxian2004@gmail.com
+Subject: ita180042 Editorial decision
+
+Dear Dr Xu,
+
+The manuscript entitled:
+Parameterizing Higher-order Processes on Names and Processes
+
+has been carefully reviewed by our referees (actually there is one report; the other report did not arrive on time, and anyhow the report that arrived is quite solid and in my opinion sufficient for a final decision).  As you can see from the enclosed report, some further revision is requested, before this paper can be finally accepted in RAIRO - ITA. While I cannot make a definite commitment, the probable course of action on a resubmitted version will be:
+o    Acceptance if all or most of the criticism has been met.
+
+Please accompany your resubmission by a letter indicating the specific changes that you have made and a brief response to any criticisms you have not attempted to meet.
+
+Please upload your revision (PDF + source files) via:
+https://articlestatus.edpsciences.org/is/ita/resubmit_a_paper.php
+Your Author ID : 159421
+Your Article reference number : ita180042
+
+
+We would like to inform you that the deadline for the resubmission of the revised version is 2 months following the editorial decision and that after that period, the article will be processed as a new manuscript.
+
+
+Sincerely yours,
+
+Editorial office, for
+Davide Sangiorgi
+Editor for RAIRO - ITA
+
+
+
+*****************
+REPORTS :
+
+Report from Referee 1:
+
+Report 1:
+This paper presents and studies two compositional encodings of the π calculus in a higher-order π calculus with name and process parameterization. In addition, a normal bisimilarity for the parameterized calculus is introduced and shown to coincide with context bisimilarity.
+
+The approach is interesting, but there are two significant technical issues that must be addressed before publication. The most crucial one is the absence of the proof that working up-to context is correct. In particular, I do not understand why the proof of Lemma 4 could not be reused to show that the encoding is sound (which would be problematic as a counter example is given). I suspect up-to context cannot be used for every context. The second issue is the absence of the proof that normal bisimilarity is a congruence.
+
+Regarding related work, why is there no reference to "On Parameterization of Higher-Order Processes" published in the International Journal of Computer Mathematics, Volume 94, 2017? I think it is strongly related to this paper.
+
+Best regards,
+
+Alan Schmitt
+
+- Page 1, "These results demonstrate more essence of the parameterization method in the higher-order paradigm toward expressiveness and behavioural equivalence." I do not understand what these results demonstrate.
+
+- Page 3, "In that effort, which somewhat precipitates the work here, we construct an encoding that harnesses the idea of Thomsen’s encoding and show that it is complete." and "Is there an encoding of first-order processes by the higher-order processes with the capability of parameterization?" It seems that the question you ask has already been answered by your previous paper. You need to explain why it is not the case.
+
+- Page 4, diagram for factorization (bottom of page). It might be easier to understand if m was fresh instead of put under restriction. It's not obvious one is allowed to remove restrictions *in the middle of a process* as part of congruence.
+
+- Page 6, "its relatively a bit" can be removed.
+
+- Page 7, "guarded input replication is used instead of general replication". Why not also have guarded output replication, as for the higher-order version?
+
+- Page 7, semantics of π. You need to define n() and bn() for labels. In particular, what is bn(a(b))? If it is ∅, then how do you avoid capture for communication of a bound name. If it is {b}, then how do you allow the reception of b if it is not restricted but present in parallel. More precisely, how do you deal with these two reductions?
+
+ a(x).P | a̅b | a̅b → P{b/x} | a̅b
+ a(x).b̅x | (b)(a̅b) → (c)b̅c (right now (b)b̅b seems allowed)
+
+- Page 7, semancis of π. You define structural congruence but do not use it in the semantics. Why?
+
+- Page 8, top of page. Do you mean α conversion should not result in name capture, or that you use α to always prevent name capture?
+
+- Page 8, Definition 1. Why use α instead of λ for labels here? And you do not need to list the labels if you include all of them.
+
+- Page 8, Definition 2. Can R have b free?
+
+- Page 9, top of page. You use the same notation E[P] and C[P] for two different notions: contexts can capture names in π, but substitution neither capture names nor variables in the higher-order version. This should be clarified and reflected in the notation.
+
+- Page 9, "and this shall not raise confusion under specific context" can be removed
+
+- Page 9, extension of semantics with structural congrunce. The structural congruence rule should come before, or you could delay introducing structural congruence till this point.
+
+- Page 9, "This application is modelled by an extensional rule". In what sense the rule is "extensional"? Do you mean "additional"?
+
+- Page 10, "For convenience, names are sometimes handled in a similar way as that in π (so are the related notations)". What does this mean? Please give examples.
+
+- Page 10, Definition 3, "B that is of the same type as A". Do you allow A to be <X>0 and B to be <X>(<Y>0)? They are both process abstractions. If you do not allow them, then the notion of types become crucial and should be given. Also the X in context E should have the same type.
+
+- Page 10, "to bear the same kind". Please define "kind". Is it "type"?
+
+- Page 10, "and abstractions is defined in the expected way" Abstractions are part of the syntax, so it is strange that you need to extend the definition of bisimulation. This should be part of definition 3 (where P can be an abstraction).
+
+- Page 11, "P' ≡ C[P'], Q' ≡ C[Q'']". Can this context capture names or variables? In other word, is it a different kind of context than the E ones?
+
+- Page 11, bottom of page. Nitpick: the up to context is already combined with structural congruence, as it is a congruence (so you can apply it in depth to P'' and Q'' when you build C[P''] and C[Q'']).
+
+- Page 12, Theorem 1. This theorem needs to be proven, as none of the referenced work use parameterization. I'm convinced the theorem is true for up to strong bisimilarity and up to structural congruence, but I'm sceptical regarding up to context.
+
+- Page 12, "up-to some structural congruence". Which?
+
+- Page 12, Section 2.3. If you don't need this additional structual congruence, please don't introduce it.
+
+- Page 12, Definition 6. Do you require completeness? It is not clear here.
+
+- Page 12, after definition 6. The definition of ≈̇₂ is not clear. The initial text seems to suggest that it is ≈₂ ∩ [|P₁|], but this seems to suggest it is a congruence where restricted sets of contexts may be considered. This needs to be clarified.
+
+- Page 13, last paragraph of Section 2. I do not understand the point being made, especially since it is said at the end it does not matter. This paragraph could be removed.
+
+- Page 14, Section 3.2, "Apparently". "Apparently" means "It seems that", typically to later say it is not the case. I'm not sure this is what you want to say here.
+
+- Page 14, "Literally in the meanwhile" can be removed.
+
+- Page 14, before Lemma 2, "(clause (2))". Say of which lemma or definition.
+
+- Page 14, "In Lemma 2 and Lemma 3, the input cases are not stated for an input". This only matters for Lemma 3.
+
+- Page 14, proof of Lemma 1, "Also the encoding is divergence-reflecting, for the reason that it does not bring about any divergence". This seems to need Lemmas 2 and 3 to be shown, so it should be moved to a new lemma after those are proven (since Lemmas 2 and 3 need Lemma 1 for renaming)
+
+- Page 17, Input case (at the top of the page). Please do not reuse T for different processes in the same subcase. Also, I don't understand how you go from "(m)(m̅[<x>[|P₁|]] | !m(Y).Y<b>)" to "(m)(!m(Y).Y<b> | [|P₁|]{b/x})". You do a communication? If so you should highlight it.
+
+- Page 18, end of proof. Same as before, is a communication happening here?
+
+- Page 19, example of soundness failure. You could give the intuition of why the particular example fails: it is possible to capture the process corresponding to b̅ then to duplicate it. This is similar to some behaviors that can be seen in presence of passivation (see [16], end of Section 2.3)
+
+- Page 19, mention of ≈̇ct. This was not formally defined, and it should be. The restriction is not only on processes to consider, but on the context E used for output.
+
+- Page 20, proof of Lemma 4, bound output case. There is something very wrong here: what prevents you from using E to create something like the process T of page 18 (assuming you were proving adequacy)? In other words, couldn't you use the same proof to show that the translation is sound (which you showed is not). Is the problem in the application of up-to context in some cases?
+
+- Page 20, "In terms of the notion of encoding, this is a more desired result." can be removed.
+
+- Page 21, argument that the label must be "a̅[<Z>(Z<b>)]". This should be made more formal (it should be its own lemma). Same thing for bound output.
+
+- Page 21, bottom of page. What if R mentions b? This seems to break the property as b cannot be free in E.
+
+- Page 22, "folliwng" → "following"
+
+- Page 23, Lemma 6, case 1. Why do you need bisimilarity here, and not simply structural congruence?
+
+- Page 25, "w.o.l.g." → "wlog"
+
+- Page 39. I did not check the proofs of the appendix.
+
+
+Report 2:
+The paper has been significantly improved by the latest revision. Most of my concerns have been addressed, with the exception of what constitutes a "legal" context for weak adequacy (see below in the detailed comments). I do not think a further round of reviewing is necessary.
+
+Best regards,
+
+Alan Schmitt
+
+Page 3, "operates names". Grammar (operates should have no 's'), and meaning: what does "operate names" mean? Is it "modify"?
+
+Page 3, discussion of being computationally complete. HO calculi (even without name restriction, let alone parameterization) are already computationally complete, so this argument is moot. Maybe you want to stress out that there is no *compositional* encoding of name passing using process passing.
+
+Page 4, discussion of HO bisimilarity. You should say that HO bisimilarity is correct, but it is too fine: it distinguishes processes that are actually equivalent.
+
+Page 4, example of factorization. The restriction (m) part is missing, hence this equation is wrong.
+
+Page 5, top diagram. You should keep the restriction (m) in this example, as it makes the factorization relation correct. It can indeed be removed in the definition of the relation R in the second diagram.
+
+Page 11, Now parameterization on process is obtained by taking U,K as X,T'. Why T' and not T?
+
+Page 12, example of Ω. How can this term occur if you use typing? What is its type?
+
+Page 12, definition 3. This would be much simpler if you introduced types, then you could says "of the same type".
+
+Page 12, definition 3, equation (*). Maybe say that E must be closed and not be an abstraction.
+
+Page 12, claim that context bisimularity is a congruence. It is a congruence for HOpi. You need to show it for your calculus.
+
+Page 14, definition 5. You need to stress in this definition that P'' and Q'' are closed, as you rely on it in the proof of Theorem 1. This matters a lot as it restricts the contexts that may be used.
+
+Page 15, definition 6. It is not clear whether you require completeness for your encoding. You should say it explicitly.
+
+Page 19, proof of Lemma 2. This proof could be moved to an appendix.
+
+Page 23, proof of Lemma 4, second case where you introduce the context for the up-to-context. Maybe highlight that these processes are closed.
+
+Page 24, proof of Lemma 5, second case where you restrict the transition done by [[Q]]. This could be described in an intermediary lemma proven in an appendix.
+
+Page 25, proof of Lemma 5, bound output case. This could be made more precise, for instance by setting E to be (.)<(x)R'>, where R' does not contain b and is such that R'{b/x} = [[R]].
+
+Page 27, Lemma 6, first case. Say that C is an *evaluation* context
+
+Page 27, proof of Lemma 6. This proof could be moved to an appendix.
+
+Page 31, context used for the counter-example for weak soundness. This notion of "legal" context should really be made formal. Up until this point, I thought a legal context was something like [[E(.)]] where [[.]] = . (as translation is compositional). Here you seem to change the rules be defining a legal context as a context that may be applied to yield a legal term. Please give a precise definition of a legal context.
+
+Page 33, proof of Lemma 9. This proof could be moved to an appendix.
+
+Page 43, proof of Theorem 1. You could initially show that R' is a congruence, as you use it in the proof by induction.
+
+You should also state that each Rn only relates closed processes.
+
+Page 43, property proved by induction. You state that each Rn meets the requirement for context bisimulation. I think this is wrong, or not clear enough. If you can show directly that R = R0 is a context bisimulation, why use an induction at all?
+
+The correct statement of the induction might be something like "if P Rn Q and P does a step, then Q does a step and the results are related (in a context bisimulation way) by R'". So you do not have that each Rn is a context bisimulation, but when you take them together as R', it works.
+
+
+
+
+
+_____________________________
+Editorial Office RAIRO ITA
+ita@edpsciences.org
+http://www.edpsciences.org
+
+** Summary **
+
+This paper studies the relationship between the pi-calculus and the higher-order pi-calculus equipped with parameterization. The ability to pass processes
+that are parameterized is called in the literature 'abstraction-passing'.
+
+The contribution of the paper could be summarized as follows: name-passing can be emulated with the ability to pass processes that are parameterized over names and processes.
+The author also provides a characterization of context bisimulation as normal form bisimulation for this calculus with parameterization, as it has been done for similar
+calculi.
+
+
+** Evaluation **
+
+The paper is poorly written, and sometimes sloppy in its conception. There are many examples of incorrect english or poorly phrased
+explanations, some of which are in the 'minor comments' section below. There are too many, however, to be exhaustive. Some technical issues
+are also discussed below.
+
+The main idea is quite natural: we can reasonably expect to capture name passing by having abstraction-passing, for both names and processes.
+However, the author already published a paper [2] showing name passing can be encoded through abstraction-passing, with only name abstractions.
+Therefore, there is really no surprise in the main results. The encodings presented in the paper are more natural, more concise; but this is not
+clear to me anything meaningful has been accomplished in this paper.
+
+Furthermore, the results regarding normal form bisimulation are already known for abstraction-passing calculi, with just one type of abstraction.
+Therefore, it is clear that by adding constructs to the language, thus making the contexts stronger, this characterisation would still hold
+(the addition of a new type of abstraction does not change the bisimulation itself).
+
+A lot of the proofs do not seem meaningful, and consist of just sequences of algebraic calculations.
+Those proofs could go in an appendix, however I am not convinced much would be left.
+
+I would advise against publication. For me, to be even considered, the paper should be almost entirely rewritten, and some convincing arguments
+should be given about its contribution and novelty.
+
+
+** Technical issues **
+
+The use of structural congruence to define abstraction and application (and substitution) is a problem:
+with such a rule, it is very easy to build an infinite derivation tree.
+
+Care has also to be taken in order to ensure that the 'normalization' of a substitution terminates.
+In [1], Sangiorgi uses a sorting/type system to ensure that substitutions terminate.
+It would seem important here, however it is barely refered to.
+Otherwise it is possible to write a diverging terms: <X>(X<X>)<<Y>(Y<Y>)> (this is basically Omega).
+Xu, X., Yin, Q., Long, H.: On the computation power of name parameterization in
+higher-order processes. In: Proceedings of 8th Interaction and Concurrency Experience
+(ICE 2015),
+
+** General comments **
+
+The proof of a lemma or theorem should be right after its statement, not after other lemmas, or
+a page of additional explanations.
+
+"Bisimulation" is sometimes used instead of "bisimilarity".
+
+
+About 'computational expressiveness':
+"higher-order processes equipped with parameterization are computationally more expressive."
+"it appears reasonable for such an extension to be able to
+express first-order processes since lambda-calculus is universal in computation."
+
+I'm not sure I understand these remarks; what does "computational expressiveness" mean here?
+I assume it is not computability. Furthermore, the lambda-calculus can be encoded
+in the higher-order pi-calculus, so I'm not sure what this means.
+
+
+** Minor comments **
+
+
+p.2
+
+Incorrect use of "i.e.":
+
+"but is very hard to analyze for
+full abstraction (i.e., the first-order processes are equivalent if and only if their
+encodings are; the ‘if only’ direction is called soundness and the other direc-
+tion is called completeness)."
+
+
+
+"the encoding has a correct operational correspondence (i.e., the correspondence between
+the processes before and after the encoding),"
+-> We establish an operational correspondence between the reductions of a process and its encoding.
+(incorrect use of "i.e.")
+
+p.3
+
+"This encoding depends heavily on the notions of ‘localized’ which means only
+the output capability of a name can be communicated during interactions, and
+‘asynchronous’ which means the output is non-blocking."
+-> This encoding relies heavily on output capability ...
+
+
+"Though technically a nice reference, intuitively because this variant of π-calculus is less expressive
+than the full π-calculus, it is not very surprising that the higher-order processes
+with parameterization on names can interpret it faithfully, i.e., fully abstract
+with respect to barbed congruence."
+-> remove
+
+"In that effort, which somewhat precipitates the work here, [...]"
+To that end, [...]. This inspired the present work.
+
+"This question is important in two aspects."
+-> respects
+
+p.4
+
+bisimulation is used but not explained
+
+
+"here | denotes concurrency,"
+-> We write | for the parallel composition
+
+"E[A] means putting A in the environment E."
+-> E[A] is a shorthand for E where the hole [.] is substituted by A.
+
+"To meet this challenge, a crucial so-called factorization theorem is used to circumvent technical difficulty."
+-> A crucial ingredient is a
+
+"how normal bisimulation is designed in the basic higher-order processes."
+
+"In particular, the factorization states the following property,"
+
+
+p.5
+
+"(i.e., not clear if the characterization remains true in a strictly higher-order setting without name-passing),"
+Incorrect use of i.e.
+
+"Such kind of encoding"
+-> This kind of encoding
+
+p. 7
+
+"2.1 Calculus π"
+-> $\pi$-calculus
+
+
+"Usually closed processes are considered by default"
+In pi, I'm don't think it makes a lot of sense.
+
+
+p.12
+"We define a notion of encoding"
+
+p.14
+
+Example:
+Put the example in an "example" block.
+
+Conclusion:
+
+"proper uniform-looking ‘trigger’"
+Does not make much sense to me
+
+p. 18
+
+"the soundness of the encoding is not true."
+-> the encoding is not sound
+
+
+p. 22
+
+"though its properties are not
+clear before this work 1"
+-> were not clear?
+-> avoid footnote
+
+
+"This encoding was suggested by Alan Schmitt
+during the communication concerning
+another work."
+-> "when discussing a different subject"?
+-> no point in that: just say the encoding was
+suggested by A. Schmitt
+
+
+p. 28
+
+"For the sake of conciseness, we use · to denote certain existent process."
+-> Here, . is some unspecified process.
+
+p.29
+
+"To summary,"
+-> To summarize
+
+
+p. 33
+"(i) if E[Trm] is <U>E' for some non-abstraction
+E' (here and below, <U>
+denotes the abstractions prefixing E ), then..."
+-> Simply replace E[Trm] by <~U>E[Trm] so you don't need E'...
+It feels like we should assume <~U>E' to be closed or something similar here.
+
+
+"(ii) particularly, if E[T r m ] is not an abstraction, then..."
+Remove this
+
+
+p.34
+
+"The proof is similar to those in the references [2, 22, 29, 34]."
+-> is similar to the congruence proofs in [2,...]
+
+"We note that although we have a new form of triggers here, the proof approach is exactly the
+same."
+Not very useful.
+The whole paragraph should be rewritten.
+
+p. 35
+"We only need to prove ≈_nr implies ≈_ct , since ≈ ct is obviously finer than ≈_nr."
+Explain why.
+
+
+"and leave out the similar (and simpler) rest."
+-> leave out the other cases.
+
+
+
+
+
+
+
+
+** References **
+
+1. Sangiorgi, D.: Expressing mobility in process algebras: First-order and higher-order
+paradigms. Phd thesis, University of Edinburgh (1992)
+
+2. Xu, X., Yin, Q., Long, H.: On the computation power of name parameterization in
+higher-order processes. In: Proceedings of 8th Interaction and Concurrency Experience
+(ICE 2015)
+

@@ -1,0 +1,166 @@
+\section{Conclusion}\label{s:conclusion}
+
+
+In this paper, we have exhibited two new encodings of name-passing in the higher-order paradigm that allows parameterization, and a normal bisimulation in that setting as well. In the former, we demonstrate the conformance or inconsistency of the encoding with respect to some well-established criteria in the literature. In the latter, we prove the coincidence between normal \xxxx{bisimilarity} and context \xxxx{bisimilarity} by pinpointing how to factorize an abstraction on some name. 
+\xxx{
+As a supporting byproduct, we show that the bisimulation up-to technique, particularly up-to context, works in the higher-order process model with parameterization.
+}
+% The encoding of this work is inspired by a seemingly similar one proposed by Alan Schmitt during the communication concerning another work. That encoding, as given below skipping the homomorphic parts, somewhat swaps the roles of input and output and treats $a(x).P$ somehow as $a.\lrangle{x}P$ (like those calculi admitting abstractions and concretions \cite{San92}). 
+% \[
+% \begin{array} {rcl}
+% \enc{a(x).P} & \DEF & \overline{a}[\lrangle{x}\enc{P}]\\
+% \enc{\overline{a}b.Q} &\DEF & a(Y).(Y\lrangle{b}\para \enc{Q}) \\%\quad \quad (Y \mbox{ is fresh})
+% \end{array}
+% \]
+% %\[
+% %\mbox{ \begin{tabular}{l} 
+% %\rc{[Optional] EXTEND the discussion of this encoding (to some extent) ? in Appendix \ref{appendix:variant_encoding}! } \\
+% %\rc{(maybe without much proof) (1) operational correspodence: apparently not satisfied directly,}\\
+% %\rc{(2) (counter)-example: try the original counterexample (Section \ref{s:encoding_soundness}) or its variant, } \\
+% %\rc{(3) (partial) soundness: if the counterexample still applies (\bc{which seems the case}),} \\
+% %\rc{then soundness is (similarly) compromised to the image,} \\
+% %\rc{(4) completeness: may be still depend on the sujection of the reverse mapping of the encoding.}
+% %\end{tabular}
+% %}
+% %\]
+
+% From the angle of achieving first-order interaction, the encoding strategy above only employs abstraction on name and is truly interesting. However at first sight, it appears not to satisfy some usual operational correspondence (say, in \cite{Gor08a} or \cite{LPSS10}), and full abstraction is not quite clear. % with similar effort.
+% Based on the results in this paper, it is tempting to expect that this encoding have some (nearly) same properties, and this is worthwhile for more investigation. 
+% {We thus extend the analysis of this encoding in Appendix \ref{appendix:variant_encoding}.} 
+% Basically, the discussion there shows that the encoding above is not weakly sound, let alone sound, although fortunately it is still complete. This warns us that a seemingly small difference in encoding strategy, e.g., swapping the input and output, can lead to rather unexpected results, and leaves open the problem of designing a (weakly) sound encoding of name-passing using abstraction on names alone.
+
+The results of this paper can be dedicated to facilitate further study on the expressiveness of higher-order processes. The following questions, among others, are still open: whether \FOPi\ can be encoded in a higher-order setting only allowing parameterization on processes; whether there is a better encoding of \FOPi\ than the one in Section \ref{s:encoding_variant} or in \cite{XYL15}, using higher-order processes only capable of parameterization on names (the corresponding calculus is written as $\HOPid$); whether \HOPid\ affords a normal-like characterization of context \xxxx{bisimilarity}. 
+%For the last one, we provide some intuitive but informal account below to show the difficulty in finding a solution. 
+For the last one, %intuitively 
+the major difficulty is to find a proper trigger-like apparatus, and then of course, the factorization property. 
+%The crux here is that the original method of normal bisimulation does not appear to work in $\Pi^d$ by all means, probably due to the loss of a factorization property in nature.
+%To understand this further, 
+To have a taste, let us revisit the example in Section \ref{s:normal}, i.e., the $\Pi^d$ process $W\DEF A\lrangle{d}, \mbox{ in which } A\DEF \lrangle{x}\overline{x}$, and clearly $W\equiv \overline{d} \,\st{\overline{d}}\, 0$. We note that the concrete name $d$ can be provided by the environment dynamically, i.e., during run-time.
+%However if one tries to factorize out the subprocess $A$, some contradiction arises by the examining below.
+%Now with regard to (\ref{eq:normal_pid_1_faclike_prop}), 
+We expect to have a factorization property like the one as follows: 
+\begin{equation}\label{eq:fac_smdonly_eg1}
+(\ve{c})(T\lrangle{d} \para F[A]) \WCB A\lrangle{d} \equiv \overline{d}
+\end{equation} % (here $E[X]$ is $X\lrangle{d}$), 
+%where $T$ is supposed to be a proper uniform-looking `trigger' (subject to the capability of the calculus), 
+\xxxx{where $T$ is supposed to be some `trigger' subject to the capability of the calculus, }
+and $F$ to be the new place holding a repository of $A$, with $\ve{c}$ being the local names shared by $T$ and $F$. %and by (\ref{eq:normal_pid_3})  %
+%Assuming $T\equiv \lrangle{z}T''$, we have 
+%$
+% (\ve{n})((\lrangle{z}T'')\lrangle{d} \para F[A]) \approx A\lrangle{d}
+%$ for some $T''$ s.t. $T\equiv \lrangle{z}T''$. Then we have
+%%\begin{equation}\label{eq:normal_pid_4}
+%%(\ve{n}\ve{n'})(\overline{m}d\para T'\fosub{d}{z} \para F[A]) \approx \overline{d} \qquad m\in\ve{n},m\notin\ve{n'}
+%%\end{equation}
+%\begin{equation}\label{eq:normal_pid_4}
+%(\ve{n})(T''\fosub{d}{z} \para F[A]) \WCB \overline{d}
+%\end{equation}
+%On the face of (\ref{eq:normal_pid_4}), 
+Now the left hand side \xxx{of (\ref{eq:fac_smdonly_eg1})} must have a transition $\wt{\overline{d}}$, which should result from the interaction between $T\lrangle{d}$ and $F[A]$, and during these interactions $d$ must be received by $F$ so as to be fed to $A$ in its own setting such that $A$ eventually gets the right instantiation \xxx{in some uniform way}. 
+However, strikingly different from the case of $\Pi^{D,d}$, there appears no hope that $T$ can finish this job of activating $A$ in $F[A]$ in need, with only name parameterization in a purely higher-order realm (i.e., no name-passing).   
+To this point, resolving this conundrum may amount to exploiting further the expressiveness of the parameterization on name; or otherwise, showing the impossibility of characterizing context \xxxx{bisimilarity} should rest on some precisely formulated criteria. This might take us one step further to scrutinize the discrepancy in the role of names in higher-order models.
+
+
+
+
+
+
+%\subsection{Discussion: Encoding \FOPi\ with \HOPiD\ or \HOPid}
+%\stress{Whether \FOPi\ can be encoded in \HOPid\ is still unknown, neither is the case with \HOPiD.}
+%
+%In \cite{XYL15}, we propose one such encoding which however is short of a satisfactory soundness result.
+%
+%Below is another trial by A. Schmitt. (\stress{A referential encoding of \FOPi\ in \HOPid\ (by A. Schmitt)})
+%\[
+%\begin{array} {rcl}
+%\enc{a(x).P} & \DEF & \overline{a}[\lrangle{x}\enc{P}]\\
+%\enc{\overline{a}b.Q} &\DEF & a(Y).(Y\lrangle{b}\para \enc{Q})\quad \quad (Y \mbox{ is fresh})
+%\end{array}
+%\]
+%
+%If we only consider the explanation of interaction (i.e., the $\tau$ action), then the above strategy would be interesting.
+%However, this strategy does not respect the notion of encoding given in Section \ref{s:criteria}. It does not satisfy, for example, the (weak) operational correspondence, as for any non-nil \FOPi\ process $P$, the encoding in \HOPid\ for input (i.e., $\enc{a(x).P}$) will evolve into a nill process after performing an output action. 
+%%Therefore the above schema is not precisely an encoding in the sense of our criteria. 
+%%Actually to our intuition, the encoding, if any, is somewhat akin to that in \cite{Tho93, XYL14}.
+%%That said,  This raises the question that in what condition we could adopt somewhat relaxed encoding criteria and still keep the study on expressiveness reasonable. This can be worthwhile for further investigation.
+
+%\sep\sep
+%\nts{\large FROM here TODO: simplify and shorten the red content below; CONSIDER use a single example (e.g., $W$ from below) to explain the core idea. Or DROP it entirely. }\sep
+%\sep
+%
+%%------------------------------------------------------------
+%%\input{normal_pid.tex}
+%\oo{\scriptsize
+%As shown above, the core of a normal-like characterization is the factorization property. Specifically, in order to recover the context bisimulation, one needs to work out some special form of processes to take the place of the general ones communicated during the simulation of input and output, without loss of any discriminating capability. Then by all means, the factorization property can be used to guide the design of a normal bisimulation. 
+%
+%%\rc{\scriptsize
+%%\xx{ FMI.}\\
+%%The core of a normal-like characterization is some property similar to factorization. The reason is that in order to design some special form of `small' process to {represent} the general ones during the simulation of input and output, such a process has to be endowed with the capability of retrieving the general requirement of context bisimulation. Such a kind of retrieval is, by all means, bound to attaching in parallel some `small' context containing a general process. This actually leads to some factorization-like property. Specifically,
+%\begin{itemize}
+%\item We recall the input clause of context bisimulation below in which $A$ is assumed to be an abstraction on a name.
+%\[
+%\mbox{If $P \st{a(A)} P'\DEF E[A]$, then $Q \wt{a(A)} Q'\DEF E'[A]$ for some $Q'$, and $E[A]\,\mathcal{R}\, E'[A]$}
+%\] %For convenience we assume $E$ and $E'$ is the receiving environments respectively corresponding to $P$ and $Q$.
+%In the very first spirit of normal bisimulation \cite{San92}, the general challenge using $A$ as the input calls for an representation by, say, a special simple term $T$. Accordingly, the requirement of relating $E[A]$ and $E'[A]$ is represented by that on $E[T]$ and $E'[T]$.
+%Suppose $F$ is the context where we put the represented $A$. 
+%%aimed at retrieving $E[A]$ (respectively $E'[A]$) using $(\ve{n})(E[T]\para F[A])$ (respectively $(\ve{n})(E'[T]\para F[A])$) where $\ve{m}$ are the (local) names possibly shared by $E[T]$ (respectively $E'[T]$) and $F$. 
+%The desired property would be that $(\ve{n})(E[T]\para F[A])$ is equivalent with $E[A]$ w.r.t. some bisimulation congruence (at least as fine as context bisimilarity), i.e., the factorization-like property below.
+%\begin{equation}\label{eq:normal_pid_1_faclike_prop}
+%(\ve{n})(E[T]\para F[A]) \approx E[A] \qquad (\mbox{respectively } (\ve{n})(E'[T]\para F[A]) \approx E'[A])
+%\end{equation}
+%As such, the gadget $T$ is responsible for activating $A$ in $F[A]$ in need (playing a role similar to `triggers').
+%%As such the factorization-like property (\ref{eq:normal_pid_1_faclike_prop}) is somewhat the core of a simpler characterization of context bisimulation.
+%
+%\item In the case of output, the context bisimulation requires that
+%\begin{center}
+%If $P \st{(\ve{c})\overline{a}A} P'$ then $Q \wt{(\ve{d})\overline{a}B} Q'$ for some $\ve{d},B,Q'$, and for every $E[X]$ ($\{\ve{c},\ve{d}\}\cap fn(E)=\emptyset$) it holds 
+%$(\ve{c})(E[A]\para P') \; \approx\;  (\ve{d})(E[B]\para Q')$.
+%\end{center}
+%In line with the way a normal bisimulation works, %as explained at the beginning of this section, % (and the section of introduction), 
+%and in accordance with the case of input, we are urged to apply (\ref{eq:normal_pid_1_faclike_prop}) to obtain the following transformation of closing statement of the output clause.
+%\begin{equation}\label{eq:normal_pid_2}
+%(\ve{c})((\ve{n})(E[T]\para F[A]) \para P') \; \approx\;  (\ve{d})((\ve{n})(E[T]\para F[B]) \para Q') \nonumber
+%\end{equation}
+%Then by isolating the different fragments on either side of (\ref{eq:normal_pid_2}), one has below the simplified requirement, which is more convenient work with since $F$ is a specific context.
+%\[
+%(\ve{c})(F[A]\para P') \; \approx\;  (\ve{d})(F[B]\para Q')
+%\] %Since $F$ is closely related to $T$ and does not have universal quantifier before it, this clause is supposed to be more convenient to use.
+%
+%\item For our purposes, the crucial point is to conceive the shape of $T$ (and subsequently $F$) subject to the capability of the calculus. 
+%%By analyzing the shape of $T$ based on the desired factorization-like property (\ref{eq:normal_pid_1_faclike_prop}), 
+%An easy fact is that it should be a name-parameterized process, so that it can take the place of the abstraction $A$. %because otherwise the substitution would not be . 
+%A tough job of $T$ is to transmit a concrete name, which it receives upon application over its parameterized name, to $F$ so as to be fed to $A$ therein such that $A$ eventually gets the right instantiation. This concrete name is provided by $E$ dynamically, i.e., during run-time.
+%%(provided by $E$ dynamically, i.e., during run-time) to $A$ in the customized context $F$, otherwise the instantiation would not be fulfilled correctly, and obviously $E$ would not take care of this in general.  
+%Put as a whole, $T$ should take the following form in which $m\in\ve{n}$ but $m\notin\ve{n'}$ ($\ve{n}$ is from equation (\ref{eq:normal_pid_1_faclike_prop}) and $\ve{n'}$ is some local names possibly used by $T$). %for some $\ve{n'},T'$
+%\begin{equation}\label{eq:normal_pid_3}
+%\lrangle{z}((\ve{n'})(\overline{m}z\para T'))
+%\end{equation} 
+%%This actually implies that non-parameterized processes and non-name-passing processes cannot play the role of $T$. 
+%However, this is not possible in $\Pi^d$ since by no %(explicitly)
+%means can a name be transmitted (at best abstraction is allowed to be communicated), so $T$ cannot be a member of $\Pi^d$. 
+%Therefore, this indicates that one has to expand the search area (possibly beyond $\Pi^d$) for such $T$.
+%\end{itemize}
+%%}%end \scriptsize
+%
+%%Therefore, the method of normal bisimulation as in \cite{San92} does not appear to be directly applicable in $\Pi^d$.
+%%We stress that the arguments above do not intend to rule out any possible form of (normal-like) bisimulation that simplifies context bisimulation, though that is what we believe. 
+%
+%}%color oo
+
+
+
+
+
+
+
+
+
+
+
+
+
+%---------------------------
+% Local Variables:
+% mode: LaTeX
+% TeX-master: "main.tex"
+% End:

@@ -1,0 +1,27 @@
+\section{\xxx{Proofs for Section \ref{s:preliminary}}}\label{appendix:up-to-context_general}
+
+We give the proof of Theorem \ref{thm:sound_up-to_context_general}.
+
+\begin{proof}[Proof of Theorem \ref{thm:sound_up-to_context_general}]
+Assume $\R$ is as defined in Definition \ref{d:up2}. %We show that the relation $\R'$ defined below is a context bisimulation \xxx{up-to $\equiv$}, thus proving the proposition.
+We define the relations $\R_n$ and $\R'$ as follows. Recall that $\mathbb{N}$ is the set of natural numbers.
+\[
+\begin{array}{lcl}
+\R_0 &\DEF& \R \\
+\R_{n+1} &\DEF& \left\{(C[M],C[N]) \,|\, M\,\R_{n}\, N \mbox{ and } C\in \mathcal{D} \right\} \\ %$\vartheta.[\cdot]$,
+\R' &\DEF& \bigcup_{i\in \mathbb{N}} \R_i \\\\
+\mathcal{D} &\DEF& \left\{
+\begin{array}{lllll}
+%[\cdot],  & 
+a(X).[\cdot],\quad & \overline{a}([\cdot]).R,\quad & \overline{a}A_1.[\cdot],\quad & \lrangle{X}[\cdot], \quad & \lrangle{x}[\cdot],\\~
+[\cdot]\lrangle{A_1}, & [\cdot]\lrangle{d}, & R\para [\cdot], & (d)[\cdot] &
+\end{array}
+\right\}
+\end{array}
+\]
+We prove by induction on $n$ that $\R'$ is a context bisimulation up-to $\equiv$. Since $\R\subseteq \R'$, $\R\subseteq \WCB$ follows.
+
+%-------------PROOF BODY BEGIN-------------
+\xx{TODO: to fetch from `NOTES'}
+%-------------PROOF BODY END-------------
+\end{proof}

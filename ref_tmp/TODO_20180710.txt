@@ -1,0 +1,4 @@
+(1) revise using the review (those useful part; discard others);
+(2) move the variant encoding into a separate section, and adjust the related part in conclusion/introduction.
+(3) emphasize the contribution and difference from the workshop paper in the introduction (copy sth from the cover letter);
+(3) try another journal;

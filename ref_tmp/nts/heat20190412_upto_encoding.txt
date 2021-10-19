@@ -1,0 +1,681 @@
+%>>>>>>>>>>>>proof up-to 
+
+
+%-------------FOR REF BEGIN-------------
+
+\begin{definition}[up-to context]\label{d:up3_encoding}
+
+A symmetric relation $\mathcal{R}$ on the image of the encoding is a context bisimulation up-to context, if whenever $P\,\mathcal{R}\, Q$ the following properties hold.
+
+\begin{itemize}
+
+\item if $P \st{\alpha} P'$ and $\alpha$ is $\tau$ or $a(A)$ in which $A$ is $\lrangle{Z}(Z\lrangle{b})$, then $Q \wt{\widehat{\alpha}} Q'$ for some $Q'$, $P'\equiv C[P'']$ and $Q'\equiv C[Q'']$ for some $P'', Q''$ and context $C$ that is an encoding, and $P''\,\mathcal{R}\, Q''$;
+
+
+\item if $P \st{(\ve{c})\overline{a}A} P'$ in which $A$ is $\lrangle{Z}(Z\lrangle{b})$ and $\ve{c}$ is either empty or $\{b\}$, 
+
+then $Q \wt{(\ve{c})\overline{a}A} Q'$ 
+
+and for every $E[\cdot]$ (\xx{or $E[X]$?}) that is an encoding and satisfies 
+
+$\{\ve{c}\}\cap \fn{E}=\emptyset$, 
+
+it holds that $(\ve{c})(E[A]\para P') \equiv C[P'']$ and $(\ve{c})(E[A]\para Q')\equiv C[Q'']$  
+
+for some $P'', Q''$ and context $C$ that is an encoding, and $P''\,\mathcal{R}\, Q''$.
+
+\end{itemize}
+
+\end{definition}
+
+
+%-------------FOR REF END-------------
+
+
+%-------------FOR NOTICE BEGIN-------------
+
+- We may write context and $C[\cdot]$ and often omit the $\cdot$ in $C[\cdot]$ for the sake of conciseness. 
+
+- The proof can be easily adapted to the proof of the correctness of the up-to context technique of general higher-order processes, for context bisimulation and even normal bisimulation. 
+
+-  The main thrust of the proof is somewhat akin to proving the congruence of a bisimilarity in a higher-order setting (actually it can. e somehow used to prove congruence properties) \cite{SW01a, san's new ref mentioned earlier}; (maybe also Howe's method, but essentially the same). So this indeed ensures that the context bisimulation on top of encodings (as well as on general higher-order processes) is a congruence. 
+
+-  
+
+-  
+
+%-------------FOR NOTICE END-------------
+
+
+We prove that $\R'$ is a context bisimulation (up-to \equiv$?? Seems YES!!). 
+
+%-------------PROOF BODY BEGIN-------------
+
+\begin{itemize}
+
+
+\item $C[P]\st{a(A)} T_1$ in which $A\equiv \lrangle{X}X\lrangle{b}$.
+
+\begin{itemize}
+
+\item $C$ is $[\cdot]$. This is immediate because $C[P]$ and $C[Q]$ are $P$ and $Q$ respectively, and $P\,\R\, Q$ from premise. 
+
+
+\item $C$ is $a(X).C_1[\cdot]$. In this case, $C[P]\st{a(A)} T_1\equiv C_1[P]\hosub{A}{X}\equiv C_2[P]$ for $C_2\DEF C_1\hosub{A}{X}$ since $P$ is closed. Then $C[Q]$ simulates by $C[Q] \st{a(A)}  C_1[Q]\hosub{A}{X}\equiv C_2[Q]$. So we have $C_2[P] \,\R'\, C_2[Q]$ with $P\,\mathcal{R}\, Q$.
+
+
+\item $C$ is $\overline{a}(C_1[\cdot]).R$. This is not possible.
+
+\item $C$ is $\overline{a}A_1.C_1[\cdot]$. This is not possible.
+
+\item $C$ is $\lrangle{X}C_1[\cdot]$. This is not possible.
+
+\item $C$ is $\lrangle{x}C_1[\cdot]$. This is not possible.
+
+\item $C$ is $C_1[\cdot]\lrangle{A_1}$. This actually falls onto the other cases after application. 
+
+\item $C$ is $C_1[\cdot]\lrangle{d}$. This actually falls onto the other cases after application. 
+
+
+\item $C$ is $R\para C_1[\cdot]$. There are three possibilities. 
+
+\begin{itemize}
+
+\item The action is from $P$. That is, $P\st{a(A)} P'$, and $C[P] \st{a(A)} R\para C_1[P']$. Since $P\,\R\, Q$, we know that $Q \wt{a(A)} Q'$ for some $Q'$, $P'\equiv C'[P'']$ and $Q'\equiv C'[Q'']$ for some $P'', Q''$ and context $C$ as stipulated, and $P''\,\mathcal{R}\, Q''$. So $C[Q]$ simulates by $C[Q] \wt{a(A)} R\para C_1[Q']$. Now we have for context $C_2\DEF R\para C_1[C'[]]$ 
+
+%(because $P$ is on a firable position)
+
+\[
+
+\begin{array}{lclcl}
+
+R\para C_1[P'] &\equiv& R\para C_1[C'[P'']] &\equiv& C_2[P'']  \\
+
+R\para C_1[Q'] &\equiv& R\para C_1[C'[Q'']] &\equiv& C_2[Q'']
+
+\end{array}
+
+\]
+
+Hence we obtain $C_2[P''] \,\R'\, C_2[Q'']$ with $P''\,\mathcal{R}\, Q''$. 
+
+
+\item The action is from $C_1$. That is,  $C_1[P]\st{a(A)} C_1'[P]$, and $C[P] \st{a(A)} R\para C_1'[P]$. So $C[Q]$ simulates by $C[Q] \st{a(A)} R\para C_1'[Q]$. Now we have for context $C_2\DEF R\para C_1'[]$ 
+
+%(because $P$ is on a firable position)
+
+\[
+
+\begin{array}{lcl}
+
+R\para C_1'[P] &\equiv& C_2[P]  \\
+
+R\para C_1'[Q] &\equiv& C_2[Q]
+
+\end{array}
+
+\]
+
+Hence we obtain $C_2[P] \,\R'\, C_2[Q]$ with $P\,\mathcal{R}\, Q$. 
+
+
+\item The action is from $R$. That is, $R\st{a(A)} R'$, and $C[P] \st{a(A)} R'\para C_1[P]$. So $C[Q]$ simulates by $C[Q] \st{a(A)} R'\para C_1[Q]$. Now we have for context $C_2\DEF R'\para C_1[]$ 
+
+%(because $P$ is on a firable position)
+
+\[
+
+\begin{array}{lcl}
+
+R'\para C_1[P] &\equiv& C_2[P]  \\
+
+R'\para C_1[Q] &\equiv& C_2[Q]
+
+\end{array}
+
+\]
+
+Hence we obtain $C_2[P] \,\R'\, C_2[Q]$ with $P\,\mathcal{R}\, Q$. 
+
+\end{itemize}
+
+
+\item $C$ is $(d)C_1[\cdot]$. There are two possibilities. 
+
+\begin{itemize}
+
+\item The action is from $P$. That is, $P\st{a(A)} P'$, and $C[P] \st{a(A)} (d)C_1[P']$. Since $P\,\R\, Q$, we know that $Q \wt{a(A)} Q'$ for some $Q'$, $P'\equiv C'[P'']$ and $Q'\equiv C'[Q'']$ for some $P'', Q''$ and context $C$ as stipulated, and $P''\,\mathcal{R}\, Q''$. So $C[Q]$ simulates by $C[Q] \wt{a(A)} (d)C_1[Q']$. Now we have for some context $C_2\DEF (d)C_1[C'[]]$ 
+
+%(because $P$ is on a firable position)
+
+\[
+
+\begin{array}{lclcl}
+
+(d)C_1[P'] &\equiv& (d)C_1[C'[P'']] &\equiv& C_2[P'']  \\
+
+(d)C_1[Q'] &\equiv& (d)C_1[C'[Q'']] &\equiv& C_2[Q'']
+
+\end{array}
+
+\]
+
+Hence we obtain $C_2[P''] \,\R'\, C_2[Q'']$ with $P''\,\mathcal{R}\, Q''$. 
+
+
+\item The action is from $C_1$. That is, $C_1[P]\st{a(A)} C_1'[P]$, and $C[P] \st{a(A)} (d)C_1'[P]$. So $C[Q]$ simulates by $C[Q] \st{a(A)} (d)C_1'[Q]$. Now we have for context $C_2\DEF (d)C_1'[]$ 
+
+%(because $P$ is on a firable position)
+
+\[
+
+\begin{array}{lcl}
+
+(d)C_1'[P] &\equiv& C_2[P]  \\
+
+(d)C_1'[Q] &\equiv& C_2[Q]
+
+\end{array}
+
+\]
+
+Hence we obtain $C_2[P] \,\R'\, C_2[Q]$ with $P\,\mathcal{R}\, Q$. 
+
+
+\end{itemize}
+
+\end{itemize}
+
+
+
+
+
+\item  $C[P]\st{(\ve{c})\overline{a}A} T_1$ in which $A\equiv \lrangle{X}X\lrangle{b}$ and $\ve{c}$ is $\{b\}$ or empty.
+
+\begin{itemize}
+
+\item $C$ is $[\cdot]$. This is immediate. 
+
+\item $C$ is $a(X).C_1[\cdot]$. This is not possible.
+
+
+\item $C$ is $\overline{a}(C_1[\cdot]).R$. This case does not make sense because in the encodings the term allowed to be on the object position of an output can only be of the form $\lrangle{X}X\lrangle{b}$. 
+
+
+\item $C$ is $\overline{a}A_1.C_1[\cdot]$. Then here  \ve{c}$ is empty, $A_1$ is $A$, and $T_1$ is $C_1[P]$. 
+
+So $C[Q]$ simulates by $C[Q]\st{\overline{a}A} C_1[Q]$. Now for every $E[\cdot]$ as specified in the definition, 
+
+consider $E[A]\para C_1[P] \equiv C'[P]$ and $E[A]\para  C_1[Q] \equiv C'[Q]$ in which $C'\DEF E[A]\para C_1[]$. Thus we have $C'[P] \,\R'\, C'[Q]$ with $P\,\mathcal{R}\, Q$.
+
+
+
+\item $C$ is $\lrangle{X}C_1[\cdot]$. This is not possible.
+
+\item $C$ is $\lrangle{x}C_1[\cdot]$. This is not possible.
+
+\item $C$ is $C_1[\cdot]\lrangle{A_1}$. This falls onto the other cases after application. 
+
+\item $C$ is $C_1[\cdot]\lrangle{d}$. This falls onto the other cases after application. 
+
+
+\item $C$ is $R\para C_1[\cdot]$. There are four  possibilities.
+
+\begin{itemize}
+
+\item The action is from $R$. That is, $R\st{(\ve{c})\overline{a}A} R'$ and $C[P]\equiv R\para C_1[P]\st{(\ve{c})\overline{a}A} T_1\equiv R'\para C_1[P]$. In this case, $C[Q]$ simulates by $C[Q]\st{(\ve{c})\overline{a}A} R'\para C_1[Q]$. Now we have  for every $E$ as demanded, and $C_2\DEF (\ve{c})(E[A]\para R'\para C_1[])$.
+
+\[
+
+\begin{array}{lcl}
+
+(\ve{c})(E[A]\para R'\para C_1[P]) &\equiv& C_2[P]  \\
+
+(\ve{c})(E[A]\para R'\para C_1[Q]) &\equiv& C_2[Q]
+
+\end{array}
+
+\]
+
+Hence we obtain $C_2[P] \,\R'\, C_2[Q]$ with $P\,\mathcal{R}\, Q$. 
+
+
+\item The action is from $C_1$. That is, $C_1[P]\st{(\ve{c})\overline{a}A} C_1'[P]$ and $C[P]\equiv R\para C_1[P]\st{(\ve{c})\overline{a}A} T_1\equiv R\para C_1'[P]$. In this case, $C[Q]$ simulates by $C[Q]\st{(\ve{c})\overline{a}A} R\para C_1'[Q]$. Now we have  for every $E$ as demanded, and $C_2\DEF (\ve{c})(E[A]\para R\para C_1'[])$.
+
+\[
+
+\begin{array}{lcl}
+
+(\ve{c})(E[A]\para R\para C_1'[P]) &\equiv& C_2[P]  \\
+
+(\ve{c})(E[A]\para R\para C_1'[Q]) &\equiv& C_2[Q]
+
+\end{array}
+
+\]
+
+Hence we obtain $C_2[P] \,\R'\, C_2[Q]$ with $P\,\mathcal{R}\, Q$. 
+
+
+\item The action is from $P$. That is, $P\st{(\ve{c})\overline{a}A} P'$ and $C[P]\equiv R\para C_1[P]\st{(\ve{c})\overline{a}A} T_1\equiv R\para C_1[P']$. In this case, since $P\,\R\, Q$, we know that $Q \wt{(\ve{c})\overline{a}A} Q'$, 
+
+and for every $E$ as described in the definition, 
+
+it holds that $(\ve{c})(E[A]\para P') \equiv C'[P'']$, $(\ve{c})(E[A]\para Q')\equiv C'[Q'']$, and $P''\,\mathcal{R}\, Q''$. So $C[Q]$ simulates by $C[Q] \wt{(\ve{c})\overline{a}A} R\para C_1[Q']$. Now, we have   for every $E$, and some $C_2$ (which exists because $P$ is in a firable position) and $C_3\DEF R\para C_2[C'[]]$. 
+
+\[
+
+\begin{array}{lclclclcl}
+
+(\ve{c})(E[A]\para R\para C_1[P']) &\equiv& R\para  (\ve{c})(E[A]\para C_1[P']) &\equiv&  R\para C_2[(\ve{c})(E[A]\para P')] &\equiv& R\para C_2[C'[P'']] &\equiv& C_3[P''] \\
+
+(\ve{c})(E[A]\para R\para C_1[Q']) &\equiv& R\para (\ve{c})(E[A]\para C_1[Q']) &\equiv& R\para C_2[(\ve{c})(E[A]\para Q')] &\equiv&  R\para C_2[C'[Q'']] &\equiv& C_3[Q'']
+
+\end{array}
+
+\]
+
+Hence we obtain $C_3[P''] \,\R'\, C_3[Q'']$ with $P''\,\mathcal{R}\, Q''$. 
+
+
+\item The action is from $P$ and $C_1$. That is, $P\st{\overline{a}A} P'$ and $C[P]\equiv R\para C_1[P]\st{(b)\overline{a}A} T_1\equiv R\para C_1'[P']$. 
+
+%This case is similar to the last one. 
+
+Since $P\,\R\, Q$, we know that $Q \wt{\overline{a}A} Q'$, 
+
+and for every $E$ as described in the definition, 
+
+it holds that $E[A]\para P' \equiv C'[P'']$, $E[A]\para Q'\equiv C'[Q'']$, and $P''\,\mathcal{R}\, Q''$. So $C[Q]$ simulates by $C[Q] \wt{(b)\overline{a}A} R\para C_1'[Q']$. Now, we have  for every $E$, and some $C_2$ (which exists because $P$ is in a firable position) and $C_3\DEF R\para (b)C_2[C'[]]$. 
+
+\[
+
+\begin{array}{lclclclcl}
+
+(b)(E[A]\para R\para C_1'[P']) &\equiv& R\para  (b)(E[A]\para C_1'[P']) &\equiv&  R\para (b)C_2[E[A]\para P'] &\equiv& R\para (b)C_2[C'[P'']] &\equiv& C_3[P''] \\
+
+(b)(E[A]\para R\para C_1'[Q']) &\equiv& R\para (b)(E[A]\para C_1'[Q']) &\equiv& R\para (b)C_2[E[A]\para Q'] &\equiv&  R\para (b)C_2[C'[Q'']] &\equiv& C_3[Q'']
+
+\end{array}
+
+\]
+
+Hence we obtain $C_3[P''] \,\R'\, C_3[Q'']$ with $P''\,\mathcal{R}\, Q''$. 
+
+\end{itemize}
+
+
+
+\item $C$ is $(d)C_1[\cdot]$. There are seven possibilities.  
+
+\begin{itemize}
+
+\item The action is from $P$, \ve{c}$ is empty and $d$ is $b$. That is, $P\st{\overline{a}A} P'$ and $C[P]\st{(b)\overline{a}A} C_1[P']$. Then since $\P\,\R\, Q$, 
+
+we know that $Q \wt{\overline{a}A} Q'$, 
+
+and for every $E$ as described in the definition, 
+
+it holds that $E[A]\para P' \equiv C'[P'']$, $E[A]\para Q'\equiv C'[Q'']$, and $P''\,\mathcal{R}\, Q''$. So $C[Q]$ simulates by $C[Q] \wt{(b)\overline{a}A} C_1[Q']$. Now, we have  for every $E$, and some $C_2$ (which exists because $P$ is in a firable position) and $C_3\DEF (b)C_2[C'[]]$. 
+
+\[
+
+\begin{array}{lclclcl}
+
+(b)(E[A]\para C_1[P']) &\equiv&  (b)C_2[E[A]\para P'] &\equiv& (b)C_2[C'[P'']] &\equiv& C_3[P''] \\
+
+(b)(E[A]\para C_1[Q']) &\equiv& (b)C_2[E[A]\para Q'] &\equiv&  (b)C_2[C'[Q'']] &\equiv& C_3[Q'']
+
+\end{array}
+
+\]
+
+Hence we obtain $C_3[P''] \,\R'\, C_3[Q'']$ with $P''\,\mathcal{R}\, Q''$. 
+
+
+\item The action is from $P$, $\ve{c}$ is $\{b\}$ and $d$ is not $b$. That is, $P\st{(b)\overline{a}A} P'$ and $C[P]\st{(b)\overline{a}A} (d)C_1[P']$. Then since $\P\,\R\, Q$, 
+
+we know that $Q \wt{(b)\overline{a}A} Q'$, 
+
+and for every $E$ as described in the definition, 
+
+it holds that $(b)(E[A]\para P') \equiv C'[P'']$, $(b)(E[A]\para Q') \equiv C'[Q'']$, and $P''\,\mathcal{R}\, Q''$. So $C[Q]$ simulates by $C[Q] \wt{(b)\overline{a}A} (d)C_1[Q']$. Now, we have  for every $E$, and some $C_2$ (which exists because $P$ is in a firable position) and $C_3\DEF (d)C_2[C'[]]$. 
+
+\[
+
+\begin{array}{lclclcl}
+
+(b)(E[A]\para (d)C_1[P']) &\equiv&  (d)C_2[(b)(E[A]\para P')] &\equiv& (d)C_2[C'[P'']] &\equiv& C_3[P''] \\
+
+(b)(E[A]\para (d)C_1[Q']) &\equiv& (d)C_2[(b)(E[A]\para Q')] &\equiv&  (d)C_2[C'[Q'']] &\equiv& C_3[Q'']
+
+\end{array}
+
+\]
+
+Hence we obtain $C_3[P''] \,\R'\, C_3[Q'']$ with $P''\,\mathcal{R}\, Q''$. 
+
+
+\item The action is from $P$ and $C_1$, $\ve{c}$ is $\{b\}$ and $d$ is not $b$. That is, $P\st{\overline{a}A} P'$ and $C[P]\st{(b)\overline{a}A} (d)C_1'[P']$. 
+
+%This case is similar to the last one. 
+
+Then since $\P\,\R\, Q$, 
+
+we know that $Q \wt{\overline{a}A} Q'$, 
+
+and for every $E$ as described in the definition, 
+
+it holds that $E[A]\para P' \equiv C'[P'']$, $E[A]\para Q' \equiv C'[Q'']$, and $P''\,\mathcal{R}\, Q''$. So $C[Q]$ simulates by $C[Q] \wt{(b)\overline{a}A} (d)C_1'[Q']$. Now, we have  for every $E$, and some $C_2$ (which exists because $P$ is in a firable position) and $C_3\DEF (bd)C_2[C'[]]$. 
+
+\[
+
+\begin{array}{lclclcl}
+
+(b)(E[A]\para (d)C_1'[P']) &\equiv&  (bd)C_2[E[A]\para P'] &\equiv& (bd)C_2[C'[P'']] &\equiv& C_3[P''] \\
+
+(b)(E[A]\para (d)C_1'[Q']) &\equiv& (bd)C_2[E[A]\para Q'] &\equiv&  (bd)C_2[C'[Q'']] &\equiv& C_3[Q'']
+
+\end{array}
+
+\]
+
+Hence we obtain $C_3[P''] \,\R'\, C_3[Q'']$ with $P''\,\mathcal{R}\, Q''$. 
+
+
+\item The action is from $P$, $\ve{c}$ is empty and $d$ is not $b$. That is, $P\st{\overline{a}A} P'$ and $C[P]\st{\overline{a}A} (d)C_1[P']$. Then since $\P\,\R\, Q$, 
+
+we know that $Q \wt{\overline{a}A} Q'$, 
+
+and for every $E$ as stipulated in the definition, 
+
+it holds that $E[A]\para P' \equiv C'[P'']$, $E[A]\para Q' \equiv C'[Q'']$, and $P''\,\mathcal{R}\, Q''$. So $C[Q]$ simulates by $C[Q] \wt{\overline{a}A} (d)C_1[Q']$. Now, we have  for every $E$, and some $C_2$ (which exists because $P$ is in a firable position) and $C_3\DEF (d)C_2[C'[]]$. 
+
+\[
+
+\begin{array}{lclclcl}
+
+E[A]\para (d)C_1[P'] &\equiv&  (d)C_2[E[A]\para P'] &\equiv& (d)C_2[C'[P'']] &\equiv& C_3[P''] \\
+
+E[A]\para (d)C_1[Q'] &\equiv& (d)C_2[E[A]\para Q'] &\equiv&  (d)C_2[C'[Q'']] &\equiv& C_3[Q'']
+
+\end{array}
+
+\]
+
+Hence we obtain $C_3[P''] \,\R'\, C_3[Q'']$ with $P''\,\mathcal{R}\, Q''$. 
+
+
+\item The action is from $C_1$, \ve{c}$ is empty and $d$ is $b$. That is, $C_1[P]\st{\overline{a}A} C_1'[P]$ and $C[P]\st{(b)\overline{a}A} C_1'[P]$. Then $C[Q]$ simulates by $C[Q] \st{(b)\overline{a}A} C_1'[Q]$. Now, we have  for every $E$, and $C_2\DEF (b)(E[A]\para C_1'[])$.
+
+\[
+
+\begin{array}{lcl}
+
+(b)(E[A]\para C_1'[P]) &\equiv&  C_2[P] \\
+
+(b)(E[A]\para C_1'[Q]) &\equiv&  C_2[Q]
+
+\end{array}
+
+\]
+
+Hence we obtain $C_2[P] \,\R'\, C_2[Q]$ with $P\,\mathcal{R}\, Q$. 
+
+
+\item The action is from $C_1$, $\ve{c}$ is $\{b\}$ and $d$ is not $b$. That is, $C_1[P]\st{(b)\overline{a}A} C_1'[P]$ and $C[P]\st{(b)\overline{a}A} (d)C_1'[P]$. Then $C[Q]$ simulates by $C[Q] \st{(b)\overline{a}A} (d)C_1'[Q]$. Now, we have  for every $E$, and $C_2\DEF (b)(E[A]\para (d)C_1'[])$.
+
+\[
+
+\begin{array}{lcl}
+
+(b)(E[A]\para (d)C_1'[P]) &\equiv&  C_2[P] \\
+
+(b)(E[A]\para (d)C_1'[Q]) &\equiv&  C_2[Q]
+
+\end{array}
+
+\]
+
+Hence we obtain $C_2[P] \,\R'\, C_2[Q]$ with $P\,\mathcal{R}\, Q$. 
+
+
+\item The action is from $C_1$, $\ve{c}$ is empty and $d$ is not $b$. That is, $C_1[P]\st{\overline{a}A} C_1'[P]$ and $C[P]\st{\overline{a}A} (d)C_1'[P]$. Then $C[Q]$ simulates by $C[Q] \st{\overline{a}A} (d)C_1'[Q]$. Now, we have  for every $E$, and $C_2\DEF E[A]\para (d)C_1'[]$.
+
+\[
+
+\begin{array}{lcl}
+
+E[A]\para (d)C_1'[P] &\equiv&  C_2[P] \\
+
+E[A]\para (d)C_1'[Q] &\equiv&  C_2[Q]
+
+\end{array}
+
+\]
+
+Hence we obtain $C_2[P] \,\R'\, C_2[Q]$ with $P\,\mathcal{R}\, Q$. 
+
+\end{itemize}
+
+\end{itemize}
+
+
+
+
+\item  $C[P]\st{\overline{a}A} T_1$ in which $A\equiv \lrangle{X}X\lrangle{b}$. \xx{Similar to the last case; MERGE and SKIP? seems yes!}
+
+\begin{itemize}
+
+\item $C$ is $[\cdot]$. 
+
+\item $C$ is $a(X).C_1[\cdot]$. 
+
+\item $C$ is $\overline{a}(C_1[\cdot]).R$. 
+
+\item $C$ is $\overline{a}A_1.C_1[\cdot]$. 
+
+\item $C$ is $\lrangle{X}C_1[\cdot]$. 
+
+\item $C$ is $\lrangle{x}C_1[\cdot]$. 
+
+\item $C$ is $C_1[\cdot]\lrangle{A_1}$.
+
+\item $C$ is $C_1[\cdot]\lrangle{d}$. 
+
+\item $C$ is $R\para C_1[\cdot]$. 
+
+\item $C$ is $(d)C_1[\cdot]$. 
+
+\end{itemize}
+
+
+
+
+\item  $C[P]\st{\tau} T_1$. 
+
+\begin{itemize}
+
+\item $C$ is $[\cdot]$. This is immediate. 
+
+\item $C$ is $a(X).C_1[\cdot]$. This is not possible. 
+
+\item $C$ is $\overline{a}(C_1[\cdot]).R$. This is not possible. 
+
+\item $C$ is $\overline{a}A_1.C_1[\cdot]$. This is not possible. 
+
+\item $C$ is $\lrangle{X}C_1[\cdot]$. This is not possible. 
+
+\item $C$ is $\lrangle{x}C_1[\cdot]$. This is not possible. 
+
+\item $C$ is $C_1[\cdot]\lrangle{A_1}$. This falls onto the other cases after application. 
+
+\item $C$ is $C_1[\cdot]\lrangle{d}$. This falls onto the other cases after application. 
+
+
+\item $C$ is $R\para C_1[\cdot]$.  Several possibilities. For two-part communication, we only consider one subcase in which one part makes input and the other makes output, and omit the other similar symmetric subcase in which their roles are switched. 
+
+\begin{itemize}
+
+\item $\tau$ is from $R$. Suppose $R\st{\tau} R'$, and $C[P]\st{\tau} R'\para C_1[P]$. Then $C[Q]$ simulates by $C[Q]\st{\tau} R'\para C_1[Q]$. So we set $C'\DEF R'\para C_1[]$, and have $C'[P]\,\R'\, C'[Q]$ in which $P\,\R\, Q$.
+
+
+\item $\tau$ is from $C_1$. Suppose $C_1[P] \st{\tau} C_1'[P]$, and $C[P]\st{\tau} R\para C_1'[P]$. Then $C[Q]$ simulates by $C[Q]\st{\tau} R\para C_1'[Q]$. So we set $C'\DEF R\para C_1'[]$, and have $C'[P] \,\R'\, C'[Q]$ in which $P\,\R\, Q$.
+
+
+\item $\tau$ is from $P$. Suppose $P\st{\tau} P'$, and  $C[P] \st{\tau} R\para C_1[P']$. Since $P\,\R\, Q$, we know $Q\wt{} Q'$ and $P'\equiv C_2[P'']$ and $Q'\equiv C_2[Q'']$ for some $P'', Q''$ and context $C_2$ that is an encoding, and $P''\,\R\, Q''$. So $C[Q]$ simulates by $C[Q] \wt{} R\para C_1[Q']$. Now consider the following pair:
+
+\[
+
+\begin{array}{lcl}
+
+R\para C_1[P'] &\equiv&  R\para C_1[C_2[P'']]  \\
+
+R\para C_1[Q']  &\equiv&  R\para C_1[C_2[Q'']]
+
+\end{array}
+
+\] Now setting $C_3\DEF R\para C_1[C_2[]]$ to be the context closes this case as required, because $C_3[P''] \,\R'\, C_3[Q'']$ with $P''\,\R\, Q''$.
+
+
+\item $\tau$ is from interaction between $R$ and $C_1$. 
+
+Suppose $C_1[P] \st{(\ve{c})\overline{a}A} C_1'[P]$ for some $C_1$, in which $A$ is $\lrangle{Z}(Z\lrangle{b})$ and $\ve{c}$ is either empty or $\{b\}$, $R \st{a(A)} R'$, and $C[P] \st{\tau} (\ve{c})(R'\para C_1'[P])$. Then  $C[Q] \st{\tau} (\ve{c})(R'\para C_1'[Q])$. We close this case by setting the context to be $C_2\DEF (\ve{c})(R'\para C_1'[])$, and having $C_2[P] \,\R'\, C_2[Q]$ with $P\,\R\, Q$.
+
+
+\item $\tau$ is from interaction between $R$ and $P$. Suppose $P \st{(\ve{c})\overline{a}A} P'$ in which $A$ is $\lrangle{Z}(Z\lrangle{b})$ and $\ve{c}$ is either empty or $\{b\}$, $R \st{a(A)} R'$, and $C[P] \st{\tau} (\ve{c})(R'\para C_1[P']) \equiv C_2[(\ve{c})(R'\para P')]$ for some $C_2$ since $P$ is in a firable position. Then since $P\R Q$, we know that $Q \wt{(\ve{c})\overline{a}A} Q'$, 
+
+and for every $E$ as described in the definition, 
+
+it holds that $(\ve{c})(E[A]\para P') \equiv C'[P'']$, $(\ve{c})(E[A]\para Q')\equiv C'[Q'']$, and $P''\,\mathcal{R}\, Q''$. So $C[Q]$ simulates by $C[Q] \wt{\tau} (\ve{c})(R'\para C_1[Q']) \equiv C_2[(\ve{c})(R'\para Q')]$.
+
+It meets the bisimulation requirement because one can take $E[A]$ to be $R'$ and obtain the following pair for some $C_3,P''',Q'''$ with $P'''\,\R\, Q'''$. 
+
+\[
+
+\begin{array}{lclcl}
+
+(\ve{c})(R'\para C_1[P']) &\equiv& C_2[(\ve{c})(R'\para P')] &\equiv& C_2[C_3[P''']] \\
+
+ (\ve{c})(R'\para C_1[Q']) &\equiv& C_2[(\ve{c})(R'\para Q')] &\equiv& C_2[C_3[Q''']
+
+\end{array}
+
+\] Now we set $C_4\DEF C_2[C_3[]]$ to be the context, and have as required $C_4[P'''] \,\R'\, C_4[Q''']$ with $P'''\,\R\, Q'''$.
+
+
+\item $\tau$ is from interaction between $R$ and $P$ together with $C_1$. Suppose $P \st{\overline{a}A} P'$ in which $A$ is $\lrangle{Z}(Z\lrangle{b})$ and $\ve{c}$ is $\{b\}$, $R \st{a(A)} R'$, and $C[P] \st{\tau} (b)(R'\para C_1'[P']) \equiv (b)C_2[R'\para P']$ for some $C_2$ since $P$ is in a firable position. 
+
+%This case is similar to the last one. 
+
+Then since $P\R Q$, we know that $Q \wt{\overline{a}A} Q'$, 
+
+and for every $E$ as described in the definition, 
+
+it holds that $E[A]\para P' \equiv C'[P'']$, $E[A]\para Q'\equiv C'[Q'']$, and $P''\,\mathcal{R}\, Q''$. So $C[Q]$ simulates by $C[Q] \wt{\tau} (b)(R'\para C_1'[Q']) \equiv (b)C_2[R'\para Q']$.
+
+It meets the bisimulation requirement because one can take $E[A]$ to be $R'$ and obtain the following pair for some $C_3,P''',Q'''$ with $P'''\,\R\, Q'''$. 
+
+\[
+
+\begin{array}{lclcl}
+
+(b)(R'\para C_1'[P']) &\equiv& (b)C_2[R'\para P'] &\equiv& (b)C_2[C_3[P''']] \\
+
+ (b)(R'\para C_1'[Q']) &\equiv& (b)C_2[R'\para Q'] &\equiv& (b)C_2[C_3[Q''']
+
+\end{array}
+
+\] Now we set $C_4\DEF (b)C_2[C_3[]]$ to be the context, and have as required $C_4[P'''] \,\R'\, C_4[Q''']$ with $P'''\,\R\, Q'''$.
+
+
+\item $\tau$ is from interaction between $P$ and $C_1$.    This case is similar to the last one. Notice that $C_1$ here has a role similar to $C$ in the last case. 
+
+%\xx{ok to skip? seems yes but ... will do still; done}
+
+Suppose $P \st{(\ve{c})\overline{a}A} P'$ in which $A$ is $\lrangle{Z}(Z\lrangle{b})$ and $\ve{c}$ is either empty or $\{b\}$, $C_1[P] \st{a(A)} C_1'[P]$, and $C[P] \st{\tau} R\para (\ve{c})(C_1'[P']) \equiv R\para C_2[(\ve{c})(T\para P')]$ for some $C_2$ and $T$ (which possibly has $A$ occurrence) since $P$ is in a firable position. Then since $P\R Q$, we know that $Q \wt{(\ve{c})\overline{a}A} Q'$, 
+
+and for every $E$ as described in the definition, 
+
+it holds that $(\ve{c})(E[A]\para P') \equiv C'[P'']$, $(\ve{c})(E[A]\para Q')\equiv C'[Q'']$, and $P''\,\mathcal{R}\, Q''$. So $C[Q]$ simulates by $C[Q] \wt{\tau} R\para (\ve{c})(C_1'[Q']) \equiv R\para C_2[(\ve{c})(T\para Q')]$.
+
+It meets the bisimulation requirement because one can take $E[A]$ to be $T$ and obtain the following pair for some $C_3,P''',Q'''$ with $P'''\,\R\, Q'''$. 
+
+\[
+
+\begin{array}{lclcl}
+
+R\para (\ve{c})(C_1'[P']) &\equiv& R\para C_2[(\ve{c})(T\para P')] &\equiv& R\para C_2[C_3[P''']] \\
+
+R\para (\ve{c})(C_1'[Q']) &\equiv& R\para C_2[(\ve{c})(T\para Q')] &\equiv& R\para C_2[C_3[Q''']
+
+\end{array}
+
+\] Now we set $C_4\DEF R\para C_2[C_3[]]$ to be the context, and have as required $C_4[P'''] \,\R'\, C_4[Q''']$ with $P'''\,\R\, Q'''$.
+
+\end{itemize}
+
+
+
+
+\item $C$ is $(d)C_1[\cdot]$. The action $C[P]\equiv (d)C_1[P] \st{\tau} T_1$ must come from $C_1[P] \st{\tau} T_2$ such that $(d)T_2$. There are several subcases.
+
+\begin{itemize}
+
+\item  $\tau$ is from $C_1$. Suppose $C_1[P] \st{\tau} C_1'[P]$, and $C[P]\st{\tau} (d)C_1'[P]$. Then $C[Q]$ simulates by $C[Q]\st{\tau} (d)C_1'[Q]$. So we set $C'\DEF (d)C_1'[]$, and have $C'[P] \,\R'\, C'[Q]$ in which $P\,\R\, Q$.
+
+
+\item $\tau$ is from $P$. Suppose $P\st{\tau} P'$, and  $C[P] \st{\tau} (d)C_1[P']$. Since $P\,\R\, Q$, we know $Q\wt{} Q'$ and $P'\equiv C_2[P'']$ and $Q'\equiv C_2[Q'']$ for some $P'', Q''$ and context $C_2$ that is an encoding, and $P''\,\R\, Q''$. So $C[Q]$ simulates by $C[Q] \wt{} (d)C_1[Q']$. Now consider the following pair:
+
+\[
+
+\begin{array}{lcl}
+
+(d)C_1[P'] &\equiv&  (d)C_1[C_2[P'']]  \\
+
+(d)C_1[Q']  &\equiv&  (d)C_1[C_2[Q'']]
+
+\end{array}
+
+\] Now setting $C_3\DEF (d)C_1[C_2[]]$ to be the context closes this case, because $C_3[P''] \,\R'\, C_3[Q'']$ with $P''\,\R\, Q''$.
+
+
+\item $\tau$ is from interaction between $P$ and$C_1$. Suppose $P \st{(\ve{c})\overline{a}A} P'$ in which $A$ is $\lrangle{Z}(Z\lrangle{b})$ and $\ve{c}$ is either empty or $\{b\}$, $C_1[P] \st{a(A)} C_1'[P]$, and $C[P] \st{\tau} (d)((\ve{c})(C_1'[P'])) \equiv (d)C_2[(\ve{c})(T\para P')]$ for some $C_2$ and $T$ (which possibly has $A$ occurrence) since $P$ is in a firable position. Then since $P\R Q$, we know that $Q \wt{(\ve{c})\overline{a}A} Q'$, 
+
+and for every $E$ as described in the definition, 
+
+it holds that $(\ve{c})(E[A]\para P') \equiv C'[P'']$, $(\ve{c})(E[A]\para Q')\equiv C'[Q'']$, and $P''\,\mathcal{R}\, Q''$. So $C[Q]$ simulates by $C[Q] \wt{\tau} (d)((\ve{c})(C_1'[Q'])) \equiv (d)C_2[(\ve{c})(T\para Q')]$.
+
+It meets the bisimulation requirement because one can take $E[A]$ to be $T$ and obtain the following pair for some $C_3,P''',Q'''$ with $P'''\,\R\, Q'''$. 
+
+\[
+
+\begin{array}{lclcl}
+
+(d)((\ve{c})(C_1'[P'])) &\equiv& (d)C_2[(\ve{c})(T\para P')] &\equiv& (d)C_2[C_3[P''']] \\
+
+(d)((\ve{c})(C_1'[Q'])) &\equiv& (d)C_2[(\ve{c})(T\para Q')] &\equiv& (d)C_2[C_3[Q''']
+
+\end{array}
+
+\] Now we set $C_4\DEF (d)C_2[C_3[]]$ to be the context as required, and have $C_4[P'''] \,\R'\, C_4[Q''']$ with $P'''\,\R\, Q'''$.
+
+\end{itemize}
+
+
+\end{itemize}
+
+
+\end{itemize}
+
+%-------------PROOF BODY END-------------
+
+
+
+
+
+
+
+
+
+Sent from my iPhone

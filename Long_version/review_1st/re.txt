@@ -1,0 +1,40 @@
+
+Subject:
+Fwd: [Iandc] Information and Computation C5145
+From:
+Information and Computation <iandc@csail.mit.edu>
+Date:
+7/6/17, 4:41 AM
+To:
+xuxian@ecust.edu.cn
+CC:
+"iandc@csail.mit.edu" <iandc@csail.mit.edu>
+
+
+
+
+-------- Forwarded Message --------
+Subject: 	[Iandc] Information and Computation C5145
+Date: 	Mon, 26 Jun 2017 16:48:47 -0400
+From: 	Information and Computation <iandc@csail.mit.edu>
+Reply-To: 	iandc@csail.mit.edu
+To: 	xuxian@ecust.edu.cn
+CC: 	iandc@csail.mit.edu <iandc@csail.mit.edu>
+
+
+Re: "Parameterizing Higher-order Processes on Names and Processes," by 
+Xian Xu, C5145
+
+Dear Dr. Xu,
+
+This is to acknowledge receipt of the above manuscript for consideration 
+for publication in Information and Computation. We will notify you when 
+the review is complete. In the meantime, please address any 
+correspondence concerning this paper to iandc@csail.mit.edu.  Your paper 
+has been assigned reference number C5145.
+
+Yours truly,
+Becky Shepardson, Assistant Editor
+Information and Computation
+
+

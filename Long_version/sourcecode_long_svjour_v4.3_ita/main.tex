@@ -1,0 +1,174 @@
+%%%%%%%%%%%%%%%%%%%%%%% file template.tex %%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% This is a template file for ITA 
+%
+% Copy it to a new file with a new name and use it as the basis
+% for your article
+%
+%%%%%%%%%%%%%%%%%%%%%%%%   EDP Sciences  %%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+\documentclass{ita}
+%
+%%%%%%%%%%%%%--PREAMBLE--%%%%%%%%%%%%%%%%%%
+%%-----------------------------
+%%         ...........
+%%         your macros
+%%         ...........
+%definitions
+\input{head_pc}
+
+
+%%-------------------------%%----
+%%%%%%%%%%%%%%%--BODY--%%%%%%%%%%%%%%%%%%
+\begin{document}
+%%-----------------------------
+%%      the top matter
+%%-----------------------------
+\title{Parameterizing Higher-order Processes on Names and Processes}
+%\thanks{...}%\thanks{...}\thanks{...}% At most 5 thanks
+% \thanks{A preliminary version of this work was presented at EXPRESS/SOS 2016. %Comparatively, 
+% This paper revises and extends that version with full-fledged proofs and more refined discussions (at least more than half new materials), and moreover, the detailed analysis of a variant encoding of interest. This encoding, mentioned only as a further direction in the preliminary version, is given thorough examination in this work.}
+% \thanks{This work has been supported by project ANR 12IS02001 PACE and NSF of China (61872142, 61261130589, 61472239, 61572318).}
+\thanks{A preliminary version of this work was presented at EXPRESS/SOS 2016. %Comparatively, 
+This paper revises and extends that version with full-fledged proofs and more refined discussions (at least more than half new materials), and moreover, the detailed analysis of a variant encoding of interest. This encoding, mentioned only as a further direction in the preliminary version, is given thorough examination in this work.}
+%\thanks{This work has been supported by project ANR 12IS02001 PACE and NSF of China (61872142, 61772336, 61572318, 61472239, 61261130589).}
+\thanks{This work has been supported by NSF of China (61872142, 61772336, 61572318, 61472239, 61261130589) and project ANR 12IS02001 `PACE'.}
+
+ 
+%
+\author{Xian Xu}\address{East China University of Science and Technology, Shanghai, China (200237).\\ Email: xuxian@ecust.edu.cn}
+%\author{...}\address{...}
+%\author{...}\address{...}
+%
+\date{}
+%
+\begin{abstract} 
+% Parameterization extends higher-order processes with the capability of abstraction and application (like those in lambda-calculus). As is well-known, this extension is strict, 
+% %i.e., higher-order processes equipped with parameterization are computationally more expressive. 
+% \xxxx{meaning that higher-order processes equipped with parameterization are strictly more expressive than those without parameterization. 
+% }
+% This paper studies strictly higher-order processes (i.e., no name-passing) with two kinds of parameterization: one on names and the other on processes themselves. We present two main results. One is that in presence of parameterization, higher-order processes can interpret first-order (name-passing) processes in a quite elegant fashion, in contrast to the fact that higher-order processes without parameterization cannot encode first-order processes at all. We present two such encodings and analyze their properties in depth, particularly full abstraction. In the other result, we provide a simpler characterization of the standard context \xxxx{bisimilarity} for higher-order processes with parameterization, in terms of the normal \xxxx{bisimilarity} that stems from the well-known normal characterization for higher-order calculus. 
+% \xxxx{As a spinoff, we show that the bisimulation up-to context technique is sound in the higher-order setting with parameterization.}
+% %These results demonstrate more essence of the parameterization method in the higher-order paradigm toward expressiveness and behavioural equivalence.
+Parameterization extends higher-order processes with the capability of abstraction and application (like those in lambda-calculus). As is well-known, this extension is strict, 
+%i.e., higher-order processes equipped with parameterization are computationally more expressive. 
+\xxxx{meaning that higher-order processes equipped with parameterization are strictly more expressive than those without parameterization. 
+}
+This paper studies strictly higher-order processes (i.e., no name-passing) with two kinds of parameterization: one on names and the other on processes themselves. We present two main results. One is that in presence of parameterization, higher-order processes can interpret first-order (name-passing) processes in a quite elegant fashion, in contrast to the fact that higher-order processes without parameterization cannot encode first-order processes at all. We present two such encodings and analyze their properties in depth, particularly full abstraction. In the other result, we provide a simpler characterization of the standard context \xxxx{bisimilarity} for higher-order processes with parameterization, in terms of the normal \xxxx{bisimilarity} that stems from the well-known normal characterization for higher-order calculus. 
+\xxxx{As a spinoff, we show that the bisimulation up-to context technique is sound in the higher-order setting with parameterization.}
+%These results demonstrate more essence of the parameterization method in the higher-order paradigm toward expressiveness and behavioural equivalence.
+
+
+\noindent\textbf{Keywords}: {Parameterization, Encoding, Context bisimulation, Normal bisimulation, Higher-order, First-order, Processes}
+\end{abstract}
+%
+%\subjclass{68Q85, 89.20.Ff, ???}
+\subjclass{68Q05, 68Q10, 68Q85}
+
+%\keywords{...}
+%
+\maketitle
+%%-----------------------------
+%%      your text
+%%-----------------------------
+% \section*{Introduction}
+% \section{...}
+% \subsection{...}
+% \subsection{...}
+% ...
+% \subsection{...}
+% %
+% \section{...}
+% \subsection{...}
+% \subsection{...}
+% ...
+% \subsection{...}
+% ...
+\input{introduction.tex}
+\input{preliminary.tex}
+\input{encoding.tex}
+\input{encoding_variant.tex}
+\input{normal.tex}
+\input{conclusion.tex}
+
+
+\subsection*{acknowledgements}
+%If you'd like to thank anyone, place your comments here
+%and remove the percent signs.
+We are grateful to the referees of EXPRESS/SOS 2016 for their useful comments on this article and related works. We also thank Alan Schmitt, Qiang Yin, and the anonymous reviewers for the helpful suggestions and communications. 
+%\end{acknowledgements}
+
+
+%%-----------------------------
+%%      your bibliography
+%%-----------------------------
+\bibliographystyle{spmpsci}
+\bibliography{process}
+
+
+%%-----------------------------
+%%      your appendix
+%%-----------------------------
+
+
+
+% \sepp
+% \clearpage
+% \appendix
+
+% \noindent\textbf{\Large Appendix}
+% %\sepp
+% \sepp
+
+% {%\normalsize
+
+% \noindent\textit{Remark}. For the sake of conciseness, in the arguments %in the appendix, 
+% we sometimes omit the existential statement such as ``for some ..." if clear from context.
+
+% %
+% \input{appendix_proof_upto_general.tex}
+% \clearpage
+% \input{appendix_proof_upto_enc_and_opcorres.tex}
+% \clearpage
+% %\input{appendix_proof_encoding.tex}
+% \input{appendix_proof_opcorres_others_variant_encoding.tex}
+% \clearpage
+% \input{appendix_proof_normal.tex}
+% \clearpage
+% %}{%
+%   %no appendixing
+% %}
+% }%normalsize
+
+\sepp
+\clearpage
+\appendix
+
+\noindent\textbf{\Large Appendix}
+%\sepp
+\sepp
+
+{%\normalsize
+
+\noindent\textit{Remark}. For the sake of conciseness, in the arguments %in the appendix, 
+we sometimes omit the existential statement such as ``for some ..." if clear from context.
+
+%
+\input{appendix_proof_upto_general.tex}
+\clearpage
+\input{appendix_proof_upto_enc_and_opcorres.tex}
+\clearpage
+%\input{appendix_proof_encoding.tex}
+\input{appendix_proof_opcorres_others_variant_encoding.tex}
+\clearpage
+\input{appendix_proof_normal.tex}
+\clearpage
+%}{%
+  %no appendixing
+%}
+}%normalsize
+
+
+
+\end{document}
+

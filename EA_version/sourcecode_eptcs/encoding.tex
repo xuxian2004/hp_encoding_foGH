@@ -1,0 +1,361 @@
+﻿\section{Encoding \FOPi\ into \HOPiDd}\label{s:encoding}
+We show that \FOPi\ can be encoded in \HOPiDd.
+%\bc{\scriptsize We first recall the notations:
+%\[
+%\begin{array}{ll}
+%\lrangle{X}P \,,\, A\lrangle{Q} \quad & \mbox{abstraction and application on processes} \\
+%\lrangle{x}P \,,\, A\lrangle{b} \quad & \mbox{abstraction and application on names}
+%\end{array}
+%\]
+%}
+
+\subsection{The encoding}
+%In light of related work in the field \cite{San92, Tho93, LPSS10, XYL14},
+%It is still not clear whether the encoding can be adapted (or rewritten) into one that only uses name parameterization.
+We have the encoding defined as below (being homomorphism on the other operators, except that the encoding of input guarded replication is defined as $\enc{!m(x).P}\DEF !\enc{m(x).P}$).
+\[
+\begin{array} {lrcll}
+ & \enc{m(x).P} & \DEF & m(Y).Y\lrangle{\lrangle{x}\enc{P}} & \\ %\quad \quad (Y \mbox{ is fresh}) \\
+ & \enc{\overline{m}n.Q} &\DEF & \overline{m}[\lrangle{Z}(Z\lrangle{n})].\enc{Q} &  \\ %\quad \quad (Z \mbox{ is fresh}) %\\
+%(\mbox{\rc{asynchronous}}) & \enc{\overline{m}n} &\DEF & \overline{m}[\lrangle{Z}(Z\lrangle{n})] & \quad \quad (Z \mbox{ is fresh})
+\end{array}
+\]
+The encoding above uses both name parameterization and process parameterization. %, and seems correct. 
+%We note that for input guarded replication, the encoding is. 
+Typically one can assume that $Y$ and $Z$ are fresh for simplicity, but this is not essential, because these variables are bound and can be $\alpha$-converted whenever necessary, and moreover the encoded first-order process does not have higher-order variables.
+Specifically, the encoding of an output `transmits' the name to be sent (i.e., $n$) in terms of a process parameterization (i.e., $\lrangle{Z}(Z\lrangle{n})$) that, once being received by the encoding of an input, is instantiated by a name-parameterized term (i.e., $\lrangle{x}\enc{P}$), which then can apply $n$ on $x$ in the encoding of $P$, thus fulfilling `name-passing'. Below we give an example. Suppose $P\DEF (c)(a(x).\overline{x}c.P_1)$ and $Q\DEF (d)(\overline{a}d.d(y).Q_1)$. So
+\[
+\begin{array}{lcl}
+P\para Q &\st{\tau}& (d)((c)(\overline{d}c.P_1\fosub{d}{x})\para d(y).Q_1) \\
+&\st{\tau}& (dc)(P_1\fosub{d}{x}\para Q_1\fosub{c}{y})
+\end{array}
+\] The encoding and interactions of $\enc{P\para Q}$ are as below. For clarity, we use \textbf{bold font} to indicate the evolving part during a communication.
+\[
+\begin{array}{lcl}
+\enc{P\para Q} &\equiv& (c)(a(Y).Y\lrangle{\lrangle{x}\enc{\overline{x}c.P_1}}) \,\para\, (d)(\overline{a}[\lrangle{Z}(Z\lrangle{d})].\enc{d(y).Q_1}) \\
+ &\st{\tau}& (d)\big((c)(\bm{(\lrangle{Z}(Z\lrangle{d}))\lrangle{\lrangle{x}\enc{\overline{x}c.P_1}}}) \,\para\, \enc{d(y).Q_1} \big) \\
+ &\equiv& (d)\big((c)( \bm{\enc{\overline{x}c.P_1}\fosub{d}{x}}) \,\para\, \enc{d(y).Q_1} \big) \\
+ &\equiv& (d)\big((c)( \bm{ (\overline{x}[\lrangle{Z}(Z\lrangle{c})].\enc{P_1}) \fosub{d}{x}}) \,\para\, d(Y).Y\lrangle{\lrangle{y}\enc{Q_1}}  \big) \\
+ &\equiv& (d)\big((c)( \bm{ (\overline{d}[\lrangle{Z}(Z\lrangle{c})].\enc{P_1}\fosub{d}{x}) }) \,\para\, d(Y).Y\lrangle{\lrangle{y}\enc{Q_1}}  \big) \\
+ &\st{\tau}&  (dc)\big(\enc{P_1}\fosub{d}{x} \,\para\, \bm{(\lrangle{Z}(Z\lrangle{c}))(\lrangle{\lrangle{y}\enc{Q_1}})} \big) \\
+ &\equiv&  (dc)\big(\enc{P_1}\fosub{d}{x} \,\para\, \enc{Q_1}\fosub{c}{y} \big) \\
+ &\equiv&  (dc)\big(\enc{P_1\fosub{d}{x}} \,\para\, \enc{Q_1\fosub{c}{y}} \big)
+\end{array}
+\]
+
+
+Apparently the encoding is compositional, preserves the (free) names, and moreover divergence-reflecting (since the encoding does not introduce any extra internal action), as stated in the follow-up lemma whose proof is a standard induction. %We stress that the side conditions in the encoding is not essential.
+\begin{lemma}
+Assume $P$ is a \FOPi\ process. The encoding above from \FOPi\ to \HOPiDd\ is compositional and divergence-reflecting; moreover $\enc{P}\fosub{n}{m} \equiv \enc{P\fosub{n}{m}}$.
+\end{lemma}
+%\sep
+
+\tdup{
+\bc{TODO (across \HOPid\ and \FOPi):}
+\begin{itemize}
+\item \bc{Operational correspondence}. \bc{$\checkmark$}
+
+\item \bc{Soundness/weak adequacy}.  \bc{$\checkmark$}
+(Ground bisimilarity: $\WGB$; Strong ground bisimilarity: $\SGB$; Context bisimilarity: $\WCB$; Strong context bisimilarity: $\SCB$)
+\[
+P\WGB Q \mbox{~~ implies ~~} \enc{P} \WCB \enc{Q}
+\]
+\stress{(Possibly use the result in Section \ref{s:normal} on normal bisimulation.)}
+\end{itemize}
+}
+
+\subsection{Operational correspondence}
+We have the following properties clarifying the correspondence of actions before and after the encoding.
+To delineate some case of the operational correspondence in terms of certain special input, i.e., a trigger, we define $\triggerD \DEF \lrangle{Z}\overline{m}Z$ in which $m$ is assumed to be fresh (it will also be used in Section \ref{s:normal}, but here simply allows for more flexible characterization of the operational correspondence). We note that sometimes existential quantification is omitted when it is clear from context.
+\begin{lemma}\label{l:opcor}
+Suppose $P$ is a \FOPi\ process.
+%\begin{enumerate}
+%\item 
+(1) If $P \st{a(b)} P'$, then $\enc{P} \st{a(\lrangle{Z}(Z\lrangle{b}))} T$ and $T\SCB \enc{P'}$; ~
+\tdup{
+\item (\rc{useful?seems not! to remove!}) If $P \st{a(b)} P'$, then for some fresh $m$, $\enc{P} \st{a(\lrangle{Z}\overline{m}[Z\lrangle{b}])} T$ and $(m)(T \para !m(Y).Y) \WCB \enc{P'}$;
+}
+%\rc{Use equation (\ref{eqn-fact-hopiDd}) to deal with $Z\lrangle{b}$ in $\lrangle{Z}\overline{m}[Z\lrangle{b}]$ ??}
+%\item 
+(2) If $P \st{a(b)} P'$, then $\enc{P} \st{a(\triggerD)} T$ and $(m)(T \para !m(Y).Y\lrangle{b}) \WCB \enc{P'}$; ~
+%\stress{ (relating $T$ and $\enc{P'}$) };\\
+%\item 
+(3) If $P \st{\overline{a}b} P'$, then $\enc{P} \st{\overline{a}[\lrangle{Z}(Z\lrangle{b})]} T$ and $T\SCB \enc{P'}$; ~
+%\item 
+(4) If $P \st{\overline{a}(b)} P'$, then $\enc{P} \st{(b)\overline{a}[\lrangle{Z}(Z\lrangle{b})]} T$ and $T\SCB \enc{P'}$; ~
+%\item 
+(5) If $P \st{\tau} P'$, then $\enc{P} \st{\tau} T$ and $T\SCB \enc{P'}$.
+%\end{enumerate}
+\end{lemma}
+
+The converse is as below.
+\begin{lemma}\label{l:opcor-conv}
+Suppose $P$ is a \FOPi\ process.
+%\begin{enumerate}
+%\item 
+(1) If $\enc{P} \st{a(\lrangle{Z}(Z\lrangle{b}))} T$, then $P \st{a(b)} P'$ and $T\SCB \enc{P'}$; ~
+\tdup{
+\item (\rc{useful? seems not! to remove!}) If for some fresh $m$, $\enc{P} \st{a(\lrangle{Z}\overline{m}[Z\lrangle{b}])} T$, then $P \st{a(b)} P'$ and $(m)(T \para !m(Y).Y) \WCB \enc{P'}$;
+}
+%\item 
+(2) If $\enc{P} \st{a(\triggerD)} T$, then $P \st{a(b)} P'$ and $(m)(T \para !m(Y).Y\lrangle{b}) \WCB \enc{P'}$; ~
+%\stress{ (relating $T$ and $\enc{P'}$) };\\
+%\item 
+(3) If $\enc{P} \st{\overline{a}[\lrangle{Z}(Z\lrangle{b})]} T$, then $P \st{\overline{a}b} P'$ and $T\SCB \enc{P'}$; ~
+%\item 
+(4) If $\enc{P} \st{(b)\overline{a}[\lrangle{Z}(Z\lrangle{b})]} T$, then $P \st{\overline{a}(b)} P'$ and $T\SCB \enc{P'}$; ~
+%\item 
+(5) If $\enc{P} \st{\tau} T$, then $P \st{\tau} P'$ and $T\SCB \enc{P'}$.
+%\end{enumerate}
+\end{lemma}
+
+Lemma \ref{l:opcor} and Lemma \ref{l:opcor-conv} can be proven in a similar fashion 
+\iftoggle{appendixing}{%
+  %using appendixing
+ (we give details in Appendix \ref{a:proofs-encoding}),
+}{%
+  %no appendixing
+ (details can be found in \cite{Xu16app}),
+}
+and moreover be lifted to the weak situation. That is, if one replaces strong transitions (single arrows) with weak transitions (double arrows), % and $\SCB$ with $\WCB$,
+the results still hold ($\SCB$ retains because the encoding does not bring any extra internal action); see \cite{San92,SW01a} for a reference.
+We will however simply refer to these two lemmas in related discussions.
+
+
+
+\subsection{Soundness}
+In this section, we discuss the soundness of the encoding.
+First of all, it is unfortunate that the soundness of the encoding is not true. To see this, take the processes $R_1$ and $R_2$ below. We recall that the CCS-like prefixes are defined as usual, i.e., $a.P\DEF a(x).P$ ($x\notin \n{P}$), $\overline{a}.P\DEF (c)\overline{a}c.P$ ($c\notin \n{P}$); sometimes we trim the trailing $0$, e.g., $a$ stands for $a.0$ and $\overline{a}$ for $\overline{a}.0$.
+\[
+\begin{array}{lcllcl}
+R_1 &\DEF& (b)(a.\overline{b} \para b.\overline{c}) &\qquad\quad R_2 &\DEF& (b)(a.\overline{b} \para b.\overline{c} \para b.\overline{c})
+\end{array}
+\]
+Obviously, $R_1$ and $R_2$ are ground bisimilar.
+%(The synchronizations are defined as usual. )
+Now we examine their encodings. %m(Y).Y\lrangle{\lrangle{x}\enc{P}}   ;      \overline{m}[\lrangle{Z}(Z\lrangle{n})].\enc{Q}
+\[
+\begin{array}{lcl}
+\enc{R_1} &\equiv& (b)(a(Y).Y\lrangle{\lrangle{x}\enc{\overline{b}}} \para b(Y).Y\lrangle{\lrangle{x}\enc{\overline{c}}}) \\
+\enc{R_2} &\equiv& (b)(a(Y).Y\lrangle{\lrangle{x}\enc{\overline{b}}} \para b(Y).Y\lrangle{\lrangle{x}\enc{\overline{c}}} \para b(Y).Y\lrangle{\lrangle{x}\enc{\overline{c}}})
+\end{array}
+\]
+
+We show that $\enc{R_1}$ and $\enc{R_2}$ are not context bisimilar. Define $T\DEF (m)(\overline{a}[\lrangle{Z}\overline{m}Z] \para m(X).(X\lrangle{d} \para X\lrangle{d})$.
+Then $(a)(\enc{R_1}\para T)$ and $(a)(\enc{R_2}\para T)$ can be distinguished. The latter can fire two output on $c$, whereas the former cannot, as shown below.
+\[
+\begin{array}{lrl}
+ &(a)(\enc{R_1}\para T) \quad \st{\tau}\SCB& (m)((b)(\overline{m}[\lrangle{x}\enc{\overline{b}}] \para b(Y).Y\lrangle{\lrangle{x}\enc{\overline{c}}}) \para m(X).(X\lrangle{d} \para X\lrangle{d})) \\
+&\st{\tau}\SCB& (b)(b(Y).Y\lrangle{\lrangle{x}\enc{\overline{c}}} \para \enc{\overline{b}} \para \enc{\overline{b}}) \\
+&\equiv& (b)(b(Y).Y\lrangle{\lrangle{x}\enc{\overline{c}}} \para (e)\overline{b}[\lrangle{Z}(Z\lrangle{e})] \para \enc{\overline{b}}) \\
+&\st{\tau}\SCB& (b)(\enc{\overline{c}} \para \enc{\overline{b}}) \\
+&\equiv& (b)((f)\overline{c}[\lrangle{Z}(Z\lrangle{f})] \para \enc{\overline{b}}) \\
+&\st{(f)\overline{c}[\lrangle{Z}(Z\lrangle{f})]}\SCB& 0 %\\\\
+\end{array}
+\]
+\[
+\begin{array}{lrl}
+ &(a)(\enc{R_2}\para T) \quad \st{\tau}\SCB& (m)((b)(\overline{m}[\lrangle{x}\enc{\overline{b}}] \para b(Y).Y\lrangle{\lrangle{x}\enc{\overline{c}}} \para b(Y).Y\lrangle{\lrangle{x}\enc{\overline{c}}}) \para m(X).(X\lrangle{d} \para X\lrangle{d})) \\
+&\st{\tau}\SCB& (b)(b(Y).Y\lrangle{\lrangle{x}\enc{\overline{c}}}\para b(Y).Y\lrangle{\lrangle{x}\enc{\overline{c}}} \para \enc{\overline{b}} \para \enc{\overline{b}}) \\
+&\equiv& (b)(b(Y).Y\lrangle{\lrangle{x}\enc{\overline{c}}}\para b(Y).Y\lrangle{\lrangle{x}\enc{\overline{c}}} \para (e)\overline{b}[\lrangle{Z}(Z\lrangle{e})] \para (e)\overline{b}[\lrangle{Z}(Z\lrangle{e})]) \\
+&\st{\tau}\st{\tau}\SCB& \enc{\overline{c}} \para \enc{\overline{c}} \\
+&\equiv& (f)\overline{c}[\lrangle{Z}(Z\lrangle{f})] \para (f)\overline{c}[\lrangle{Z}(Z\lrangle{f})] \\
+&\st{(f)\overline{c}[\lrangle{Z}(Z\lrangle{f})]}\SCB& (f)\overline{c}[\lrangle{Z}(Z\lrangle{f})] \\
+&\st{(f)\overline{c}[\lrangle{Z}(Z\lrangle{f})]}\SCB& 0
+\end{array}
+\]
+
+
+Intuitively, the reason general soundness does not hold is that context bisimulation is somewhat more discriminating in the target higher-order calculus, which can have more flexibility when dealing with blocks of processes in presence of parameterization (e.g., some subprocess can be sent as needed). This is however beyond the capability of a first-order process.
+
+In spite of the falsity of soundness in general, we can have a somewhat weaker yet still sensible soundness. Remember that our main goal is to achieve first-order concurrency in the higher-order model, so maybe we do not need to be so demanding when coping with the encodings of  first-order processes, that is, when testing an encoding process with an input, one can focus on those representing a name instead of a general one. Then it is expected that soundness will hold under this assumption. Fortunately, this is indeed true.
+
+%The choice of this variant soundness is further motivated below.(opt.) .
+
+%\sepp
+
+%The soundness of the encoding is stated in the followig lemma.
+We have the following lemma stating the weak soundness of the encoding. Recall that $\WWCB$ is the $\WCB$ restricted to the image of the encoding (i.e., the processes in the target model that have reverse-image w.r.t. the encoding).
+\begin{lemma}\label{l:soundness}
+Suppose $P$ is a \FOPi\ process. Then $P\WGB Q$ implies $\enc{P} \,\WWCB\, \enc{Q}$.
+\end{lemma}
+
+\tdup{
+$\myxcancel{
+\fbox{
+\begin{minipage}{8cm}
+\rc{Use normal bisimulation for \HOPiDd\ to prove soundness, and original context bisimulation for completeness (?); Notice normal bisimulation for \HOPiDd\ inherits that for \HOPiD\ (type of input can be name-parameterization or process-parameterization.)}
+\end{minipage}
+}}$
+}
+
+\begin{proof}
+\tdup{
+\stress{ \scriptsize DONE! $\bcancel{\mbox{TODO: ,}}$
+to deal with input and output, USE ``up-to context" technique (\cite{SW01a}, page 80-92; to confirm that it can be extended to higher-order paradigm (e.g., the case a context hole appears beneath an input or name-abstraction (seems ok)) !!; maybe also notice (e.g.) \cite{BPPR15}). }
+
+\stress{ \scriptsize NOTICE that in input/output bisimulation (to prove $\enc{P}\WNB \enc{Q}$ or $\enc{P}\WCB \enc{Q}$):
+\begin{itemize}
+\item (by going through the FO processes $P,Q$) $\enc{P}\st{a(\triggerD)}$ must be able to be matched by $\enc{Q}\st{a(\triggerD)}$;
+\item (by going through the FO processes $P,Q$)  $\enc{P}\st{\overline{a}[\lrangle{Z}(Z\lrangle{b})]}$ must be able to be matched by $\enc{Q}\st{\overline{a}[\lrangle{Z}(Z\lrangle{b})]}$.
+\end{itemize}}
+}
+
+%\sep
+
+We show that $\mathcal{R}\DEF \{(\enc{P},\enc{Q}) \,|\, P\WGB Q\} \cup \WWCB$ is a context bisimulation up-to context and $\SCB$ (we refer the reader to, for example,  \cite{SW01a,BPPR15} and the references therein for the up-to proof technique for establishing bisimulations; we note that using $\SCB$ here is sufficient since it is stronger than $\WSCB$, i.e., $\SCB$ restricted to the image of the encoding). %\stress{\large ***About the ``up-to context" technique (\cite{SW01a}, page 80-92; to confirm that it can be extended to higher-order paradigm (e.g., the case a context hole appears beneath an input or name-abstraction. (seems ok)) !!; maybe also notice (e.g.) \cite{BPPR15}).***}
+
+Suppose $\enc{P}\,\mathcal{R}\, \enc{Q}$. There are several cases, where  Lemma \ref{l:opcor} and Lemma \ref{l:opcor-conv} %(as well as their weak versions)
+play an important part.
+\begin{itemize}
+\item $\enc{P}\wt{a(\lrangle{Z}(Z\lrangle{b}))} T$.
+By Lemma \ref{l:opcor-conv}, $P \wt{a(b)} P'$ and $T\SCB \enc{P'}$. Because $P\WGB Q$, we know that $Q \wt{a(b)} Q'$ ~ $\WGB P'$ and thus $\enc{P'} \,\mathcal{R}\, \enc{Q'}$. Then by Lemma \ref{l:opcor}, $\enc{Q} \wt{a(\lrangle{Z}(Z\lrangle{b}))} T'$ and $T'\SCB \enc{Q'}$. So we have $T \SCB \enc{P'} \,\mathcal{R}\, \enc{Q'} \SCB T'$.
+
+\tdup{
+$\myxcancel{
+\fbox{
+\begin{minipage}{14cm}
+$\enc{P}\wt{a(\triggerD)} T$. \stress{todo ~~ (\& see NOTICE just above: use Lemma \ref{l:opcor},~\ref{l:opcor-conv}(3) and up-to context}) \\
+By Lemma \ref{l:opcor-conv}, $P \wt{a(b)} P'$ and $(m)(T \para !m(Y).Y\lrangle{b}) \WCB \enc{P'}$. Because $P\WGB Q$, we know that $Q \wt{a(b)} Q' \WGB P'$ and thus $\enc{P'} \,\mathcal{R}\, \enc{Q'}$. Then by Lemma \ref{l:opcor}, $\enc{Q} \wt{a(\triggerD)} T'$ and $(m)(T' \para !m(Y).Y\lrangle{b}) \WCB \enc{Q'}$. So  {\large \stress{??? (some informal discussion in ``q.txt")}} \\ %$\alpha$
+\stress{Input is the crux!! Try ...
+A compromise is to confine to $\enc{}(\FOPi)$
+(i.e., the image of the encoding that communicate only $\lrangle{Z}(Z\lrangle{b})$)}; \\
+\stress{under this constraint the argument for input would be straightforward (see the box on the right).}\\
+Three possible motiv: 1) encoding used to achieve correct FO interactions in HO, so limited contexts may be ok; 2) too demanding to require all kinds of input because the target (HO) model has somewhat more powerful computation ability;  3) in practice usually not all possible objects are communicated (rather some typical ones).
+\end{minipage}
+}}$
+}%\tdup
+%\fbox{
+%\begin{minipage}{7cm}
+%\begin{itemize}
+%\item $\enc{P}\wt{a(\lrangle{Z}(Z\lrangle{b}))} T$.
+%By Lemma \ref{l:opcor-conv}, $P \wt{a(b)} P'$ and $T\SCB \enc{P'}$. Because $P\WGB Q$, we know that $Q \wt{a(b)} Q' \WGB P'$ and thus $\enc{P'} \,\mathcal{R}\, \enc{Q'}$. Then by Lemma \ref{l:opcor}, $\enc{Q} \wt{a(\lrangle{Z}(Z\lrangle{b}))} T'$ and $T'\SCB \enc{Q'}$. So we have $T \SCB \enc{P'} \,\mathcal{R}\, \enc{Q'} \SCB T'$.
+%\end{itemize}
+%\end{minipage}
+%}
+%\sep\sep
+
+\tdup{
+$\myxcancel{
+\fbox{
+\begin{minipage}{14cm}
+\rc{Some more discussion: tackle general input directly?}\\
+{First let us consider a special case, i.e., the input is $\lrangle{Z}Z\lrangle{b}$, somewhat the encoding of a transmitted name.
+%(replace the current discussion with one on this special case)
+By Lemma \ref{l:opcor-conv}, that $\enc{P}\wt{a(\lrangle{Z}(Z\lrangle{b}))} T_1$ implies that $P \wt{a(b)} P_1$ and $T_1\SCB \enc{P_1}$. Because $P\WGB Q$, we know that $Q \wt{a(b)} Q_1 \WGB P_1$ and thus $\enc{P_1} \,\mathcal{R}\, \enc{Q_1}$. Then by Lemma \ref{l:opcor}, $\enc{Q} \wt{a(\lrangle{Z}(Z\lrangle{b}))} T_2$ and $T_2\SCB \enc{Q_1}$. So we have $T_1 \SCB \enc{P_1} \,\mathcal{R}\, \enc{Q_1} \SCB T_2$. \\
+Now consider the general input $A$, which basically should take the form $\lrangle{Z}F[Z\lrangle{b}]$ for some context $F$, so as to make the applications happen in a correct manner (otherwise the discussion would be similar, e.g., $Z$ does not appear in $F$ or is not fed with a name).
+%(now do the input and use the special case and up-to context to finish the simulation)
+Say $\enc{P}\wt{a(\lrangle{Z}F[Z\lrangle{b}])} T$. Then we know from the special case above that $\enc{Q}\wt{a(\lrangle{Z}F[Z\lrangle{b}])} T'$.
+\bc{The problem here is how to relate $T$ with $T_1$ (and $T'$ with $T_2$)}.
+Specifically, we know $T_1\equiv G[(\lrangle{x}\enc{R})\lrangle{b}] \equiv G[\enc{R}\fosub{b}{x}]$ for some context $G$ and $\lrangle{x}R$. Then $T\equiv G[F[(\lrangle{x}\enc{R})\lrangle{b}]] \equiv G[F[\enc{R}\fosub{b}{x}]]$. Similarly, we have $T_2\equiv H[(\lrangle{x}\enc{R'})\lrangle{b}] \equiv H[\enc{R'}\fosub{b}{x}]$ for some context $H$ and $\lrangle{x}R'$, and $T'\equiv H[F[(\lrangle{x}\enc{R'})\lrangle{b}]] \equiv H[F[\enc{R'}\fosub{b}{x}]]$. The situation is depicted below.
+\[
+\xymatrix{
+  T \ar@{}[r]|-{\equiv} & G[F[\enc{R}\fosub{b}{x}]] \ar@{.}[rr]|-{?}\ar@{.}[d]|-{?}  &  & H[F[\enc{R'}\fosub{b}{x}]] \ar@{.}[d]|-{?} \ar@{}[r]|-{\equiv}  & T'  \\
+  T_1 \ar@{}[r]|-{\equiv} & G[\enc{R}\fosub{b}{x}] \ar@{}[rr]|-{ \SCB\, \enc{P_1}\,\mathcal{R}\,\enc{Q_1}\,\SCB}  & &  H[\enc{R'}\fosub{b}{x}] \ar@{}[r]|-{\equiv} & T_2
+}
+\]
+\rc{How can we proceed? Use normal bisimulation, we can set $F$ as $\overline{m}[\cdot]$. But then how? }
+}
+\end{minipage}
+}}$
+}%\tdup
+
+
+%\sepp\sepp
+
+\item $\enc{P}\wt{\overline{a}[(b)\lrangle{Z}(Z\lrangle{b})]} T$. %\stress{\scriptsize done! ~~(\& note NOTICE just above: use Lemma \ref{l:opcor},~\ref{l:opcor-conv}(5) and up-to context}) \\
+By Lemma \ref{l:opcor-conv}, $P \wt{\overline{a}(b)} P'$ and $T\SCB \enc{P'}$. Because $P\WGB Q$, we know that $Q \wt{\overline{a}(b)} Q' \WGB P'$ and thus $\enc{P'} \,\mathcal{R}\, \enc{Q'}$. Then by Lemma \ref{l:opcor}, $\enc{Q} \st{(b)\overline{a}[\lrangle{Z}(Z\lrangle{b})]} T'$ and $T'\SCB \enc{Q'}$. Consider the following pair
+\[
+(b)(T\para E[A]) \;\quad,\quad\;  (b)(T'\para E[A])
+\] in which $b\notin \fn{E[X]}$ %$E[X]\DEF !\bc{m(Z).X\lrangle{Z}}$ (\stress{\small do not set this if using context bisimulation instead of normal bisimulation})
+and $A\DEF \lrangle{Z}(Z\lrangle{b})$. So
+\[
+(b)(T\para E[A]) \SCB (b)(\enc{P'}\para E[A]) \;\quad,\quad\; (b)(\enc{Q'}\para E[A]) \SCB (b)(T'\para E[A])
+\] By setting a context $C\DEF (b)([\cdot]\para E[A])$, we have the following pair in which $\enc{P'} \,\mathcal{R}\, \enc{Q'}$.
+\[
+C[\enc{P'}] \;\quad,\quad\; C[\enc{Q'}]
+\] This suffices to close this case in terms of the up-to context requirement.
+
+\item $\enc{P}\wt{\overline{a}[\lrangle{Z}(Z\lrangle{b})]} T$. %\stress{\scriptsize done! ~~ (\& note NOTICE just above: use Lemma \ref{l:opcor},~\ref{l:opcor-conv}(4) and up-to context}) \\
+This case is similar to the last case.
+
+\item $\enc{P}\wt{\tau} T$. By Lemma \ref{l:opcor-conv}, $P \wt{\tau} P'$ and $T\SCB \enc{P'}$. From $P\WGB Q$, we know $Q \wt{} Q'\WGB P'$ and thus $\enc{P'} \,\mathcal{R}\, \enc{Q'}$. Then by Lemma \ref{l:opcor}, $\enc{Q} \wt{} T'$ and $T'\SCB \enc{Q'}$. So we have $T\SCB \enc{P'} \,\mathcal{R}\, \enc{Q'}\SCB T'$.
+\end{itemize}
+
+\end{proof}
+
+
+\subsection{Completeness}
+The completeness of the encoding is stated in the lemma below. {We note that completeness is true even if we do not constrain the domain to be the image of the encoded \FOPi\ processes. }
+\begin{lemma}\label{l:completeness}
+Suppose $P$ is a \FOPi\ process. Then $\enc{P} \WCB \enc{Q}$ implies $P\WGB Q$.
+\end{lemma}
+\begin{proof}
+\tdup{
+\stress{ \scriptsize DONE! $\bcancel{\mbox{TODO: if necessary,}}$ \\
+(1) (for bound output in particular) maybe Use ``local bisimulation" on the \FOPi\ side and context bisimulation on \HOPiDd\ side, to analyze using ``context surjection" (e.g., \cite{Fu05b,Xu12}). \\
+(2) maybe use certain up-to technique on the FO side.}
+}
+
+\tdup{
+\stress{\scriptsize NOTICE that in input/output bisimulation (to prove $P\WGB Q$):
+\begin{itemize}
+%\item to prove $P$ and $Q$ bisimulate on input: (by going through the HO processes $\enc{P},\enc{Q}$) $\enc{P}\st{a(\triggerD)}$ must be able to be matched by $\enc{Q}\st{a(\triggerD)}$;
+\item to prove $P$ and $Q$ bisimulate on input: (by going through the HO processes $\enc{P},\enc{Q}$) $\enc{P}\st{a(\lrangle{Z}(Z\lrangle{b}))}$ must be able to be matched by $\enc{Q}\st{a(\lrangle{Z}(Z\lrangle{b}))}$;
+\item to prove $P$ and $Q$ bisimulate on free output:(by going through the HO processes $\enc{P},\enc{Q}$)  $\enc{P}\st{\overline{a}[\lrangle{Z}(Z\lrangle{b})]}$ must be able to be matched by $\enc{Q}\st{\overline{a}[\lrangle{Z}(Z\lrangle{b})]}$, because $\enc{Q}$ can only emit such form of processes, and moreover if the matching is $\enc{Q}\st{\overline{a}[\lrangle{Z}(Z\lrangle{c})]}$ then one can design a context to distinguish $\enc{P}$ and $\enc{Q}$;
+\item to prove $P$ and $Q$ bisimulate on bound output:(by going through the HO processes $\enc{P},\enc{Q}$)  $\enc{P}\st{\overline{a}[(b)\lrangle{Z}(Z\lrangle{b})]}$ must be able to be matched by $\enc{Q}\st{(b)\overline{a}[\lrangle{Z}(Z\lrangle{b})]}$ (apply $\alpha$-conversion if needed), because $\enc{Q}$ can only emit such form of processes, and moreover if the matching is $\enc{Q}\st{(c)\overline{a}[\lrangle{Z}(Z\lrangle{c})]}$ (or $\enc{Q}\st{\overline{a}[\lrangle{Z}(Z\lrangle{c})]}$) then one can design a context to distinguish between $\enc{P}$ and $\enc{Q}$;
+\end{itemize}}
+}%\tdup
+%\sep
+
+We show that $\mathcal{R}\DEF \{(P,Q) \,|\, \enc{P} \WCB \enc{Q}\} \cup \WGB$ is a local bisimulation. %a (ground)/(local) bisimulation up-to $\SGB$ and \stress{??}. 
+Suppose $P\,\mathcal{R}\, Q$. There are several cases. %, where again Lemma \ref{l:opcor} and Lemma \ref{l:opcor-conv} are frequently used.
+\begin{itemize}
+\item $P\wt{a(b)} P'$. %\stress{see NOTICE just above \& todo: use input clause of context bisimulation, apply Lemma \ref{l:opcor},~\ref{l:opcor-conv}(3)} \\
+By Lemma \ref{l:opcor}, $\enc{P} \wt{a(\lrangle{Z}(Z\lrangle{b}))} T$ and $T\SCB \enc{P'}$. Because $\enc{P} \WCB \enc{Q}$, we know that $\enc{Q} \wt{a(\lrangle{Z}(Z\lrangle{b}))} T'\WCB T$. By Lemma \ref{l:opcor-conv}, $Q \wt{a(b)} Q'$ and $T'\SCB \enc{Q'}$. Thus we have $\enc{P'} \SCB T \WCB T'\SCB \enc{Q'}$, so $P'\,\mathcal{R}\, Q'$, which fulfills this case.
+
+\item $P\wt{\overline{a}b} P'$. %\stress{see NOTICE just above \& todo: use free output clause of context bisimulation, apply Lemma \ref{l:opcor},~\ref{l:opcor-conv}(3)} \\
+By Lemma \ref{l:opcor}, $\enc{P} \wt{\overline{a}[\lrangle{Z}(Z\lrangle{b})]} T$ and $T\SCB \enc{P'}$. Since $\enc{P} \WCB \enc{Q}$, we know that $\enc{P}$ must be able to be matched by $\enc{Q}\wt{\overline{a}[\lrangle{Z}(Z\lrangle{b})]} T'$, because $\enc{Q}$ can only output such shape of processes, and if the matching is, e.g., $\enc{Q}\wt{\overline{a}[\lrangle{Z}(Z\lrangle{c})]} T''$ then a context can be designed to distinguish between $\enc{P}$ and $\enc{Q}$. So for every $E[X]$, we have $T \para E[\lrangle{Z}(Z\lrangle{b})] \WCB T' \para E[\lrangle{Z}(Z\lrangle{b})]$. By Lemma \ref{l:opcor-conv}, $Q \wt{\overline{a}b} Q'$ and $T'\SCB \enc{Q'}$. So we know
+\begin{equation}\label{eq:comp4}
+\enc{P'} \para E[\lrangle{Z}(Z\lrangle{b})) \WCB \enc{Q'} \para E[\lrangle{Z}(Z\lrangle{b})]
+\end{equation}
+We want to show
+\begin{equation}\label{eq:comp5}
+P' \mathcal{R} Q' \quad \mbox{ that is, }\; \enc{P'} \WCB \enc{Q'}
+\end{equation}
+By setting $E$ to be $0$ in (\ref{eq:comp4}), we obtain (\ref{eq:comp5}), and thus close this case.
+
+\item $P\wt{\overline{a}(b)} P'$. %\stress{see NOTICE just above \& todo: use bound output clause of context bisimulation, and ``context surjection", apply Lemma \ref{l:opcor},~\ref{l:opcor-conv}(3)} \\
+By Lemma \ref{l:opcor}, $\enc{P} \wt{(b)\overline{a}[\lrangle{Z}(Z\lrangle{b})]} T$ and $T\SCB \enc{P'}$. Since $\enc{P} \WCB \enc{Q}$, we know that $\enc{P}$  must be able to be matched by $\enc{Q}\wt{(b)\overline{a}[\lrangle{Z}(Z\lrangle{b})]} T'$ (apply $\alpha$-conversion if needed). This is because $\enc{Q}$ can only emit such form of processes, and moreover if the matching does not have a bound name (e.g., $\enc{Q}\wt{\overline{a}[\lrangle{Z}(Z\lrangle{c})]} T''$) then one can design a context to distinguish $\enc{P}$ and $\enc{Q}$. So for every $E[X]$ s.t. $b\notin \mbox{fn}(E)$, we have $(b)(T \para E[\lrangle{Z}(Z\lrangle{b})]) \WCB (b)(T' \para E[\lrangle{Z}(Z\lrangle{b})])$. By Lemma \ref{l:opcor-conv}, $Q \wt{\overline{a}(b)} Q'$ and $T'\SCB \enc{Q'}$. So we know
+\begin{equation}\label{eq:comp1}
+(b)(\enc{P'} \para E[\lrangle{Z}(Z\lrangle{b})]) \WCB (b)(\enc{Q'} \para E[\lrangle{Z}(Z\lrangle{b})])
+\end{equation}
+In terms of local bisimulation \cite{Fu05b,Xu12}, for every \FOPi\ process $R$, we need to show
+\begin{equation}\label{eq:comp2}
+(b)(P'\para R) \,\mathcal{R}\, (b)(Q'\para R) \quad\mbox{ i.e., }\quad (b)(\enc{P'}\para \enc{R}) \WCB (b)(\enc{Q'} \para \enc{R})
+\end{equation}
+%That is,
+%\begin{equation}\label{eq:comp3}
+%(b)(\enc{P'}\para \enc{R}) \WCB (b)(\enc{Q'} \para \enc{R})
+%\end{equation}
+Comparing equations (\ref{eq:comp1}) and (\ref{eq:comp2}), one can see that the different part is $E[\lrangle{Z}(Z\lrangle{b})]$ and $\enc{R}$. Since the inverse of the encoding is a surjection, if all possible forms of $E$ is itinerated, $\enc{R}$ must be hit somewhere (i.e., some choice of $E$ makes $E[\lrangle{Z}(Z\lrangle{b})]$ and $\enc{R}$ equal). Therefore we infer that (\ref{eq:comp2}) %(and thus (\ref{eq:comp2})) 
+is true and thus complete this case.
+
+
+\item $P\wt{\tau} P'$. By Lemma \ref{l:opcor}, $\enc{P} \wt{\tau} T$ and $T\SCB \enc{P'}$. Because $\enc{P} \WCB \enc{Q}$, we know $\enc{Q} \wt{} T' \WCB T$. Then by Lemma \ref{l:opcor-conv}, $Q \wt{} Q'$ and $T'\SCB \enc{Q'}$. % (notice that the case $\enc{Q}$ is exactly $T'$ is trivial).
+So we have $P'\,\mathcal{R}\, Q'$ because $\enc{P'}\SCB T \WCB T' \SCB \enc{Q'}$.
+\end{itemize}
+
+
+\end{proof}
+
+
+
+
+
+
+%---------------------------
+% Local Variables:
+% mode: LaTeX
+% TeX-master: "main.tex"
+% End:

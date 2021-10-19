@@ -1,0 +1,32 @@
+[SENT]
+
+Dear Editor,
+
+I have checked the proof, and made a lot of corrections to it. 
+Please see all the correstions in the attached pdf file, which has also been uploaded to the SAGA system. 
+For your convenience, I have highlighted each correction, together with some detailed comment about it (put in a framed box). Notice that is you position your mouse on the highlights, it may also display some explanation.
+
+Besides those corrections marked in the pdf, there is one particular thing I would like to mention here. For the formal model, in really a lot of places the plain dot (.), which is part of the formal language, is mistakenly changed to the \cdot symbol. It is VERY important that this is made right. I have also commented this in the pdf file. 
+
+I apologize for all the inconvenience.
+Thank you very much.
+
+
+Bet regards,
+Xu Xian  (BTW. Xu is my family name, and Xian is my given name)
+
+
+
+
+
+------------------------------------------------------------------------------
+[SENT]
+
+Dear Editor,
+
+Please find in the attachment the signed copyright form, which has also been uploaded in the SAGA system. 
+
+Best regards,
+Xu Xian (BTW. Xu is my family name and Xian is the given name. )
+
+

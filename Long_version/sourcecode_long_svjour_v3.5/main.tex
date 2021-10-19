@@ -1,0 +1,288 @@
+%%%%%%%%%%%%%%%%%%%%%%% file template.tex %%%%%%%%%%%%%%%%%%%%%%%%%
+%
+% This is a general template file for the LaTeX package SVJour3
+% for Springer journals.          Springer Heidelberg 2010/09/16
+%
+% Copy it to a new file with a new name and use it as the basis
+% for your article. Delete % signs as needed.
+%
+% This template includes a few options for different layouts and
+% content for various journals. Please consult a previous issue of
+% your journal as needed.
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%% First comes an example EPS file -- just ignore it and
+%% proceed on the \documentclass line
+%% your LaTeX will extract the file if required
+%\begin{filecontents*}{example.eps}
+%%!PS-Adobe-3.0 EPSF-3.0
+%%%BoundingBox: 19 19 221 221
+%%%CreationDate: Mon Sep 29 1997
+%%%Creator: programmed by hand (JK)
+%%%EndComments
+%gsave
+%newpath
+%  20 20 moveto
+%  20 220 lineto
+%  220 220 lineto
+%  220 20 lineto
+%closepath
+%2 setlinewidth
+%gsave
+%  .4 setgray fill
+%grestore
+%stroke
+%grestore
+%\end{filecontents*}
+%
+\RequirePackage{fix-cm}
+
+
+
+%
+%\documentclass{svjour3}                     % onecolumn (standard format)
+%\documentclass[smallcondensed]{svjour3}     % onecolumn (ditto)
+\documentclass[smallextended]{svjour3}       % onecolumn (second format)
+%\documentclass[smallextended,draft]{svjour3}       % onecolumn (second format)
+%\documentclass[twocolumn]{svjour3}          % twocolumn
+%
+%definitions
+\input{head_pc}
+%\usepackage{geometry} \geometry{a4paper,scale=0.8} %tem use
+%\usepackage[width=14cm, left=2cm]{geometry}
+%\usepackage[scale=0.5]{geometry}
+%\renewcommand{\headrulewidth}{0pt}
+
+\smartqed  % flush right qed marks, e.g. at end of proof
+%
+%\usepackage{graphicx}
+%
+% \usepackage{mathptmx}      % use Times fonts if available on your TeX system
+%
+% insert here the call for the packages your document requires
+%\usepackage{latexsym}
+% etc.
+%
+% please place your own definitions here and don't use \def but
+% \newcommand{}{}
+%
+% Insert the name of "your journal" with
+% \journalname{myjournal}
+%
+
+%\renewcommand{\headrulewidth}{0pt}
+
+\begin{document}
+
+\title{Parameterizing Higher-order Processes on Names and Processes
+\thanks{A preliminary version of this work was presented at EXPRESS/SOS 2016. %Comparatively, 
+This paper revises and extends that version with full-fledged proofs and more refined discussions (at least more than half new materials), and moreover, the detailed analysis of a variant encoding of interest. This encoding, mentioned only as a further direction in the preliminary version, is given thorough examination in this work.}
+\thanks{This work has been supported by project ANR 12IS02001 PACE and NSF of China (61261130589, 61472239, 61572318, 61872142).}
+}
+%\subtitle{Do you have a subtitle?\\ If so, write it here}
+
+%\titlerunning{Short form of title}        % if too long for running head
+
+\author{Xian Xu         %\and
+        %Second Author %etc.
+}
+
+%\authorrunning{Short form of author list} % if too long for running head
+
+\institute{Xian Xu \at
+              East China University of Science and Technology, Shanghai, China (200237) \\
+              %Tel.: +123-45-678910\\
+              %Fax: +123-45-678910\\
+              \email{xuxian@ecust.edu.cn}           %  \\
+%             \emph{Present address:} of F. Author  %  if needed
+          % \and
+           %S. Author \at
+            %  second address
+}
+
+\date{}
+%\date{Received: date / Accepted: date}
+% The correct dates will be entered by the editor
+
+
+\maketitle
+
+
+%\nts{TODO:
+%\begin{itemize}
+%\item~ [Done] ~~  about up-to context: see \cite{DHS18}; defs of the 2 up-to (strong bisimilarity and context); make it a (soundness) theorem; explain that it is sound and refer to \cite{SW01a,MPS14, DHS18} (\cite{SW01a} on first-order; \cite{MPS14} somewhat extension to higher-order setting; \cite{DHS18} touches up-to context in HO setting w.r.t. unique solution; moreover there is fully abstract encoding from higher-order process to first-order processes, and up-to context is true in the first-order setting, that is, HOpi can be translated into pi in a fully abstract way, and the technique is sound in pi); use it henceforth. %\cite{MPS14}
+%%I attach the paper. Actually it is not using bisimulation, but unique solution of equations. For you, it is firther evidence that the
+%%technique up-to context is sound, and you could refer to it, but it is
+%%not really what you need in the paper (my other suggestions, of claiming
+%%that the technique follows from the full abstraction of encoding into pi, would seem ok)
+%%
+%\item~ [Done] ~~ about congruence of normal bisimulation: make it a theorem; say that it is sound and refer to \cite{San92, SW01a} for the similar proof;
+%%\item {\scriptsize about motivation (selectively use the brittle review; nuance shyt; fk it);} %
+%\item about latex cls redo (maybe simply modify the current style).
+%\end{itemize}
+%}
+
+\vspace*{-.5cm}
+\begin{abstract}
+Parameterization extends higher-order processes with the capability of abstraction and application (like those in lambda-calculus). As is well-known, this extension is strict, 
+%i.e., higher-order processes equipped with parameterization are computationally more expressive. 
+\xxxx{meaning that higher-order processes equipped with parameterization are strictly more expressive than those without parameterization. 
+}
+This paper studies strictly higher-order processes (i.e., no name-passing) with two kinds of parameterization: one on names and the other on processes themselves. We present two main results. One is that in presence of parameterization, higher-order processes can interpret first-order (name-passing) processes in a quite elegant fashion, in contrast to the fact that higher-order processes without parameterization cannot encode first-order processes at all. We present two such encodings and analyze their properties in depth, particularly full abstraction. In the other result, we provide a simpler characterization of the standard context \xxxx{bisimilarity} for higher-order processes with parameterization, in terms of the normal \xxxx{bisimilarity} that stems from the well-known normal characterization for higher-order calculus. 
+\xxxx{As a spinoff, we show that the bisimulation up-to context technique is sound in the higher-order setting with parameterization.}
+%These results demonstrate more essence of the parameterization method in the higher-order paradigm toward expressiveness and behavioural equivalence.
+
+\keywords{Parameterization \and Encoding \and Context bisimulation \and Normal bisimulation \and Higher-order \and First-order \and Processes}
+%\PACS{PACS code1 \and PACS code2 \and more}
+%\noindent\emph{2000 MSC}: 68Q85
+%\subclass{MSC code1 \and MSC code2 \and more}
+\PACS{89.20.Ff}
+\subclass{68Q85}
+\end{abstract}
+
+
+%\vspace*{-.5cm}
+
+%\section{Introduction}
+%
+%\begin{proof}
+%TEST.
+%\qed
+%\end{proof}
+
+
+%----------------------------------------------------------------------------------------------
+\input{introduction.tex}
+\input{preliminary.tex}
+\input{encoding.tex}
+\input{encoding_variant.tex}
+\input{normal.tex}
+\input{conclusion.tex}
+%----------------------------------------------------------------------------------------------
+
+
+
+%\section{Introduction}
+%\label{intro}
+%Your text comes here. Separate text sections with
+%\section{Section title}
+%\label{sec:1}
+%Text with citations \cite{RefB} and \cite{RefJ}.
+%\subsection{Subsection title}
+%\label{sec:2}
+%as required. Don't forget to give each section
+%and subsection a unique label (see Sect.~\ref{sec:1}).
+%\paragraph{Paragraph headings} Use paragraph headings as needed.
+%\begin{equation}
+%a^2+b^2=c^2
+%\end{equation}
+%
+%% For one-column wide figures use
+%\begin{figure}
+%% Use the relevant command to insert your figure file.
+%% For example, with the graphicx package use
+%  %\includegraphics{example.eps}
+%% figure caption is below the figure
+%\caption{Please write your figure caption here}
+%\label{fig:1}       % Give a unique label
+%\end{figure}
+%%
+%% For two-column wide figures use
+%\begin{figure*}
+%% Use the relevant command to insert your figure file.
+%% For example, with the graphicx package use
+%  %\includegraphics[width=0.75\textwidth]{example.eps}
+%% figure caption is below the figure
+%\caption{Please write your figure caption here}
+%\label{fig:2}       % Give a unique label
+%\end{figure*}
+%%
+%% For tables use
+%\begin{table}
+%% table caption is above the table
+%\caption{Please write your table caption here}
+%\label{tab:1}       % Give a unique label
+%% For LaTeX tables use
+%\begin{tabular}{lll}
+%\hline\noalign{\smallskip}
+%first & second & third  \\
+%\noalign{\smallskip}\hline\noalign{\smallskip}
+%number & number & number \\
+%number & number & number \\
+%\noalign{\smallskip}\hline
+%\end{tabular}
+%\end{table}
+
+
+\begin{acknowledgements}
+%If you'd like to thank anyone, place your comments here
+%and remove the percent signs.
+We are grateful to the referees of EXPRESS/SOS 2016 for their useful comments on this article and related works. We also thank Alan Schmitt, Qiang Yin, and the anonymous reviewers for the helpful suggestions and communications. 
+\end{acknowledgements}
+
+%-------------------------bibliography------------------------------------------------------------
+%\clearpage
+%\vspace*{-3mm}
+%\nocite{*}
+\bibliographystyle{spmpsci}
+\bibliography{process}
+%-----------------------------------------------------------------------------------------------
+
+% BibTeX users please use one of
+%\bibliographystyle{spbasic}      % basic style, author-year citations
+%\bibliographystyle{spmpsci}      % mathematics and physical sciences
+%\bibliographystyle{spphys}       % APS-like style for physics
+%\bibliography{}   % name your BibTeX data base
+
+% Non-BibTeX users please use
+%\begin{thebibliography}{}
+%%
+%% and use \bibitem to create references. Consult the Instructions
+%% for authors for reference list style.
+%%
+%\bibitem{RefJ}
+%% Format for Journal Reference
+%Author, Article title, Journal, Volume, page numbers (year)
+%% Format for books
+%\bibitem{RefB}
+%Author, Book title, page numbers. Publisher, place (year)
+%% etc
+%\end{thebibliography}
+
+
+%-----------------------------------------------------------------------------------------------
+%\iftoggle{appendixing}{%
+  %using appendixing
+\sepp
+\clearpage
+\appendix
+
+\noindent\textbf{\Large Appendix}
+%\sepp
+\sepp
+
+{\normalsize
+
+\noindent\textit{Remark}. For the sake of conciseness, in the arguments %in the appendix, 
+we sometimes omit the existential statement such as ``for some ..." if clear from context.
+
+%
+\input{appendix_proof_upto_general.tex}
+\clearpage
+\input{appendix_proof_upto_enc.tex}
+\clearpage
+%\input{appendix_proof_encoding.tex}
+\input{appendix_proof_normal.tex}
+%\input{appendix_proof_variant_encoding.tex}
+\clearpage
+%}{%
+  %no appendixing
+%}
+}%normalsize
+
+%-----------------------------------------------------------------------------------------------
+
+\end{document}
+% end of file 
+

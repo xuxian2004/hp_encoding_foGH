@@ -1,0 +1,62 @@
+*****************
+REPORTS :
+
+Report from Referee 1: 
+
+Report 2: 
+
+The paper has been significantly improved by the latest revision. Most of my concerns have been addressed, with the exception of what constitutes a "legal" context for weak adequacy (see below in the detailed comments). I do not think a further round of reviewing is necessary.
+
+Best regards,
+
+Alan Schmitt
+
+Page 3, "operates names". Grammar (operates should have no 's'), and meaning: what does "operate names" mean? Is it "modify"?
+
+Page 3, discussion of being computationally complete. HO calculi (even without name restriction, let alone parameterization) are already computationally complete, so this argument is moot. Maybe you want to stress out that there is no *compositional* encoding of name passing using process passing.
+
+Page 4, discussion of HO bisimilarity. You should say that HO bisimilarity is correct, but it is too fine: it distinguishes processes that are actually equivalent.
+
+Page 4, example of factorization. The restriction (m) part is missing, hence this equation is wrong.
+
+Page 5, top diagram. You should keep the restriction (m) in this example, as it makes the factorization relation correct. It can indeed be removed in the definition of the relation R in the second diagram.
+
+Page 11, Now parameterization on process is obtained by taking U,K as X,T'. Why T' and not T?
+
+Page 12, example of Ω. How can this term occur if you use typing? What is its type?
+
+Page 12, definition 3. This would be much simpler if you introduced types, then you could says "of the same type".
+
+Page 12, definition 3, equation (*). Maybe say that E must be closed and not be an abstraction.
+
+Page 12, claim that context bisimularity is a congruence. It is a congruence for HOpi. You need to show it for your calculus.
+
+Page 14, definition 5. You need to stress in this definition that P'' and Q'' are closed, as you rely on it in the proof of Theorem 1. This matters a lot as it restricts the contexts that may be used.
+
+Page 15, definition 6. It is not clear whether you require completeness for your encoding. You should say it explicitly.
+
+Page 19, proof of Lemma 2. This proof could be moved to an appendix.
+
+Page 23, proof of Lemma 4, second case where you introduce the context for the up-to-context. Maybe highlight that these processes are closed.
+
+Page 24, proof of Lemma 5, second case where you restrict the transition done by [[Q]]. This could be described in an intermediary lemma proven in an appendix.
+
+Page 25, proof of Lemma 5, bound output case. This could be made more precise, for instance by setting E to be (.)<(x)R'>, where R' does not contain b and is such that R'{b/x} = [[R]].
+
+Page 27, Lemma 6, first case. Say that C is an *evaluation* context
+
+Page 27, proof of Lemma 6. This proof could be moved to an appendix.
+
+Page 31, context used for the counter-example for weak soundness. This notion of "legal" context should really be made formal. Up until this point, I thought a legal context was something like [[E(.)]] where [[.]] = . (as translation is compositional). Here you seem to change the rules be defining a legal context as a context that may be applied to yield a legal term. Please give a precise definition of a legal context.
+
+Page 33, proof of Lemma 9. This proof could be moved to an appendix.
+
+Page 43, proof of Theorem 1. You could initially show that R' is a congruence, as you use it in the proof by induction.
+
+You should also state that each Rn only relates closed processes.
+
+Page 43, property proved by induction. You state that each Rn meets the requirement for context bisimulation. I think this is wrong, or not clear enough. If you can show directly that R = R0 is a context bisimulation, why use an induction at all?
+
+The correct statement of the induction might be something like "if P Rn Q and P does a step, then Q does a step and the results are related (in a context bisimulation way) by R'". So you do not have that each Rn is a context bisimulation, but when you take them together as R', it works.
+
+

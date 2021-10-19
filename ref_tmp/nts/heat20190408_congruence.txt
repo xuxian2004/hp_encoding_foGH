@@ -1,0 +1,122 @@
+%>>>>proof normal congruence
+%-------------FOR REF BEGIN-------------
+We recall that $\rrc{\trigger} \DEF \overline{m}$, $\rrc{\triggerD} \DEF \lrangle{Z}\overline{m}Z$, and $\rrc{\triggerd} \DEF \lrangle{z}\overline{m}[\lrangle{Y}(Y\lrangle{z})]$.
+\begin{definition}\label{normal-bisi-Dd} %[Normal bisimulation]
+A symmetric binary relation $\mathcal{R}$ on closed processes of \HOPiDd\ is a normal bisimulation, if whenever $P\,\mathcal{R}\, Q$ the following properties hold:
+\begin{enumerate}%\itemsep-.3em
+\item If $P \st{a(\trigger)} P'$ ($m$ is fresh), then $Q \wt{a(\trigger)} Q'$ for some $Q'$ s.t.  $P'\,\mathcal{R}\, Q'$. %($m$ is fresh w.r.t. $P$ and $Q$)
+\item If $P \st{a(\triggerD)} P'$ ($m$ is fresh), then $Q \wt{a(\triggerD)} Q'$ for some $Q'$ s.t.  $P'\,\mathcal{R}\, Q'$. %($m$ is fresh w.r.t. $P$ and $Q$)
+\item If $P \st{a(\triggerd)} P'$ ($m$ is fresh), then $Q \wt{a(\triggerd)} Q'$ for some $Q'$ s.t.  $P'\,\mathcal{R}\, Q'$. %($m$ is fresh w.r.t. $P$ and $Q$)
+
+\item If $P \st{(\ve{c})\overline{a}A} P'$ and $A$ is not an abstraction, then $Q \wt{(\ve{d})\overline{a}B} Q'$ for some $\ve{d},Q'$ and $B$ that is not an abstraction, and it holds that ($m$ is fresh) ~\\
+$(\ve{c})(P'\para !\rbc{m.A}) \; \mathcal{R}\;  (\ve{d})(Q'\para  !\rbc{m.B})$.
+\item If $P \st{(\ve{c})\overline{a}A} P'$ and $A$ is an abstraction on process, then $Q \wt{(\ve{d})\overline{a}B} Q'$ for some $\ve{d},Q'$ and $B$ that is a process abstraction, and it holds that ($m$ is fresh) ~
+$(\ve{c})(P'\para !\rbc{m(Z).A\lrangle{Z}}) \; \mathcal{R}\;  (\ve{d})(Q'\para  !\rbc{m(Z).B\lrangle{Z}})$.
+\item If $P \st{(\ve{c})\overline{a}A} P'$ and $A$ is a name abstraction, then $Q \wt{(\ve{d})\overline{a}B} Q'$ for some $\ve{d},Q'$ and $B$ that is a name abstraction, and it holds that ($m$ is fresh) ~
+$(\ve{c})(P'\para !\rbc{m(Z).Z\lrangle{A}}) \; \mathcal{R}\;  (\ve{d})(Q'\para  !\rbc{m(Z).Z\lrangle{B}})$.
+
+\item If $P \st{\tau} P'$, then $Q \wt{} Q'$ for some $Q'$ s.t. $P'\,\mathcal{R}\, Q'$.
+\end{enumerate}
+Process $P$ is normal bisimilar to $Q$, written $P\,\WNB\, Q$, if $P\,\mathcal{R}\, Q$ for some normal bisimulation $\mathcal{R}$. Relation \WNB\ is called normal bisimilarity. 
+The strong version of \WNB\ is denoted by \SNB, i.e., replacing above every double arrow with a single arrow and $\wt{}$ with $\st{\tau}$ in particular.
+\end{definition}
+%-------------FOR REF END-------------
+
+%-------------FOR NOTICE BEGIN-------------
+- We focus on the case of sending triggers corresponding to name parameterization, and the rest can be referred to \cite{San92}.
+- 
+%-------------FOR NOTICE END-------------
+
+￼
+
+We show that \R is a normal bisimulation (\xxx{up-to context}? seem need to expand.).
+%-------------PROOF BODY BEGIN-------------
+% MAY adapt from the proof of up-to***********
+
+\item $C[P]\st{a(A)} T_1$ in which $A\equiv \lrangle{z}(\overline{m}(\lrangle{Y}(Y\lrangle{z})))$.
+\begin{itemize}
+\item $C$ is $[\cdot]$. This is immediate because $C[P]$ and $C[Q]$ are $P$ and $Q$ respectively, and $P\,\WNB\, Q$ from premise. 
+
+\item $C$ is $a(X).C_1[\cdot]$. 
+
+\item $C$ is $\overline{a}(C_1[\cdot]).R$. This is not possible.
+\item $C$ is $\overline{a}A_1.C_1[\cdot]$. This is not possible.
+\item $C$ is $\lrangle{X}C_1[\cdot]$. This is not possible.
+\item $C$ is $\lrangle{x}C_1[\cdot]$. This is not possible.
+\item $C$ is $C_1[\cdot]\lrangle{A_1}$. This falls onto the other cases after application. 
+\item $C$ is $C_1[\cdot]\lrangle{d}$. This falls onto the other cases after application. 
+
+\item $C$ is $R\para C_1[\cdot]$. 
+\item $C$ is $(d)C_1[\cdot]$. 
+\end{itemize}
+
+
+
+\item  $C[P]\st{(\ve{c})\overline{a}A} T_1$. 
+\begin{itemize}
+\item $C$ is $[\cdot]$. This is immediate. 
+\item $C$ is $a(X).C_1[\cdot]$. This is not possible.
+
+\item $C$ is $\overline{a}(C_1[\cdot]).R$. 
+\item $C$ is $\overline{a}A_1.C_1[\cdot]$. 
+
+\item $C$ is $\lrangle{X}C_1[\cdot]$. This is not possible.
+\item $C$ is $\lrangle{x}C_1[\cdot]$. This is not possible.
+\item $C$ is $C_1[\cdot]\lrangle{A_1}$. This falls onto the other cases after application. 
+\item $C$ is $C_1[\cdot]\lrangle{d}$. This falls onto the other cases after application. 
+
+\item $C$ is $R\para C_1[\cdot]$. 
+\item $C$ is $(d)C_1[\cdot]$. 
+\end{itemize}
+
+
+
+\item  $C[P]\st{\overline{a}A} T_1$. \xx{MERGE into the last bound output case; SKIP this case!}
+\begin{itemize}
+\item $C$ is $[\cdot]$. 
+\item $C$ is $a(X).C_1[\cdot]$. 
+\item $C$ is $\overline{a}(C_1[\cdot]).R$. 
+\item $C$ is $\overline{a}A_1.C_1[\cdot]$. 
+\item $C$ is $\lrangle{X}C_1[\cdot]$. 
+\item $C$ is $\lrangle{x}C_1[\cdot]$. 
+\item $C$ is $C_1[\cdot]\lrangle{A_1}$.
+\item $C$ is $C_1[\cdot]\lrangle{d}$. 
+\item $C$ is $R\para C_1[\cdot]$. 
+\item $C$ is $(d)C_1[\cdot]$. 
+\end{itemize}
+
+
+
+\item  $C[P]\st{\tau} T_1$. 
+\begin{itemize}
+\item $C$ is $[\cdot]$. This is immediate. 
+\item $C$ is $a(X).C_1[\cdot]$. This is not possible. 
+\item $C$ is $\overline{a}(C_1[\cdot]).R$. This is not possible.
+\item $C$ is $\overline{a}A_1.C_1[\cdot]$. This is not possible.
+\item $C$ is $\lrangle{X}C_1[\cdot]$. This is not possible.
+\item $C$ is $\lrangle{x}C_1[\cdot]$. This is not possible.
+\item $C$ is $C_1[\cdot]\lrangle{A_1}$. This falls onto the other cases after application. 
+\item $C$ is $C_1[\cdot]\lrangle{d}$. This falls onto the other cases after application. 
+
+\item $C$ is $R\para C_1[\cdot]$.  Several possibilities. We omit the symmetric cases concerning communication. 
+\begin{itemize}
+\item $\tau$ is from $R$. That is, $R\st{\tau} R'$. 
+\item $\tau$ is from $C_1$.
+\item $\tau$ is from $P$.
+\item $\tau$ is from interaction between $P$ and $C_1$. 
+\item $\tau$ is from interaction between $R$ and $C_1$. 
+
+\item $\tau$ is from interaction between $R$ and $P$. Suppose $P \st{(\ve{c'})\overline{a}A} P'$ and $A$ is a name abstraction, $R \st{a(A)} R'$, and $R\para C_1[P] \st{\tau} (ve{c})(R'\para C_1[P'])$. Since $P\,\R\, Q$, we know ...
+So ...
+%------>>>>>>FROM HERE
+
+
+\end{itemize}
+
+
+\item $C$ is $(d)C_1[\cdot]$. 
+
+\end{itemize}
+
+%-------------PROOF BODY END-------------
+

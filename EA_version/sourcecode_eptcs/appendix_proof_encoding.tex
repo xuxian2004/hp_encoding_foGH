@@ -1,0 +1,104 @@
+﻿\section{Proofs for Section \ref{s:encoding}}\label{a:proofs-encoding}
+\begin{proof}[Proof of Lemma \ref{l:opcor}]
+We prove the clauses by induction on the structure of $P$. The case $P$ is $0$ is trivial.  %\stress{TODO (treat 1-6 together or separately)}
+\begin{itemize}
+\item $P$ is $a(x).P_1$.
+\begin{itemize}
+\item Input. $P\st{a(b)} P_1\fosub{b}{x} \equiv P'$. So $\enc{P} \equiv a(Y).Y\lrangle{\lrangle{x}\enc{P_1}} \st{a(\lrangle{Z}(Z\lrangle{b}))} \equiv \enc{P_1}\fosub{b}{x} \equiv T$. We then have $T \SCB \enc{P_1\fosub{b}{x}} \SCB \enc{P'}$. Moreover, $\enc{P} \st{a(\triggerD)} \overline{m}[\lrangle{x}\enc{P_1}] \equiv T$. We have 
+\[
+\begin{array}{ll}
+& (m)(T \para !m(Y).Y\lrangle{b}) \\
+\equiv & (m)(\overline{m}[\lrangle{x}\enc{P_1}] \para !m(Y).Y\lrangle{b}) \\
+\WCB & (m)(!m(Y).Y\lrangle{b} \para \enc{P_1}\fosub{b}{x}) \\
+\WCB & \enc{P_1}\fosub{b}{x}) \SCB \enc{P'}
+\end{array}
+\]
+\end{itemize}
+\item $P$ is $\overline{a}b.P_1$.
+\begin{itemize}
+\item Output. $P \st{\overline{a}b} P_1\equiv P'$. Then $\enc{P} \equiv \overline{a}[\lrangle{Z}(Z\lrangle{b})].\enc{P_1} \st{\overline{a}[\lrangle{Z}(Z\lrangle{b})]} \enc{P_1} \equiv T$, so $T\SCB \enc{P'}$.
+\end{itemize}
+\item $P$ is $P_1\para P_2$.
+\begin{itemize}
+\item Input. Assume $P_1\st{a(b)} P_1'$, and $P\st{a(b)} P_1'\para P_2 \equiv P'$. By ind. hpy., $\enc{P_1} \st{a(\lrangle{Z}(Z\lrangle{b}))} T_1$ and $T_1\SCB \enc{P_1'}$. Then $\enc{P}\equiv \enc{P_1}\para \enc{P_2} \st{a(\lrangle{Z}(Z\lrangle{b}))} T_1\para \enc{P_2} \DEF T$. So $T\SCB \enc{P_1'}\para \enc{P_2} \equiv \enc{P'}$. Moreover, $\enc{P_1} \st{a(\triggerD)} T_2$ and $(m)(T_2 \para !m(Y).Y\lrangle{b}) \WCB \enc{P_1'}$. So $\enc{P}\equiv \enc{P_1}\para \enc{P_2} \st{a(\triggerD)} T_2\para \enc{P_2} \DEF T'$. So $(m)(T' \para !m(Y).Y\lrangle{b}) \equiv (m)(T_2\para \enc{P_2} \para !m(Y).Y\lrangle{b}) \WCB \enc{P_1'} \para \enc{P_2} \equiv \enc{P'}$.
+\item Output. Assume $P_1\st{\overline{a}b} P_1'$, and $P\st{\overline{a}b} P_1'\para P_2 \equiv P'$. By ind. hpy., $\enc{P_1} \st{\overline{a}[\lrangle{Z}(Z\lrangle{b})]} T_1$ and $T_1\SCB \enc{P_1'}$. Then $\enc{P}\equiv \enc{P_1}\para \enc{P_2} \st{\overline{a}[\lrangle{Z}(Z\lrangle{b})]} T_1\para \enc{P_2} \DEF T$. So $T\SCB \enc{P_1'}\para \enc{P_2}\equiv \enc{P'}$. 
+\item Bound output. Assume $P_1\st{\overline{a}(b)} P_1'$, and $P\st{\overline{a}(b)} P_1'\para P_2 \equiv P'$. By ind. hpy., $\enc{P_1} \st{(b)\overline{a}[\lrangle{Z}(Z\lrangle{b})]} T_1$ and $T_1\SCB \enc{P_1'}$. Then $\enc{P}\equiv \enc{P_1}\para \enc{P_2} \st{(b)\overline{a}[\lrangle{Z}(Z\lrangle{b})]} T_1\para \enc{P_2} \DEF T$. So $T\SCB \enc{P_1'}\para \enc{P_2}\equiv \enc{P'}$. 
+\item Internal action ($\tau$). The interesting case is when there is a communication between $P_1$ and $P_2$. Take, for example, the case $P_1\st{a(b)} P_1'$ and $P_2\st{\overline{a}(b)} P_2'$, and $P'\equiv (b)(P_1'\para P_2')$. By ind. hpy., $\enc{P_1} \st{a(\lrangle{Z}(Z\lrangle{b}))} T_1$ and $T_1\SCB \enc{P_1'}$, and $\enc{P_2} \st{(b)\overline{a}[\lrangle{Z}(Z\lrangle{b})]} T_2$ and $T_2\SCB \enc{P_2'}$. So $\enc{P}\equiv \enc{P_1}\para \enc{P_2} \st{\tau} (b)(T_1\para T_2) \DEF T$. Thus $\enc{P'} \equiv (b)(\enc{P_1'}\para \enc{P_2'}) \SCB (b)(T_1\para T_2) \equiv T$.
+\end{itemize}
+\item $P$ is $(c)P_1$.
+\begin{itemize}
+\item Input. Assume $P_1\st{a(b)} P_1'$, and $P\st{a(b)} (c)P_1'\equiv P'$. By ind. hpy., $\enc{P_1} \st{a(\lrangle{Z}(Z\lrangle{b}))} T_1$ and $T_1\SCB \enc{P_1'}$. Then $\enc{P}\equiv (c)\enc{P_1} \st{a(\lrangle{Z}(Z\lrangle{b}))} (c)T_1 \DEF T$. So $T\SCB (c)\enc{P_1'}\equiv \enc{P'}$. Moreover, $\enc{P_1} \st{a(\triggerD)} T_2$ and $(m)(T_2 \para !m(Y).Y\lrangle{b}) \WCB \enc{P_1'}$. So $\enc{P}\equiv (c)\enc{P_1} \st{a(\triggerD)} (c)T_2 \DEF T'$. So $(m)(T' \para !m(Y).Y\lrangle{b}) \equiv (m)((c)T_2 \para !m(Y).Y\lrangle{b}) \WCB (c)\enc{P_1'} \equiv \enc{P'}$.
+\item Output. Assume $P_1\st{\overline{a}b} P_1'$, and $P\st{\overline{a}b} (c)P_1'\equiv P'$. By ind. hpy., $\enc{P_1} \st{\overline{a}[\lrangle{Z}(Z\lrangle{b})]} T_1$ and $T_1\SCB \enc{P_1'}$. Then $\enc{P}\equiv (c)\enc{P_1} \st{\overline{a}[\lrangle{Z}(Z\lrangle{b})]} (c)T_1 \DEF T$. So $T\SCB (c)\enc{P_1'}\equiv \enc{P'}$.
+\item Bound output. The interesting case is $P_1\st{\overline{a}c} P_1'$, and $P\st{\overline{a}(c)} P'\equiv P_1'$. By ind. hpy., $\enc{P_1} \st{\overline{a}[\lrangle{Z}(Z\lrangle{c})]} T_1$ and $T_1\SCB \enc{P_1'}$. So $\enc{P}\equiv (c)\enc{P_1} \st{(c)\overline{a}[\lrangle{Z}(Z\lrangle{c})]} T \equiv T_1 \SCB \enc{P'}$.
+\item Internal action ($\tau$). Assume $P_1\st{\tau} P_1'$, and $P\st{\tau} (c)P_1'\equiv P'$. By ind. hpy., $\enc{P_1} \st{\tau} T_1$ and $T_1\SCB \enc{P_1'}$. Then $\enc{P}\equiv (c)\enc{P_1} \st{\tau} (c)T_1 \DEF T$. So $T\SCB (c)\enc{P_1'} \equiv \enc{P'}$.
+\end{itemize}
+\item $P$ is $!a(x).P_1$. 
+\begin{itemize}
+\item Input. $P\st{a(b)} P_1\fosub{b}{x}\para P \equiv P'$. So $\enc{P} \equiv !a(Y).Y\lrangle{\lrangle{x}\enc{P_1}} \st{a(\lrangle{Z}(Z\lrangle{b}))} \equiv \enc{P_1}\fosub{b}{x}\para \enc{P} \equiv T$. We then have $T \SCB \enc{P_1\fosub{b}{x}}\para \enc{P} \SCB \enc{P'}$. Moreover, $\enc{P} \st{a(\triggerD)} \overline{m}[\lrangle{x}\enc{P_1}]\para \enc{P} \equiv T$. We have 
+\[
+\begin{array}{ll}
+& (m)(T \para !m(Y).Y\lrangle{b}) \\
+\equiv & (m)(\overline{m}[\lrangle{x}\enc{P_1}]\para \enc{P} \para !m(Y).Y\lrangle{b}) \\
+\WCB & (m)(!m(Y).Y\lrangle{b}\para \enc{P} \para \enc{P_1}\fosub{b}{x}) \\
+\WCB & \enc{P_1}\fosub{b}{x})\para \enc{P} \SCB \enc{P'}
+\end{array}
+\]
+\end{itemize}
+\end{itemize}
+\end{proof}
+
+
+
+%\begin{proof}[Proof of Lemma \ref{l:opcor-conv}]
+\noindent\emph{Proof of Lemma \ref{l:opcor-conv}}~~ The proof proceeds by induction on the structure of $P$. Except that actions come from $\enc{P}$ instead of $P$, it is similar to the proof of Lemma \ref{l:opcor}. We thus skip the details.
+
+%\sepp
+%\noindent\greycolor{
+%{Memo below; to remove: (treat 1-6 together or separately); Actually similar to Lemma \ref{l:opcor} (except that actions come from $\enc{P}$ instead of $P$); maybe simply SKIP.} \\
+%The case $P$ is $0$ is trivial.  
+%\begin{itemize}
+%\item $P$ is $a(x).P_1$.
+%\begin{itemize}
+%\item Input.
+%\end{itemize}
+%\item $P$ is $\overline{a}b.P_1$.
+%\begin{itemize}
+%\item Output.
+%\end{itemize}
+%\item $P$ is $P_1\para P_2$.
+%\begin{itemize}
+%\item Input.
+%\item Output.
+%\item Bound output.
+%\item $\tau$.
+%\end{itemize}
+%\item $P$ is $(c)P_1$.
+%\begin{itemize}
+%\item Input.
+%\item Output.
+%\item Bound output.
+%\item $\tau$.
+%\end{itemize}
+%\item $P$ is $!a(x).P_1$.
+%\begin{itemize}
+%\item Input.
+%\end{itemize}
+%\end{itemize}
+%}%greycolor
+
+%\end{proof}
+
+
+
+
+
+
+
+
+
+
+%---------------------------
+% Local Variables:
+% mode: LaTeX
+% TeX-master: "main.tex"
+% End:

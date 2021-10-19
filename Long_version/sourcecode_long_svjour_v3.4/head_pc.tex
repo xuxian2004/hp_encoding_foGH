@@ -1,0 +1,487 @@
+%---------------------------------------------------------------------
+%the definitions used by xx
+%---------------------------------------------------------------------
+
+
+%---------------------------packages begin---------------------------------------------------------------
+\usepackage{etex}
+\usepackage[usenames]{color}
+%\usepackage{xcolor}
+%\usepackage{inference}
+%\usepackage{vmacros,cmacros}
+\usepackage{makeidx}
+\usepackage{verbatim}
+\usepackage{fancyhdr}
+\usepackage{fancybox}
+\usepackage{stmaryrd}
+\usepackage[reqno]{amsmath}
+%\usepackage[notref,notcite]{showkeys}
+%\usepackage{layout}
+%\usepackage{graphicx}
+%\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{amsfonts}
+\usepackage{bm}
+\usepackage{amsbsy}
+\usepackage[all]{xypic}
+\usepackage {indentfirst}
+\usepackage{graphicx}
+\DeclareGraphicsRule{.jpg}{eps}{.bb}{}
+\DeclareGraphicsRule{.bmp}{eps}{.bb}{}
+%\usepackage{palatino}
+\usepackage[hang]{subfigure}
+\usepackage{cite}
+\usepackage{proof}
+\usepackage{bbding}
+\usepackage{pgf}
+\usepackage{tikz}
+\usetikzlibrary{positioning,arrows,automata}
+\usepackage{cancel}
+\usepackage{semantic}
+\usepackage{extarrows}
+\usepackage{etoolbox} %for defining conditions
+%\usepackage{hyperref}
+%\usepackage[left=1in,right=1in,top=1in,bottom=1in,bindingoffset=1cm,a4paper]{geometry}
+%\usepackage[a4paper,tmargin=0.8in,bmargin=0.85in,lmargin=1.4in,rmargin=1.4in]{geometry}
+%\usepackage{hyperref} % ×îºÃ±£Ö¤ hyperref ÊÇ×îºó¼ÓÔØµÄºê°ü
+%\hypersetup{%
+%  dvipdfmx,% Éè¶¨ÒªÊ¹ÓÃµÄ driver Îª dvipdfmx
+%  unicode={true},% Ê¹ÓÃ unicode À´±àÂë PDF ×Ö·û´®
+%  pdfstartview={FitH},% ÎÄµµ³õÊ¼ÊÓÍ¼ÎªÆ¥Åä¿í¶È
+%  bookmarksnumbered={true},% ÊéÇ©¸½ÉÏÕÂ½Ú±àºÅ
+%  bookmarksopen={true},% Õ¹¿ªÊéÇ©
+%  pdfborder={0 0 0},% Á´½ÓÎÞ¿ò
+%  pdftitle={±êÌâ},
+%  pdfauthor={×÷Õß},
+%  pdfsubject={Ö÷Ìâ},
+%  pdfkeywords={¹Ø¼ü´Ê},
+%  pdfcreator={Ó¦ÓÃ³ÌÐò},
+%  pdfproducer={PDF ÖÆ×÷³ÌÐò},% Õâ¸öºÃÏñÃ»Æð×÷ÓÃ£¿
+%}
+%---------------------------packages end----------------------------------------------------------------
+
+
+%---------------------------thms begin--------------------------------------------------------------------
+% \newtheorem{theorem}{Theorem}%[chapter]
+% \newtheorem{proposition}[theorem]{Proposition}
+% \newtheorem{lemma}[theorem]{Lemma}
+% \newtheorem{corollary}[theorem]{Corollary}
+% \newtheorem{conjecture}[theorem]{Conjecture}
+% \theoremstyle{definition}
+% \newtheorem{definition}[theorem]{Definition}
+% \newtheorem{example}[theorem]{Example}
+% \newtheorem{exercise}[theorem]{Exercise}
+% \theoremstyle{remark}
+% \newtheorem{remark}[theorem]{Remark}
+% \newtheorem{notes}[theorem]{Notes}
+% \newtheorem{convention}[theorem]{Convention}
+%---------------------------thms end---------------------------------------------------------------------
+
+
+%---------------------------common 1 begin-------------------------------------------------------------------
+%\newcommand{\HOPi}{HOPi}
+\newcommand{\HOPi}{\ensuremath{\Pi}}
+\newcommand{\LHOPi}{LHOPi}
+%\newcommand{\FOPi}{FOPi}
+\newcommand{\FOPi}{\ensuremath{\pi}}
+\newcommand{\HOCCS}{HOCCS}
+\newcommand{\CHOCS}{CHOCS}
+\newcommand{\PC}{Plain CHOCS}
+\newcommand{\HOPid}{\ensuremath{\Pi^d}}
+\newcommand{\HOPiD}{\ensuremath{\Pi^D}}
+\newcommand{\HOPiDd}{\ensuremath{\Pi^{D,d}}}
+%
+\newcommand{\NAT}{\mathcal{N}}
+%
+\newcommand{\para}{\,|\,}
+%\newcommand{\para}{|}
+\newcommand{\cho}{\;{+}\;}
+\newcommand{\mat}{{=}}
+\newcommand{\mmat}{{\neq}}
+
+%
+%\newcommand{\myqed}{}
+\newcommand{\myqed}{\qed}
+
+%\newcommand{\R}{\ensuremath{\mathcal{R}}}
+
+%
+\newcommand{\fn}[1]{\mbox{\rm fn($#1$)}} %free names
+\newcommand{\bn}[1]{\mbox{\rm bn($#1$)}} %bound names
+\newcommand{\n}[1]{\mbox{\rm n($#1$)}} %names
+\newcommand{\fnv}[1]{\mbox{\rm fnv($#1$)}} %free name variables
+\newcommand{\bnv}[1]{\mbox{\rm bnv($#1$)}} %bound name variables
+\newcommand{\nv}[1]{\mbox{\rm nv($#1$)}} %name variables
+\newcommand{\fpv}[1]{\mbox{\rm fpv($#1$)}} %free process variables
+\newcommand{\bpv}[1]{\mbox{\rm bpv($#1$)}} %bound process variables
+\newcommand{\pv}[1]{\mbox{\rm pv($#1$)}} %process variables
+\newcommand{\vv}[1]{\mbox{\rm vv($#1$)}} %variables
+
+
+%
+\newcommand{\encode}[3]{ \lds #1 \rds^{#2}_{#3}}
+\newcommand{\dpara}{\;|\!|\, }
+\newcommand{\nber}[1]{|#1|}
+%\newcommand{\lrangle}[1]{\langle #1 \rangle}
+%
+\newcommand{\fosub}[2]{\{#1/#2\} }
+%\newcommand{\hosub}[2]{[#1/#2] }
+\newcommand{\hosub}[2]{\{#1/#2\} }
+\newcommand{\hosubd}[2]{[#1/#2] }%dynamic substitution
+%
+\newcommand{\vect}[1]{{#1_1,#1_2,...,#1_n} }
+\newcommand{\vectk}[1]{{#1_1,#1_2,...,#1_k} }
+\newcommand{\ve}[1]{\widetilde{#1}}
+\newcommand{\vet}[1]{{#1}}
+%\newcommand{\vet}[1]{\widetilde{#1}}
+%
+\newcommand{\size}[1]{|#1|}
+%strong transition
+\newcommand{\st}[1]{\,{\xrightarrow{#1}}\, }
+%strong transition star
+\newcommand{\sts}[1]{\,{\xrightarrow{#1}}^*\, }
+%weak transition
+\newcommand{\wt}[1]{{\xLongrightarrow{#1}} }
+%\newcommand{\wt}[1]{{\stackrel{#1}{\Longrightarrow}} }
+%\newcommand{\rc}[1]{{\color{Red} #1}}
+\newcommand{\rc}[1]{{\color{red} #1}}
+\newcommand{\rrc}[1]{{#1}} %deprecated color
+%\newcommand{\bc}[1]{{\color{Blue} #1}}
+\newcommand{\bc}[1]{{\color{blue} #1}}
+\newcommand{\rbc}[1]{{#1}} %deprecated color
+%
+\newcommand{\da}{\!\!\downarrow}
+\newcommand{\Da}{\!\!\Downarrow}
+\newcommand{\R}{\ensuremath{\mathcal{R}} }
+%
+%\newcommand{\sep}{\vspace*{0.7cm}}
+\newcommand{\sepp}{\vspace*{0.4cm}}
+%
+\newcommand{\itsep}{\itemsep -0.2em}
+%
+%\newcommand{\nsep}{\vspace{-0.13cm}}
+%\newcommand{\nsepv}[1]{\vspace{-#1cm}}
+\newcommand{\nsep}{\vspace{0mm}}
+\newcommand{\nsepv}[1]{\vspace{0mm}}
+\newcommand{\nsepvs}[1]{\vspace{-#1cm}} %negative vertical space
+\newcommand{\psepvs}[1]{\vspace{#1cm}} %positive vertical space
+
+%
+\newcommand{\hfilldots}{$\cdots\cdots\cdots\cdots\cdots\cdots\cdots\cdots\cdots\cdots\cdots\cdots\cdots\cdots\cdots\cdots\cdots\cdots$ }
+%
+%\usepackage{mathabx}
+\newcommand{\FROMHERE}{\rc{$\blacktriangleright\blacktriangleright\blacktriangleright\blacktriangleright\blacktriangleright\blacktriangleright\blacktriangleright\blacktriangleright\blacktriangleright\blacktriangleright\blacktriangleright\blacktriangleright\blacktriangleright\blacktriangleright\blacktriangleright\blacktriangleright\blacktriangleright\blacktriangleright\blacktriangleright\blacktriangleright\blacktriangleright\blacktriangleright$ \textsc{\large from here!!!!!!....}} }
+%
+\newcommand{\TODO}{$\blacktriangleright\blacktriangleright\blacktriangleright\blacktriangleright\blacktriangleright\blacktriangleright\blacktriangleright\blacktriangleright\blacktriangleright\blacktriangleright\blacktriangleright\blacktriangleright\blacktriangleright\blacktriangleright\blacktriangleright\blacktriangleright\blacktriangleright\blacktriangleright\blacktriangleright\blacktriangleright\blacktriangleright\blacktriangleright$ \textsc{\large TODO!!!!!!....} }
+%---------------------------common 1 end-------------------------------------------------------------------
+
+
+
+
+%---------------------------common 2(bisimulation) begin-------------------------------------------------------------------
+%CCS
+\newcommand{\CCSSB}{\sim }
+\newcommand{\CCSWB}{\approx }
+\newcommand{\CCSWC}{= }
+\newcommand{\CCSIMP}{\vdash }
+%first-order barbed bisimulation
+\newcommand{\FOBB}{\approx_{bf}}
+%higher-order barbed bisimulation
+\newcommand{\HOBB}{\approx_{bh}}
+%first-order barbed congruence
+\newcommand{\FOBC}{\approx_{bf}^c}
+%higher-order barbed congruence
+\newcommand{\HOBC}{\approx_{bh}^c}
+%first-order barbed equivalence
+\newcommand{\FOBE}{\approx_{bf}^e}
+%higher-order barbed equivalence
+\newcommand{\HOBE}{\approx_{bh}^e}
+%strong higher-order context bisimulation
+\newcommand{\SHOCB}{\sim_{ct}}
+%higher-order context bisimulation
+\newcommand{\HOCB}{\approx_{ct}}
+%higher-order context congruence
+\newcommand{\HOCC}{\approx_{Ct}^c}
+%higher-order normal bisimulation
+\newcommand{\HONB}{\approx_{nr}}
+%higher-order triggered bisimulation
+\newcommand{\HOTB}{\approx_{Tr}}
+%index operation in quasi open bisimulations
+\newcommand{\qidx}[2]{{#1}^{#2} }
+%higher-order bisimulation defined in [San92]
+\newcommand{\HB}{\approx_H }
+%
+\newcommand{\CHB}{\approx_H^{CHOCS} }
+%a symbol for barbed bisimulation in [San92]
+\newcommand{\BB}{\approx }
+%a symbol for early bisimulation in [San92]
+\newcommand{\EB}{\approx_e }
+%local bisimilarity
+\newcommand{\LB}{\approx_l }
+%structural equivalence
+%\newcommand{\SE}{\sim_s }
+%\newcommand{\SE}{\sim }
+\newcommand{\SE}{\equiv }
+%structural equivalence
+\newcommand{\HOSE}{\sim }
+%---------------------------common 2(bisimulation) end-------------------------------------------------------------------
+
+
+%---------------------------mHO begin-------------------------------------------------------------------
+%higher-order pi-calculus with mismatch
+%\newcommand{\mHOPi}{mHOPi }
+\newcommand{\mHOPi}{mHOPi}
+%encoding higher-order to first-order
+\newcommand{\hofo}[1]{{\mathcal{C}[\![ #1]\!]} }
+%open strong HO bisimilarity
+\newcommand{\HOOSB}{\sim_{oh} }
+%open weak HO bisimilarity
+\newcommand{\HOOWB}{\approx_{oh} }
+%open weak HO congruence
+\newcommand{\HOOWC}{\simeq_{oh} }
+%quasi open (weak) higher-order bisimilarity
+\newcommand{\QOHOB}[1]{\approx_{qh}^{#1} }
+%quasi open (weak) higher-order congruence
+\newcommand{\QOHOC}{\simeq_{qh} }
+%local higher-order bisimilarity
+\newcommand{\LHOB}{\approx_{lh} }
+%local higher-order congruence
+\newcommand{\LHOC}{\simeq_{lh} }
+%the axiom system for open weak HO bisimilarity
+\newcommand{\ASLM}{\mathcal{AS}_{LM} }
+%the axiom system for quasi open weak HO bisimilarity or local HO bisimilarity
+\newcommand{\ASLMQ}{\mathcal{AS}_{LM_q} }
+%the axiom system for quasi open weak HO bisimilarity or local HO bisimilarity
+\newcommand{\ASLML}{\mathcal{AS}_{LM_l} }
+%---------------------------mHO end-------------------------------------------------------------------
+
+
+%---------------------------encoding begin-------------------------------------------------------------------
+%
+\newcommand{\lds}{[\![}
+\newcommand{\rds}{]\!]}
+%
+\newcommand{\encoding}[3]{ \lds #1 \rds^{#2}_{#3}}
+\newcommand{\iencoding}[3]{ \lds #1 \rds^{#2}_{#3}}
+\newcommand{\enc}[1]{\llbracket #1 \rrbracket}
+%
+\newcommand{\wm}[1]{ \mathcal{W}[\![ #1 ]\!]}
+\newcommand{\iwm}[1]{ \mathcal{W}^n[\![ #1 ]\!]}
+\newcommand{\chan}[1]{#1{-}chan}
+\newcommand{\ichan}[1]{#1{-}ichan}
+\newcommand{\backs}[1]{\!\setminus\!#1\!}
+\newcommand{\dmd}[2]{\{\diamond_{#1}\; #2\} }
+%\newcommand{\dmd}[2]{\{\diamond\; #2\} }
+\newcommand{\idmd}[2]{\{\diamond_{#1}^i\; #2\} }
+%ground bisimulation
+\newcommand{\GB}{\stackrel{.}{\approx}}
+%strong applicative higher-order bisimulation
+\newcommand{\SAHOB}{\stackrel{:}{\sim}}
+%applicative higher-order bisimulation
+\newcommand{\AHOB}{\stackrel{:}{\approx}}
+%indexed applicative higher-order bisimulation
+\newcommand{\IAHOB}{\stackrel{:}{\approx}_S}
+%indexed higher-order barbed bisimulation
+\newcommand{\IHOBB}{\approx_{bh}^S}
+%indexed higher-order barbed congruence
+\newcommand{\IHOBC}{^c\approx_{bh}^S}
+%indexed higher-order barbed equivalence
+\newcommand{\IHOBE}{^e\approx_{bh}^S}
+%indexed strong higher-order context bisimulation
+\newcommand{\ISHOCB}{\sim_{Ct}^S}
+%indexed higher-order context bisimulation
+\newcommand{\IHOCB}{\approx_{Ct}^S}
+%indexed higher-order context congruence
+\newcommand{\IHOCC}{\simeq_{Ct}^S}
+%indexed higher-order normal bisimulation
+\newcommand{\IHONB}{\approx_{Nr}^S}
+%wired bisimulation
+\newcommand{\WB}{\approx_{Wr}}
+%wired congruence
+\newcommand{\WC}{\simeq_{Wr}}
+%indexed wired bisimulation
+\newcommand{\IWB}{\approx_{Wr}^S}
+%indexed wired congruence
+\newcommand{\IWC}{\simeq_{Wr}^S}
+%
+\newcommand{\OHOCB}{\approx_{Ct}}
+%quasi open bisimulation
+\newcommand{\QOB}[1]{\approx_q^{#1} }
+%local open bisimilarity
+\newcommand{\LOB}{\approx_{lo}}
+%local wired bisimulation
+\newcommand{\LWB}{\approx_{lw}}
+%---------------------------encoding end-------------------------------------------------------------------
+
+
+%---------------------------logic begin-------------------------------------------------------------------
+%first-order q-open bisimilarity
+\newcommand{\FOQOB}{\approx_{qo}}
+%higher-order q-open bisimilarity
+\newcommand{\HOQOB}{\approx_{qoh}}
+%higher-order q-open linear bisimilarity
+\newcommand{\HOQOLB}{\approx_{qoh}^{l}}
+%higher-order local bisimilarity
+\newcommand{\HOLB}{\approx_{l} }
+%higher-order local congruence
+\newcommand{\HOLC}{\simeq_{l} }
+%higher-order local linear bisimilarity
+\newcommand{\HOLLB}{\approx_{ll} }
+%higher-order local linear congruence
+\newcommand{\HOLLC}{\simeq_{ll} }
+%higher-order local linear variant bisimilarity
+\newcommand{\HOLLVB}{\approx_{ll}^{v} }
+%higher-order local linear variant bisimilarity: hierarchy
+\newcommand{\HOLLVBH}[1]{\approx^{#1} }
+%higher-order general bisimilarity
+\newcommand{\HOGNLB}{\approx }
+%linear higher-order logic
+\newcommand{\LHOL}{LHOL }
+%on logic characterization
+\newcommand{\dias}[1]{\langle {#1} \rangle }
+\newcommand{\boxs}[1]{[ {#1} ] }
+\newcommand{\conjuct}{\wedge }
+\newcommand{\disjuct}{\vee }
+%semantically imply or not imply
+\newcommand{\semimply}{\vDash }
+\newcommand{\nsemimply}{\not\vDash }
+%syntactically imply or not imply
+\newcommand{\synimply}{\vdash }
+\newcommand{\nsynimply}{\not\vdash }
+%(): [] or <>
+\newcommand{\diaobox}[1]{( {#1} ) }
+%constructive implication
+\newcommand{\ci}{\Rightarrow }
+%depth of a formula
+\newcommand{\depth}[1]{| {#1} | }
+%characteristic formula
+\newcommand{\cformula}[2]{C^{#1}(#2) }
+%
+\newcommand{\HOLE}{\approx_{L} } %higher-order logical equivalence in the weak case
+\newcommand{\HOLEH}[1]{\approx^{#1}_{L} } %higher-order logical equivalence in hierarchy  in the weak case
+\newcommand{\NHOLEH}[1]{\not\approx^{#1}_{L} } %negation of higher-order logical equivalence in hierarchy  in the weak case
+%---------------------------logic end-------------------------------------------------------------------
+
+
+%---------------------------common 3() begin-------------------------------------------------------------------
+%more
+\newcommand{\DEF}{\stackrel{\textrm{def}}{=}} %definition
+\newcommand{\myxcancel}[1]{\xcancel{#1}} %cancel notation
+%add to original head_pc
+\newcommand{\lrangle}[1]{\langle #1 \rangle} % for abstraction and etc.
+\newcommand{\CCSSLE}{\sim_{L} } %higher-order logical equivalence in the weak case
+\newcommand{\CCSSLEH}[1]{\sim_{#1} } %higher-order logical equivalence in hierarchy  in the weak case
+%consider redefine \encoding{}{}{} as ``\llbracket #1 \rrbracket^{#2}_{#3}"
+\newcommand{\piBiCo}{\approx_\downarrow^\pi}
+%pipe definition
+\newcommand{\PIPE}[4]{\mathfrak{#1}{-}\mathfrak{pipe}(#2,#3,#4) }
+\newcommand{\PIPEA}[1]{\mathbf{#1}{\textendash}\mathfrak{pipe} }
+
+%---------------------------common 3() end-------------------------------------------------------------------
+
+
+%---------------------------expressiveness begin-------------------------------------------------------------------
+%\makeindex
+\newcommand{\AEHOPi}{\ensuremath{=_{\Pi}} } %absolute equality of HOPi
+\newcommand{\AEHOPid}{\ensuremath{=_{\Pi^d}} } %absolute equality of HOPid
+\newcommand{\AEHOPiddiv}{\ensuremath{=_{\scriptscriptstyle \Pi^d}^{\scriptscriptstyle \Uparrow}} } %absolute equality of HOPid with divergence-sensitivity
+\newcommand{\AEFOPi}{\ensuremath{=_{\pi}} } %absolute equality of FOPi
+%
+\newcommand{\EWLB}{\ensuremath{\approx_{l}} } %external weak local bisimilarity
+%\newcommand{\EWLB}{\approx_{l}^{\pi} } %external weak local bisimilarity
+\newcommand{\EWBFOPi}{\ensuremath{\approx_{w}^{\pi}} }%external weak bisimilarity of FOPi
+\newcommand{\SGB}{\ensuremath{\sim_{g}} }%strong ground bisimilarity of FOPi
+\newcommand{\WGB}{\ensuremath{\approx_{g}} }%ground bisimilarity of FOPi
+
+%\newcommand{\ground}{ground }%the name of "ground": can be omitted
+\newcommand{\ground}{ }%the name of "ground": can be omitted
+%\newcommand{\Ground}{Ground }%the name of "ground": can be omitted
+\newcommand{\Ground}{ }%the name of "ground": can be omitted
+
+\newcommand{\CBHOPi}{\approx_{Ct}^{\Pi} }%weak context bisimilarity of HOPi
+\newcommand{\WCB}{\ensuremath{\approx_{ct}} }%weak context bisimilarity for general HO
+\newcommand{\WWCB}{\ensuremath{\dot\approx_{ct}} }%weak context bisimilarity restricted to the image of an encoding
+\newcommand{\SCB}{\ensuremath{\sim_{ct}} }%strong context bisimilarity for general HO
+\newcommand{\WSCB}{\ensuremath{\dot\sim_{ct}} }%strong context bisimilarity restricted to the image of an encoding
+\newcommand{\SSEQV}{\ensuremath{\equiv} }%strong structural congruence for general HO: may be \equiv or \sim
+%
+\newcommand{\WNB}{\ensuremath{\approx_{nr}} }%weak normal bisimilarity for general HO
+\newcommand{\SNB}{\ensuremath{\sim_{nr}} }%strong normal bisimilarity for general HO
+\newcommand{\diverge}[1]{#1^{\Uparrow}}
+%
+\newcommand{\trigger}{\ensuremath{Tr_m} } %trigger of HOPi
+\newcommand{\triggerD}{\ensuremath{Tr_m^D} } %trigger of HOPiD
+\newcommand{\triggerd}{\ensuremath{Tr_m^d} } %trigger of HOPiDd
+\newcommand{\triggerExp}{\ensuremath{\overline{m}} } %trigger of HOPi expanded
+\newcommand{\triggerDExp}{\ensuremath{\lrangle{Z}\overline{m}Z} } %trigger of HOPiD expanded
+\newcommand{\triggerdExp}{\ensuremath{\lrangle{z}\overline{m}[\lrangle{Y}(Y\lrangle{z})]} } %trigger of HOPiDd expanded
+%---------------------------expressiveness end-------------------------------------------------------------------
+
+
+%---------------------------theory of computation begin-------------------------------------------------------------------
+%\makeindex
+%\makeatletter
+\makeatletter
+\@ifundefined{newslide}{%
+\newcommand{\slidesepa}{}
+}{%
+\newcommand{\slidesepa}{\newslide} %defined as \newslide when used in slides making
+}
+%whether to make a new input file
+\makeatletter
+\@ifundefined{endinput}{%
+\newcommand{\infilesepa}{}
+}{%
+\newcommand{\infilesepa}{\endinput} %defined as \newslide when used in slides making
+}
+
+%
+\newcommand{\stress}[1]{\rc{#1}} %emphasize
+\newcommand{\strs}[1]{{#1}} %emphasize
+\newcommand{\strss}[1]{\rc{#1}} %emphasize
+%\newcommand{\stress}[1]{\textbf{#1}} %emphasize
+\newcommand{\length}[1]{|#1|} %length/size of #1
+\newcommand{\lang}[1]{\mathcal{L}(#1)} %language of #1
+\newcommand{\choice}{\quad|\quad} %separating items in a grammar definition
+\newcommand{\showspace}{\raisebox{0.45mm}{\texttt{\char32}}} %explicit space symbol \raisebox{-0.7ex}{aa}
+%\newcommand{\showspace}{\textvisiblespace}
+%\newcommand{\showspace}{\sqcup}
+%---------------------------theory of computation end-------------------------------------------------------------------
+
+
+%---------------------------others begin-------------------------------------------------------------------
+%
+%color for comments
+\newcommand{\lh}[1]{{\textcolor[RGB]{178,58,238}{#1}}}
+\newcommand{\yq}[1]{{\textcolor[RGB]{255,215,0}{#1}}}
+\newcommand{\xx}[1]{{\textcolor[RGB]{0,200,0}{#1}}}
+\newcommand{\xxrmcolor}[1]{#1} %for removing the color
+\newcommand{\xxz}[1]{{\textcolor[RGB]{205,185,0}{#1}}}
+\newcommand{\xxy}[1]{{\textcolor[RGB]{0,205,175}{#1}}}
+\newcommand{\xxx}[1]{{\textcolor[RGB]{0,185,205}{#1}}}
+%\newcommand{\xxx}[1]{#1}
+
+\newcommand{\xxxrmcolor}[1]{#1} %for removing the color
+
+\newcommand{\oo}[1]{{\color{red} #1}}
+\newcommand{\nts}[1]{{\textcolor[RGB]{0,221,0}{#1}}}
+\newcommand{\ntsrm}[1]{} %for removing the notes after usage
+\newcommand{\ntsoo}[1]{{\textcolor[RGB]{204,153,255}{#1}}}
+\newcommand{\ntsoorm}[1]{} %for removing the notes after usage
+
+\newcommand{\greycolor}[1]{{\textcolor[RGB]{112,128,144}{#1}}}
+\newcommand{\greycolora}[1]{{\textcolor[RGB]{119,136,153}{#1}}}
+
+%switch for comments to tiny up
+%\newcommand{\tdup}[1]{{\tiny #1}}%keep the related comments temporarily
+\newcommand{\tdup}[1]{}%remove the related comments
+
+%---------------------------others end-------------------------------------------------------------------
+
+
+%---------------------------
+% Local Variables:
+% mode: LaTeX
+% TeX-master: "main.tex"
+% End:
+% End:

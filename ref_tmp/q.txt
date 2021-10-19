@@ -1,0 +1,23 @@
+﻿
+
+Below a question about the soundness proof of the encoding.
+
+
+We want to prove P ≈ Q, and define a relation R s.t. P R Q.
+Suppose P -α-> P', and Q tries to simulate with Q =α=> Q'.
+We want to show P' and Q' are somehow related by R (maybe use some up-to technique), 
+but only know that C[P'] ≈R≈ C[Q'] for some specific context C.
+
+Is it possible in this case to conclude R implies the bisimilarity? 
+If true, is there some proof technique we can refer to?
+If false, could you point to some paper where an example or some discussion is provided?
+
+------------------------------------------------
+This seems false.
+Consider processes a and a.c. Obviously they are not bisimilar. 
+However define R as {(a,a.c)}∪≈. Then a -a-> 0 and  a.c -a-> c tries to match, with C ≡ (c)[]. 
+This meets the condition above, but does not entail a correct result.
+
+
+So we have to find another way.
+

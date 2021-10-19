@@ -1,0 +1,92 @@
+
+
+https://www.rairo-ita.org/about-the-journal/aims-and-scope
+
+
+----------------
+Thanks for the paper and further advice, both of which I appreciate a lot.
+
+The abstract's last sentence indeed brings some resonance. I mean I actually did expand the proof of congruence of normal bisimulation (though not fully written down), and then I came to realize that its proof probably needs certain up-to context technique (or other technique of the same essence). So from certain viewpoint, in my work the parts on up-to context and congruence of normal bisimulation converges to some up-to context technique. I feel like the importance of up-to context may need more investigation. But since the current paper is not about up-to, I did not go further (at that time I thought I would touch on this thread in the near future).
+
+Thank you again. I will spend some more time in this respect when modifying the paper. I will let you know if I have further questions/thoughts, if convenient.
+
+Best,
+Xu Xian
+
+----------------
+ 
+
+
+---------- Origin message ----------
+>From£º"Davide Sangiorgi" <davide.sangiorgi@gmail.com>
+>To£º"Xu Xian" <xuxian@ecust.edu.cn>
+>Subject£ºRe: lmcs #4448 - publication of your LMCS paper
+>Date£º2018-08-21 23:22:33
+actually i was wrong (did not remember well): in that paper we do not 
+treat  bis upto context for HOpi. However i am pretty sure it is sound, 
+because HOpi can be translated into pi in a fully abstract way, and the 
+technique is sound in pi.
+
+
+On 08/21/18 17:02, Davide Sangiorgi wrote:
+> Actually, with Adrien Durier we have recently written a paper (under
+> submission) about unique solution of equation, where we prove some up-to
+> context for normal bisimulation.  If you want I could send you a draft
+> DS
+
+
+I attach the paper. Actually it is not using bisimulation, but unique
+solution of equations. For you, it is firther evidence that the
+technique up-to context is sound, and you could refer to it, but it is
+not really what you need in the paper (my other suggestions, of claiming
+that the technique follows from the full abstraction of encoding into
+pi, would seem ok)
+
+DS
+ 
+----------------
+
+
+Thank you so much for the advice. They are very instructive and constructive.
+
+Concerning up-to context: I suppose you are pointing to the paper of concur14 (attached, or here https://link.springer.com/chapter/10.1007/978-3-662-44584-6_8 ). I will take a look. It seems relevant. Thank you (also for possible further questions in advance).
+
+Concerning correctness: from your intuition, do you think the up-to context (in the higher-order setting) and the congruence of normal bisimulation are sound?
+
+I agree very much with your comment on treating the review (only sometimes it is hard to ignore something). Criticism helps more often than not (even though there may be an infinite number of styles of referees (not so easy to make them happy all)).
+Nevertheless, I indeed agree and appreciate your suggestions very much. And I have been and will be trying to improve.
+
+Thank you again.
+
+
+Best,
+Xu Xian
+
+
+----------------
+ 
+
+
+---------- Origin message ----------
+>From£º"Davide Sangiorgi" <davide.sangiorgi@gmail.com>
+>To£º"Xu Xian (ecust)" <xuxian@ecust.edu.cn>
+>Subject£ºRe: lmcs #4448 - publication of your LMCS paper
+>Date£º2018-08-21 21:19:27
+For the part on up-to context (assuming you use it, i do not know):
+you need to state the theorem of soundness covering what you need, and
+add references to the papers from which the theorem is taken.
+
+Concerning such results, i think the only ones are those in my paper
+Concur 12 with Pous and Madiot (have a look at it, and see if this is ok
+for your needs)
+
+Similarly you could put a theorem about congruence of normal
+bisimulation with references; then point out that the proof for you is
+similar. This should make a referee happy, i would think.
+
+For the other points, I am not sure I see what you are asking.
+Note that you need not agree with all the comments from a referee.
+However seeing what the referee did not like/understand could help you
+clarifying things (including motivations, i guess)
+
+DS

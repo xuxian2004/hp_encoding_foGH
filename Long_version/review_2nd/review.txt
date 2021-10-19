@@ -1,0 +1,129 @@
+View Letter
+Date:	20 Aug 2018
+To:	"Xian Xu" xuxian2004@gmail.com
+From:	"Journals Editorial Office" Vidhya.Velayudhan@springer.com
+Subject:	Acta Informatica - Editor's decision on ACIN-D-18-00105
+Dear Xian Xu, 
+
+I have received a report from a referee on your manuscript, ACIN-D-18-00105,
+"Parameterizing Higher-order Processes on Names and Processes", submitted to Acta Informatica
+You find the report below. As you see, I am afraid it is rather negative. 
+Hence it is pointless to wait for further reports, which would just mean wasting time for you. 
+
+I do hope you will find the report and the comments in it useful.
+
+
+Yours sincerely,
+Davide Sangiorgi
+Associate Editor
+Acta Informatica
+
+===================================
+
+Referee report on the paper 
+
+"Parametrizing higher-order processes on names and processes" 
+by Xian Xu
+
+
+The paper studies parametrization in higher-order processes. 
+The main results: 2 encodings of first-order processes (ie, pi-calculus) 
+into a higher-order calculus with name parametrization, and
+correctness results for them; a characterization of
+context bisimulation (the 'standard' bisimulation for higher-order
+processes) as a normal bisimulation on a calculus without name-passing.
+
+The paper is not up to the standards of the Acta Informatica journal,
+for the following reasons. 
+
+First the encodings of pi-calculus into the higher-order calculi are
+really straightforward, and not at all surprising. Allowing the
+communication of abstractions over names is not really far from 
+allowing name communication. 
+
+Secondly, I do not understand the interest of the characterization of
+context bisimulation as a non-standard normal bisimulation in the
+paper. It is known that context bisimulation can be characterized as
+normal bisimulation, provided the calculus has name communication. 
+Now, the calculus in the paper does not have it; however, as normal
+bisimulation is just a tool to characterize context bisimulation in
+the simplest possible way, what is wrong with providing the
+characterization in an extended calculus in which name-communication
+is allowed? Then one could re-use the standard (and simpler) normal
+bisimulation. If this plan is not possible 
+(though I do not see why it should not be so), then indeed it would be
+interesting to know why, and maybe explore the direction in the
+paper. 
+
+
+On this point: You should make it clear that the whole point of the
+characterization as normal bisimulation is about the absence of
+name-passing in the calculus, which prevents using the standard normal
+bisimulation. It took me a while to realize this.
+
+Furthermore a motivating issue: what is the interest in not having name communication in a calculus in which 
+there are abstractions over names and communication of these? 
+
+Other important things: 
+
+Def 1 of bisimulation. You call it "ground" but in fact I believe this
+is the "early" one. 
+
+Clause 2 of Def 3 is awful to read, notably here: 
+"... and A is a process abstraction or name abstraction or not an
+abstraction, then .... for some B that is accordingly a process 
+abstraction or name abstraction or not an abstraction". 
+I guess there is an underlying type system and then what you want to
+say is that A and B should have the same type. 
+
+
+This remark applies to several other definitions and results (example
+theorem 1 page 31) 
+
+Def. 4 (soundness and completeness): aren't they exchanged?	
+
+Paragraph after def 5. You claim that you have modified the standard
+def of normal bisimulation. But then you cannot handle the issue of
+congruence saying "it is well known that normal bisimulation is 
+a congruence" ! 
+
+The standard normal bisimulation is a congruence, but this one is
+different (moreover congruence for normal bisimulation is not an easy
+proof)
+
+
+Page 10. You explain that you will use "bisimulations up-to context". 
+How do you know they are sound ? The references given contain no such
+results for the calculi in the paper, as far as I can see. 
+Again, these are results that would have non-trivial proofs
+
+
+Appendixes: why using small characters? they are hard to read
+
+Minor issues: 
+
+Page 3, line 37-39: "Resolving this can also provide (technical)
+reference for practical work beyond the encoding itself. " What
+practical work?
+
+Page 5, line 13-16: 
+
+"That characterization , however, is made in the presence of
+first-order processes (i.e., name-passing), and thus not very
+convincing with regard to the inner complexity of context bisimulation
+in presence of parameterization. "
+This sentence is mysterious. 
+
+Page 10, line 4: "reply" should be "rely" 
+
+Another example of mysterious sentence (there are several in the
+paper): page 6, line 3-4: 
+"The idea of the encodings in this paper is quite different from the above-
+mentioned works in the literature, and may potentially offer (technical)
+reference to relevant work."
+Which work? I guess you mean that it is an expressiveness result and
+that you hope it may spawn further work? of what kind? 
+
+Last line before section 4.1: "whole" should be "hole" 
+
+Following line: "pronounced" ??

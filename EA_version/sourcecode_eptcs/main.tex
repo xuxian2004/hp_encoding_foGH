@@ -1,0 +1,117 @@
+%\documentclass[submission,copyright,creativecommons]{eptcs}
+\documentclass[submission]{eptcs}
+%\documentclass[adraft]{eptcs}
+%\documentclass[preliminary]{eptcs}
+\providecommand{\event}{} % Name of the event you are submitting to
+%\usepackage{breakurl}             % Not needed if you use pdflatex only.
+
+%definitions
+\input{head_pc}
+\RequirePackage[normalem]{ulem}
+\RequirePackage{color}\definecolor{RED}{rgb}{1,0,0}\definecolor{BLUE}{rgb}{0,0,1}
+\providecommand{\DIFadd}[1]{{\protect\color{blue}\uwave{#1}}}
+\providecommand{\DIFdel}[1]{{\protect\color{red}\sout{#1}}}
+%DIF SAFE PREAMBLE
+\providecommand{\DIFaddbegin}{}
+\providecommand{\DIFaddend}{}
+\providecommand{\DIFdelbegin}{}
+\providecommand{\DIFdelend}{}
+%DIF FLOATSAFE PREAMBLE
+\providecommand{\DIFaddFL}[1]{\DIFadd{#1}}
+\providecommand{\DIFdelFL}[1]{\DIFdel{#1}}
+\providecommand{\DIFaddbeginFL}{}
+\providecommand{\DIFaddendFL}{}
+\providecommand{\DIFdelbeginFL}{}
+\providecommand{\DIFdelendFL}{}
+
+%
+%\usepackage{etoolbox} %moved to head_pc.tex
+\newtoggle{appendixing} % whether to include appendices
+%\toggletrue{appendixing}
+\togglefalse{appendixing}
+%\iftoggle{appendixing}{%
+  % using appendixing
+%}{%
+  % no appendixing
+%}
+
+
+%\title{Interpreting Name-passing with Abstraction-passing}
+%\title{A New Encoding of Name-passing with Process-passing}
+%\title{Parameterizing Higher-order Processes over Names and Processes}
+\title{Higher-order Processes with Parameterization over Names and Processes}
+\author{Xian Xu
+\thanks{This work has been supported by project ANR 12IS02001 PACE and NSF of China (61261130589,
+61472239, 61572318).}
+\institute{East China University of Science and Technology, China}
+\email{xuxian@ecust.edu.cn}
+%\and
+%Qiang Yin \quad\qquad Huan Long
+%\institute{Shanghai Jiao Tong University, China}
+%\email{\quad yinqiang.sjtu@gmail.com \quad\qquad longhuan@sjtu.edu.cn}
+}
+%\def\titlerunning{On the Computation Power of Name Parameterization in Higher-order Processes}
+\def\titlerunning{Higher-order Processes with Parameterization}
+%\def\authorrunning{Xian Xu, Qiang Yin \& Huan Long}
+\def\authorrunning{Xian Xu}
+\begin{document}
+\maketitle
+
+%\bc{TODO :\rc{make it a (workshop) paper} (technical stuff nearly ok now); } %\bc{$\checkmark$}}
+%\begin{itemize}
+%\item introduction.  \bc{$\checkmark$}
+%\item definition.  \bc{$\checkmark$}
+%\item conclusion.  \bc{$\checkmark$}
+%\item tidy up (remove the tiny comments by redefining ``$\backslash$tdup").  \bc{$\checkmark$}
+%\item page limit and more readable (\rc{flow})  \,\&\,  remove colors and nts %\bc{$\checkmark$}
+%\item \greycolor{Words: facilitate, demonstrate, be dedicated to, }
+%\end{itemize}
+%\sep
+%\vspace*{-.5cm}
+\begin{abstract}
+Parameterization extends higher-order processes with the capability of abstraction and application (like those in lambda-calculus). This extension is strict, i.e., higher-order processes equipped with parameterization is computationally more powerful. This paper studies higher-order processes with two kinds of parameterization: one on names and the other on processes themselves. We present two results. One is that in presence of parameterization, higher-order processes can encode first-order (name-passing) processes in a quite neat fashion, in contrast to the fact that higher-order processes without parameterization cannot encode first-order processes at all. In the other result, we provide a simpler characterization of the (standard) context bisimulation for higher-order processes with parameterization, in terms of the normal bisimulation that stems from the well-known normal characterization for higher-order calculus. These two results demonstrate more essence of the parameterization method in the higher-order paradigm toward expressiveness and behavioural equivalence.
+
+\vspace*{.1cm}
+\noindent\emph{keywords}: Parameterization, Context bisimulation, Higher-order, First-order, Processes %, Name-passing, Process-passing,
+\end{abstract}
+
+
+%----------------------------------------------------------------------------------------------
+%\input{scribble.tex}
+\input{introduction.tex}
+\input{preliminary.tex}
+\input{encoding.tex}
+\input{normal.tex}
+\input{conclusion.tex}
+%----------------------------------------------------------------------------------------------
+
+%----------------------------------------------------------------------------------------------
+\sepp
+\noindent\textbf{Acknowledgements}\;\;
+%This work has been supported by project ANR 12IS02001 PACE and NSF of China (61261130589, 61472239, 61572318). 
+We thank the anonymous referees for their useful comments on this article. %We also thank Qiang Yin for the helpful discussion 
+
+%-------------------------bibliography------------------------------------------------------------
+%\clearpage
+%\vspace*{-3mm}
+%\nocite{*}
+\bibliographystyle{eptcs}
+\bibliography{process}
+%-----------------------------------------------------------------------------------------------
+
+%-----------------------------------------------------------------------------------------------
+\iftoggle{appendixing}{%
+  %using appendixing
+%\sep\sep
+\clearpage
+\appendix
+\noindent\textbf{\Large Appendix}
+\input{appendix_proof_encoding.tex}
+\input{appendix_proof_normal.tex}
+}{%
+  %no appendixing
+}
+
+%-----------------------------------------------------------------------------------------------
+
+\end{document}

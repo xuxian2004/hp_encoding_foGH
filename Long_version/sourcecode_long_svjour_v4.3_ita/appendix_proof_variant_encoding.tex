@@ -1,0 +1,223 @@
+%\section{Proofs for Section \ref{s:conclusion}}\label{appendix:variant_encoding}
+% \rc{
+% The remainder of this section is devoted to a full analysis of this encoding.
+% Details are in Appendix \ref{appendix:variant_encoding}.
+% \nts{\fbox{move the appendix here and adjust/refactor the stuff}}
+% }
+
+%***************************************************
+%NOW in the body, used by "encoding_variant.tex"
+
+\sepp
+
+The remainder of this section is devoted to a full analysis of the encoding above.
+%Particularly, we examine the static and dynamic properties of the variant encoding given above. %in Section \ref{s:conclusion}. 
+%For convenience, we reuse the encoding notation $\enc{}$ and there should be no confusion in context. 
+\xxx{We first note that, similar to the encoding in Section \ref{s:encoding}, 
+%Lemma \ref{l:syn-pro-encoding}, 
+the encoding comes with compositionality and divergence-reflection, and preserves name substitution (i.e., name invariant) and the structural congruence.}
+These properties will be used implicitly in the arguments of this section. We also point out again that since the encoding is compositional, it makes sense to extend the definition of the encoding to be over contexts, with a hole translated to a hole.
+
+%\nts{
+%\begin{itemize}
+%\item[DONE] Operational correspondence (not directly true at least)
+%\item[DONE] Soundness's couterexample (the original counterexample (Section \ref{s:encoding_soundness}) or its light variant seems still applicable)
+%\item[DONE] Weak soundness
+%\item[DONE] Completeness
+%\end{itemize}
+%}
+
+\subsection{Operational correspondence}\label{s:opcoores_var_encoding}
+
+%\FROMHERE
+
+It is pronounced that the operational correspondence does not hold in a direct fashion, because the encoding now has two swaps: one is between input and output; the other between synchrony and asynchrony. From a certain perspective, this encoding is more of a conceptual one,
+% and it is unequivocally a great step in the right direction, though 
+and its analysis is more tricky than the encoding in Section \ref{ss:encoding_def}. 
+\xxx{Nevertheless, as for the encoding in Section \ref{ss:encoding_def}, from the operational correspondence (Lemma \ref{l:opcor_var} and Lemma \ref{l:opcor-conv_var}), we can still see that an encoding always evolves into another one (think of $A$ in these two lemmata as an encoding abstracted on a name, i.e., $\lrangle{x}\enc{P}$). So the image of the translation yields a closed (sub)range in the target model.}
+%\nts{TODO (ref. Section \ref{s:encoding_operational})}
+
+\begin{lemma}\label{l:opcor_var}
+Suppose $P$ is a \FOPi\ process and $A$ is a name abstraction. % (typically, an encoding abstracted on a name, i.e., $\lrangle{x}\enc{P}$).
+\begin{enumerate}
+%\item If $P \st{a(b)} P'$, then $P\SCB C[a(x).P_1]$ and $P'\SCB C[P_1\fosub{b}{x}]$ for some context $C$ and $P_1$, and \\
+%$\enc{P} \st{\overline{a}[\lrangle{x}(\enc{P_1})]} T$ and $T\SCB \enc{C[0]}$;
+\item If $P \st{a(b)} P'$, then $P\SGB (\ve{e})C[a(x).P_1]$ and \\
+$P'\equiv (\ve{e})C[P_1\fosub{b}{x}] \equiv (\ve{e})(C[0]\para P_1\fosub{b}{x})$ for some \xiv{evaluation} context $C$, $P_1$ and $\ve{e}$ being the bound names shared between $P_1$ and its context, and \\
+$\enc{P} \st{(\ve{e})\overline{a}[\lrangle{x}(\enc{P_1})]} T\SSEQV \enc{C[0]}$.
+\item If $P \st{\overline{a}b} P'$, then $\enc{P} \st{a(A)} T \SSEQV A\lrangle{b} \para \enc{P'}$.
+\item If $P \st{\overline{a}(b)} P'$, then $\enc{P} \st{a(A)} T \SSEQV (b)(A\lrangle{b} \para \enc{P'})$. %\nts{??}
+%\item If $P \st{a(b)} P'$, then $\enc{P} \st{a(\lrangle{Z}(Z\lrangle{b}))} T$ and $T\SCB \enc{P'}$; ~
+%\item If $P \st{a(b)} P'$, then $\enc{P} \st{a(\triggerD)} T$ and $(m)(T \para !m(Y).Y\lrangle{b}) \WCB \enc{P'}$; ~
+%\item If $P \st{\overline{a}b} P'$, then $\enc{P} \st{\overline{a}[\lrangle{Z}(Z\lrangle{b})]} T$ and $T\SCB \enc{P'}$; ~
+%\item If $P \st{\overline{a}(b)} P'$, then $\enc{P} \st{(b)\overline{a}[\lrangle{Z}(Z\lrangle{b})]} T$ and $T\SCB \enc{P'}$; ~
+\item If $P \st{\tau} P'$, then $\enc{P} \st{\tau} T \SSEQV \enc{P'}$.
+\end{enumerate}
+\end{lemma}
+
+The converse is as below.
+\begin{lemma}\label{l:opcor-conv_var}
+Suppose $P$ is a \FOPi\ process and $A$ is a name abstraction.
+\begin{enumerate}
+%\item If $\enc{P} \st{\overline{a}[\lrangle{x}(\enc{P_1})]} T$, then $P \st{a(b)} P'$, with $P\SCB C[a(x).P_1]$ and $P'\SCB C[P_1\fosub{b}{x}]$ for some context $C$ and $P_1$, and $T\SCB \enc{C[0]}$;
+\item If $\enc{P} \st{(\ve{e})\overline{a}[\lrangle{x}(\enc{P_1})]} T$, then $P \st{a(b)} P'$, with $P\SGB (\ve{e})C[a(x).P_1]$ and \\
+$P'\equiv (\ve{e})C[P_1\fosub{b}{x}] \equiv (\ve{e})(C[0]\para P_1\fosub{b}{x})$ for some \xiv{evaluation} context $C$ with $\ve{e}$ being the bound names shared between $P_1$ and its context, and $T\SSEQV \enc{C[0]}$.
+\item If $\enc{P} \st{a(A)} T$, then
+\begin{enumerate}
+\item[(i)] $P \st{\overline{a}b} P'$, and $T\SSEQV A\lrangle{b} \para \enc{P'}$, or
+\item[(ii)] $P \st{\overline{a}(b)} P'$, and $T\SSEQV (b)(A\lrangle{b} \para \enc{P'})$. %\nts{??}
+\end{enumerate}
+%\item If $\enc{P} \st{a(\lrangle{Z}(Z\lrangle{b}))} T$, then $P \st{a(b)} P'$ and $T\SCB \enc{P'}$; ~
+%\item If $\enc{P} \st{a(\triggerD)} T$, then $P \st{a(b)} P'$ and $(m)(T \para !m(Y).Y\lrangle{b}) \WCB \enc{P'}$; ~
+%\item If $\enc{P} \st{\overline{a}[\lrangle{Z}(Z\lrangle{b})]} T$, then $P \st{\overline{a}b} P'$ and $T\SCB \enc{P'}$; ~
+%\item If $\enc{P} \st{(b)\overline{a}[\lrangle{Z}(Z\lrangle{b})]} T$, then $P \st{\overline{a}(b)} P'$ and $T\SCB \enc{P'}$; ~
+\item If $\enc{P} \st{\tau} T$, then $P \st{\tau} P'$ and $T\SSEQV \enc{P'}$.
+\end{enumerate}
+\end{lemma}
+
+Lemma \ref{l:opcor_var} and Lemma \ref{l:opcor-conv_var} can be similarly proven, \xiv{and we prove the former in Appendix \ref{a:proofs-corres-var-encoding}}. 
+We note that these lemmas can be lifted to the weak case, as for the encoding in Section \ref{ss:encoding_def}.
+\xxxx{
+We also notice that the clause (1) of these lemmas uses $\SGB$, instead of $\equiv$, to deal with $P$ because it is needed in discussing the case for replication.
+}
+
+
+
+\subsection{Soundness}
+We reuse the \ground bisimilar processes $R_1$ and $R_2$ in Section \ref{s:encoding_soundness}, and see what happens to their new encodings. The CCS-like prefixes are defines as there.
+\[
+\begin{array}{lcllcl}
+R_1 &\DEF& (b)(a.\overline{b} \para b.\overline{c}) &\qquad\quad R_2 &\DEF& (b)(a.\overline{b} \para b.\overline{c} \para b.\overline{c})
+\end{array}
+\]
+%(The synchronizations are defined as usual. )
+Now we examine their encodings. %\overline{a}[\lrangle{x}\enc{P}]   ;      a(Y).(Y\lrangle{b}\para \enc{Q})
+\[
+\begin{array}{lcl}
+\enc{R_1} &\equiv& (b)(\overline{a}[\lrangle{x}\enc{\overline{b}}] \para \overline{b}[\lrangle{x}\enc{\overline{c}}]) \\
+\enc{R_2} &\equiv& (b)(\overline{a}[\lrangle{x}\enc{\overline{b}}] \para \overline{b}[\lrangle{x}\enc{\overline{c}}] \para \overline{b}[\lrangle{x}\enc{\overline{c}}]) \\
+\mbox{in which} && \\
+\enc{\overline{b}} &\equiv& (f)(b(Y).(Y\lrangle{f}\para 0)) \\
+\enc{\overline{c}} &\equiv& (g)(c(Z).(Z\lrangle{g}\para 0))
+\end{array}
+\] Take $T\DEF a(X).(X\lrangle{d} \para X\lrangle{d})$.
+Then $(a)(\enc{R_1}\para T)$ and $(a)(\enc{R_2}\para T)$ can be distinguished, as shown below. This demonstrates that $\enc{R_1}$ and $\enc{R_2}$ are not context bisimilar. Particularly, the latter can do two inputs on $c$, while the former cannot.
+\[
+\begin{array}{lrl}
+ &(a)(\enc{R_1}\para T) \quad \st{\tau}\SCB& (ab)(\enc{\overline{b}} \para \enc{\overline{b}} \para \overline{b}[\lrangle{x}\enc{\overline{c}}]) \\
+&\equiv& (ab)((f)(b(Y).(Y\lrangle{f}\para 0)) \para \enc{\overline{b}} \para \overline{b}[\lrangle{x}\enc{\overline{c}}]) \\
+&\st{\tau}\SCB& (b)(\enc{\overline{c}} \para \enc{\overline{b}}) \\
+&\equiv& (b)((g)(c(Z).(Z\lrangle{g}\para 0)) \para \enc{\overline{b}}) \\
+&\st{c(\lrangle{z}0)}\SCB& 0 \\\\ %\\\\
+%\end{array}
+%\]
+%\[
+%\begin{array}{lrl}
+ &(a)(\enc{R_2}\para T) \quad \st{\tau}\SCB& (ab)(\enc{\overline{b}} \para \enc{\overline{b}} \para \overline{b}[\lrangle{x}\enc{\overline{c}}] \para \para \overline{b}[\lrangle{x}\enc{\overline{c}}]) \\
+&\equiv& (ab)((f)(b(Y).(Y\lrangle{f}\para 0)) \para (f)(b(Y).(Y\lrangle{f}\para 0))  \\
+& & \qquad\qquad\qquad\qquad\qquad\,\,\,\, \para \overline{b}[\lrangle{x}\enc{\overline{c}}] \para \overline{b}[\lrangle{x}\enc{\overline{c}}]) \\
+&\st{\tau}\st{\tau}\SCB& \enc{\overline{c}} \para \enc{\overline{c}} \\
+&\equiv& (g)(c(Z).(Z\lrangle{g}\para 0)) \para (g)(c(Z).(Z\lrangle{g}\para 0)) \\
+&\st{c(\lrangle{z}0)}\SCB& (g)(c(Z).(Z\lrangle{g}\para 0)) \\
+&\st{c(\lrangle{z}0)}\SCB& 0
+\end{array}
+\]
+
+\subsubsection{Weak soundness}
+Short of soundness, one might expect that the encoding at least has weak soundness, {i.e., sound w.r.t. $\WWCB$, as defined in Section \ref{s:preliminary} and used in Section \ref{s:encoding_soundness}}. %(We recall that weak soundness means the soundness confined to the images of the encoding in \HOPiDd, i.e., processes in \HOPiDd\ that are the encoding of \FOPi\ processes; these processes merely communicate terms of the form $\lrangle{x}(\enc{P})$ in which $P$ is a \FOPi\ process).
+We demonstrate that it is not the case. We carry out the analysis with a new counterexample below.
+%(i.e., the processes in the target model that have reverse-image w.r.t. the encoding).
+%\sep
+%\nts{\Large See the note jpg file ``nt20170609.JPG" in the ``Long\_version" subfolder; typeset it here}
+%\sep
+
+Fix two \FOPi\ processes $R_3$ and $R_4$. That they are \ground bisimilar is in the clear. We now show that their encodings are not related by $\WWCB$. %, which is similarly defined as that in Section \ref{s:encoding_soundness}.
+\[
+R_3 \DEF (b)(a.b\para \overline{b}.\overline{c}) \qquad\qquad R_4 \DEF (b)(a.b\para \overline{b}.\overline{c}\para \overline{b}.\overline{c})
+\]
+Their encodings should have the follow-up simulation.
+%\[\nsepvs{.2}
+%\xymatrix{
+% & P \ar@{.}[rr]|-{\mathcal{R}}\ar@{->}[d]_{\overline{a}A}  &  & Q \ar@{=>}[d]^{\overline{a}B}  &   \\
+% P'\para !m.A \ar@/_1.6pc/@{.}[0,4]|{\mathcal{R}} & P'  & &  Q'  & Q'\para !m.B
+%}
+%\]
+\[\nsepvs{.2}
+\xymatrix@C=10pt{
+\enc{R_3}\ar@{}[r]|-{\equiv} & (b)(\overline{a}[\lrangle{x}(\enc{b})] \para \enc{\overline{b}.\overline{c}}) \ar@{->}[d]_{(b)\overline{a}[\lrangle{x}(\enc{b})]}  &  &  (b)(\overline{a}[\lrangle{x}(\enc{b})] \para \enc{\overline{b}.\overline{c}} \para \enc{\overline{b}.\overline{c}}) \ar@{->}[d]^{(b)\overline{a}[\lrangle{x}(\enc{b})]} & \enc{R_4}\ar@{}[l]|-{\equiv}   \\
+ & 0\para \enc{\overline{b}.\overline{c}}  &  &  0 \para  \enc{\overline{b}.\overline{c}} \para \enc{\overline{b}.\overline{c}} &
+}
+\]
+In terms of context bisimulation, we choose $E[X] \DEF X\lrangle{e} \para X\lrangle{e}$ and have
+\[
+\begin{array}{rcl}
+E[\lrangle{x}(\enc{b})] &\equiv& \enc{b}\para \enc{b} \\
+\enc{b} &\equiv& \overline{b}[\lrangle{x}0] \\
+\enc{\overline{b}.\overline{c}} &\equiv& (f)(b(Y).(Y\lrangle{f} \para (g)(c(Z).(Z\lrangle{g}\para 0))))
+\end{array}
+\]
+We note that $E[\lrangle{x}(\enc{b})]$ corresponds to the \FOPi\ process $b\para b$ so it is legal for $\WWCB$.
+We now argue that $(b)(E[\lrangle{x}(\enc{b})] \para \enc{\overline{b}.\overline{c}})$ and $(b)(E[\lrangle{x}(\enc{b})] \para \enc{\overline{b}.\overline{c}}\para \enc{\overline{b}.\overline{c}})$ are not bisimilar as regard to $\WWCB$, i.e.,
+\[
+(b)(\enc{b}\para \enc{b}\para \enc{\overline{b}.\overline{c}})  \;\;\;\;\;\bcancel{\WWCB}\;\;\;\;\; (b)(\enc{b}\para \enc{b}\para \enc{\overline{b}.\overline{c}}\para \enc{\overline{b}.\overline{c}})
+\] thus violating the output requirement of the context bisimulation.
+To see this, fix a \HOPiDd\ abstraction $B$, e.g., $\lrangle{x}0$. We then have the following chasing diagram showing the inequality above. 
+%For the sake of conciseness, we use $\cdot$ to denote certain existent process.
+\xxxx{
+Here, $\cdot$ is some unspecified process.
+}
+\[\nsepvs{.2}
+\xymatrix{
+  (b)(\enc{b}\para \enc{b}\para \enc{\overline{b}.\overline{c}})  \ar@{->}[d]_{\tau}  &  &  (b)(\enc{b}\para \enc{b}\para \enc{\overline{b}.\overline{c}}\para \enc{\overline{b}.\overline{c}}) \ar@{->}[d]^{\tau}    \\
+  \cdot \ar@{->}[d]_(.3){c(B)}  &  &  \cdot \ar@{->}[d]^{c(B)} \\
+  {\begin{array}{c}\cdot \\[-.3cm] \rotatebox{-90}{\SCB} \\ 0 \end{array}}  &  & \cdot \ar@{->}[d]^{\tau} \\
+   & & \cdot \ar@{->}[d]^(.3){c(B)} \\
+   & & {\begin{array}{c}\cdot \\[-.3cm] \rotatebox{-90}{\SCB} \\ 0 \end{array}}
+}
+\]
+We thus conclude that $\enc{R_3} \;\;\bcancel{\WWCB}\;\; \enc{R_4}$.
+
+
+
+\sepp
+%To summary, 
+\xxxx{To summarize, }
+we have the following lemma.
+\begin{lemma}\label{l:soundness_var}
+Assume $P$ and $Q$ are \FOPi\ processes. Then $P\WGB Q$ implies neither $\enc{P} \,\WCB\, \enc{Q}$ nor $\enc{P} \,\WWCB\, \enc{Q}$.
+\end{lemma}
+%\begin{proof}
+%\nts{TODO (ref. Section \ref{s:encoding_soundness})}
+%\end{proof}
+
+
+\subsection{Completeness}
+\xxxx{In spite of the failure of the soundness in either general or weak cases, fortuitously the encoding indeed has completeness.
+} 
+It is worth noting that we need Theorem \ref{factor-bigd-smalld} (Factorization) in the proof. This not only exhibits somewhat the use of that theorem, but also confers upon in a sense the synergy of the two kinds of abstractions. 
+\xxrmcolor{For the sake of modular organization (viz., putting the two encodings in neighbouring sections), the statement and proof of Theorem \ref{factor-bigd-smalld} is deferred until Section \ref{s:normal}.
+\xxx{Basically, as explained in Section \ref{s:introduction},} 
+that theorem expresses that a sub-process of a process can be replaced with the so-called trigger, and moved to a new parallel position, which is accessible using the trigger acting as a messenger that faithfully transmits the information at the original position to the new positition, thus retaining the equivalence with the original process. Interested readers are encouraged to have a quick look at the statement of the theorem so as to understand the proof of completeness. 
+More details of the theorem and its proof can be consulted later.
+}
+% Basically this theorem states that in \HOPiDd, there is the so-called normal bisimulation 
+% %We note that the proof of completeness uses the normal bisimulation of \HOPiDd. 
+% that characterizes context bisimulation but has a light requirement of checking equivalence. The definition of normal bisimulation and its coincidence with context bisimulation is given in Section \ref{s:normal}. 
+% %This is actually an application of the normal bisimulation. 
+% Interested readers are encouraged to have a quick look at the definition of normal bisimulation so as to understand the proof of completeness. 
+% The details of the coincidence between normal bisimulation and context bisimulation can be consulted later.
+
+\begin{lemma}\label{l:completeness_var}
+Assume $P$ and $Q$ are \FOPi\ processes. Then $\enc{P} \WCB \enc{Q}$ implies $P\WGB Q$.
+\end{lemma}
+\xiv{The proof of Lemma \ref{l:completeness_var} is placed in Appendix \ref{a:proofs-completeness-var-encoding}.}
+
+
+
+
+
+%---------------------------
+% Local Variables:
+% mode: LaTeX
+% TeX-master: "main.tex"
+% End:

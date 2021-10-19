@@ -1,0 +1,234 @@
+﻿\section{Introduction}\label{s:introduction}
+
+In concurrent systems, higher-order means that processes communicate by means of process-passing (i.e., program-passing), % or service-passing), 
+whereas first-order means that processes communicate through name-passing (i.e., reference-passing). Parameterization originates from lambda-calculus (that is itself of higher-order nature), and enables processes, in a concurrent setting, to do abstraction and application in a way similar to that of lambda-calculus. Say $P$ is a higher-order process, then an abstraction $\lrangle{U}P$ means abstracting the variable $U$ in $P$ to obtain somewhat a function (like $\lambda U.P$ in terms of lambda-calculus), and correspondingly an application $(\lrangle{U}P)\lrangle{K}$ means passing process $K$ to the abstraction and obtaining an instantiation $P\hosub{K}{U}$ (i.e., replacing each variable $U$ in $P$ with $K$, like $(\lambda U.P)K$ in terms of lambda-calculus). There are basically two kinds of parameterization: parameterization on names and parameterization on processes. In the former, $U$ is a name variable and $K$ is an instance name. In the latter, $U$ is a process variable and $K$ is an instance process.
+Parameterization is a natural way to extend the capacity of higher-order processes and this extension is strict, that is, the 
+%computational power 
+\xxx{expressiveness}
+strictly increases with the help of parameterization \cite{LPSS10}. In this paper, we study higher-order processes in presence of parameterization.
+
+%\sepp
+
+Comparison between higher-order and first-order processes is a frequent topic in concurrency theory. Such comparison, for example, asks whether higher-order processes can correctly express first-order processes, or vice versa. It is well known that first-order processes can elegantly encode higher-order processes \cite{San92,SW01a}; the converse is however not quite the case. As the first issue, this paper addresses how to encode first-order processes with higher-order processes enhanced with parameterization.
+
+%\FROMHERE
+
+The very early work on using higher-order process to interpret first-order ones is contributed by Thomsen \cite{Tho93}, who proposes a prototype encoding of first-order processes with higher-order processes with the relabelling operator (the same as that in CCS \cite{Mil89}). 
+\xxx{This encoding employs a gadget called wire to mimic the function of a name in the higher-order setting, and makes essential use of the relabelling to guarantee that the wires work properly so as to fulfill the role of names.
+} 
+\xxxx{Thomsen establishes some basic operational correspondence between the reductions of a first-order process and its encoding. 
+However, due to the arbitrary ability of relabelling to change names (e.g., from global to local), %the encoding has a correct operational correspondence (i.e., the correspondence between the processes before and after the encoding), but 
+the encoding is very hard to analyze for full abstraction. 
+ %(i.e., the first-order processes are equivalent if and only if their encodings are; the `if only' direction is called soundness and the other direction is called completeness).
+Roughly, full abstraction means that the first-order processes are equivalent if and only if their encodings are, with the `if only' direction called soundness and the other direction completeness. 
+} 
+Unfortunately, without the relabelling operator, the basic higher-order process (which has the elementary operators including input, output, parallel composition and restriction) is not capable of encoding first-order processes \cite{Xu12}. 
+In the literature, several variants of higher-order processes are exploited to encode first-order processes. 
+In \cite{SW01a}, an asynchronous higher-order calculus with parameterization on names is used to compile the asynchronous localized $\pi$-calculus, a somewhat lightweight variant of the first-order $\pi$-calculus \cite{MPW92}. 
+\xxxx{
+The concept of asynchrony means that the output is non-blocking.
+%This encoding depends heavily on the notions of `localized' which means only the output capability of a name can be communicated during interactions, and `asynchronous' which means the output is non-blocking. 
+This encoding relies heavily on the output capability that is the only way a received name can be used in the localized $\pi$-calculus, and is proven to be fully abstract with respect to barbed congruence. 
+}
+%Though technically a nice reference, intuitively because this variant of $\pi$-calculus is less expressive than the full $\pi$-calculus, it is not very surprising that the higher-order processes with parameterization on names can interpret it faithfully, i.e., fully abstract with respect to barbed congruence. 
+In \cite{XYL15}, %the present author explores 
+we explore the encoding of the full $\pi$-calculus using higher-order processes with parameterization on names. 
+%In that effort, which somewhat precipitates the work here, we construct an encoding that harnesses the idea of Thomsen's encoding and show that it is complete. 
+\xxx{
+To that end, we construct an encoding that harnesses the idea of Thomsen's encoding and show that it is complete. This inspires the present work.	
+}
+In \cite{BHG06}, Bundgaard et al. use the HOMER to translate the name-passing $\pi$-calculus. This translation is possible because a HOMER process can, in a way quite different from parameterization, operates names in the continuation processes (resources), and this allows flexibility so that names can be communicated in an intermediate fashion. 
+In \cite{KPY16}, Kouzapas et al. propose fully abstract encodings concerning first-order processes and session typed higher-order processes. Their encodings use session types to govern communications and show that in the context of session types, first-order and higher-order processes are equally expressive. This work is well related to those mentioned above and that in this paper, though the context is quite different (i.e., session typed processes).
+%In \cite{Fu07}, another variant  ...
+
+Despite the extensive research on encoding first-order processes with (variant) higher-order processes, the following question has remained open: \emph{Is there an encoding of first-order processes by the higher-order processes with the capability of parameterization, \xxx{in a way at least as elegant as that from higher-order processes to first order ones}?}
+This question is important in two \xxxx{respects}. %aspects. 
+\xxxx{
+One is that parameterization somewhat brings about the core of lambda-calculus to higher-order concurrency (actually they can indeed encode lambda-calculus \cite{San92,SW01a}), while lambda-calculus is computationally complete. So it makes sense for such an extended higher-order calculus to be able to express first-order pi-calculus.  %since lambda-calculus is universal in computation. %(first-order processes have long been shown to be capable of expressing the lambda-calculus). 
+Knowing how this can be achieved would be interesting, and the encoding strategy can vary and yield (possibly drastically) different consequences. 
+}
+The other is that the converse has an almost standard encoding method. 
+\xxxx{
+%i.e., encoding variants of higher-order processes with first-order processes. 
+First-order processes are so programmable that they can encode variants of higher-order processes with little difficulty. 
+}
+Yet higher-order processes are still short of a both effective and succinct way to express first-order ones. \xxx{To this end, the result in \cite{Tho93,Xu12} is not sufficiently satisfactory because that encoding is far from being elegant and in effect difficult for understanding, analyzing and application.} Resolving this can provide (technical) reference for both theoretical study and practical work (e.g., modelling and verification) beyond the encoding itself.
+
+
+%In ...
+%In ...
+%In ...
+%
+%\stress{Related work: }
+%\begin{itemize}
+%\item \greycolor{\cite{Tho93}, (maybe \cite{Xu09x})}
+%\item \greycolor{\cite{SW01a}, section 13.3 (page 408)}
+%\item \greycolor{\cite{BHG06}}
+%\item \greycolor{\cite{Fu07} (not used)}
+%\item \greycolor{\cite{XYL15}}
+%\item more? (to ask ds maybe)
+%\end{itemize}
+%
+
+%\sep
+\sepp
+
+Closely related with the first issue on expressiveness, the second issue this paper deals with is the characterization of \xxxx{bisimilarity} on higher-order processes. 
+\xxxx{Bisimulation studies what it means that two processes have the same behaviour, and is the pivotal part of a process model. Roughly, two processes are bisimilar if whenever one of them does some action, the other must be able to do the same. The bisimulation equality, called \emph{bisimilarity}, is the most widely used form of behavioural equality for various processes. For convenience and to avoid being too technical, sometimes we say bisimulation instead of bisimilarity.
+In the higher-order models, the almost standard behavioural equality is the context bisimilarity \cite{San92}.
+} 
+The central idea of the context \xxxx{bisimilarity} is that when comparing output actions, the transmitted process and the residual process (i.e., the process obtained after sending a process) are considered at the same time, rather than separately, as in the applicative higher-order bisimulation proposed by Thomsen \cite{Tho90, Tho93}. For example (for simplicity we do not consider local names), if $P$ and $Q$ are context bisimilar and $P\st{\overline{a}A} P'$ (i.e., $P$ outputs $A$ on $a$ and becomes $P'$), then $Q\wt{\overline{a}B} Q'$ (i.e., $Q$ outputs $B$ on $a$ possibly involving some internal actions and becomes $Q'$), and for every receiving environment $E[\cdot]$, $P'\para E[A]$ and $Q'\para E[B]$ are still context bisimilar.
+\xxxx{Here we write $\para$ for the parallel composition that models  concurrency, %and $E[A]$ means putting $A$ in the environment $E$. 
+and $E[A]$ is a shorthand for $E$ where the hole $[\cdot]$ is substituted by $A$.
+}
+
+However, in its original form, context \xxxx{bisimilarity} is inconvenient to use, because it calls for checking with regard to every possible receiving environment. This leads to works on the simpler characterization of the context \xxxx{bisimilarity}, called normal \xxxx{bisimilarity}. The core idea of the normal bisimulation, proposed by Sangiorgi \cite{San92, SW01a}, is that instead of checking with a general process in input and a general receiving environment in output, one only needs to comply with the matching of some special process or context, on the basis of a class of terms called triggers. 
+% \xxx{To achieve the characterization, a crucial property called} factorization theorem is used to circumvent technical difficulty. 
+\xxxx{To achieve the characterization, a crucial ingredient is a property called factorization. 
+We briefly explain how the normal bisimulation is constructed in the basic higher-order processes without parameterization. 
+}
+\xxx{In particular as said, we need a property known as the factorization, stating the following property for a fresh name $m$}, where $\WCB$ denotes the context \xxx{bisimilarity}, and $\overline{m}.P$ and $m.P$ are CCS-like prefixes in which the communicated contents are not important \cite{SW01a}. %\nsepvs{.6}
+% \[ E[A] \WCB (m)(E[\overline{m}.0] \para !m.A)  %\nsepvs{.3} 
+% \] 
+\[ \xxx{ E[A] \WCB E[\overline{m}.0] \para !m.A } %\nsepvs{.6} 
+\] 
+%\begin{itemize} 
+%\item[] $\xxx{ E[A] \WCB E[\overline{m}.0] \para !m.A }$ %\nsepvs{.6} 
+%\end{itemize}
+One can clearly identify the reposition of the process $A$ of interest, which in fact captures the upshot of the property: move $A$ to a new position as a repository, which in turn can be retrieved as many times as needed in the original environment $E$, with the help of the pointer undertaken by the fresh channel $m$ (\xxx{$\overline{m}.0$ is called a trigger}). Inspired by the factorization, the normal bisimulation can be developed. We take the output as an example (input is similar), and restriction operation in output is omitted for the sake of simplicity. As stated above, context \xxxx{bisimilarity} requires the following chasing diagram, which is now extended with an application of the factorization on the fresh name $m$. %\nsepvs{.3} 
+% \[
+% \xymatrix{
+%  &  & P \ar@{.}[rr]|-{\WCB}\ar@{->}[d]_{\overline{a}A}  &  & Q \ar@{=>}[d]^{\overline{a}B}  &  & \\
+% P'\para (m)(E[\overline{m}.0] \para !m.A) \ar@{}[r]|-{\WCB} & P'\para E[A] \ar@/_1.6pc/@{.}[0,4]|{\WCB} & P'  & &  Q'  & Q'\para E[B] \ar@{}[r]|-{\WCB}  &  Q'\para (m)(E[\overline{m}.0] \para !m.B)
+% }
+% \]
+% \[ %\nsepvs{.2} 
+% \xymatrix@C=20pt{
+%  &  & P \ar@{.}[rr]|-{\WCB}\ar@{->}[d]_{\overline{a}A}  &  & Q \ar@{=>}[d]^{\overline{a}B}  &  & \\
+% P'\para (m)(E[\overline{m}.0] \para !m.A) \ar@{}[r]|-{\WCB} & P'\para E[A] \ar@/_1.6pc/@{.}[0,4]|{\WCB} & P'  & &  Q'  & Q'\para E[B] \ar@{}[r]|-{\WCB}  &  Q'\para (m)(E[\overline{m}.0] \para !m.B)
+% }
+% \]
+% \[ %\nsepvs{.2} 
+% \xymatrix@C=20pt{
+%   & P \ar@{.}[rr]|-{\WCB}\ar@{->}[d]_{\overline{a}A}  &  & Q \ar@{=>}[d]^{\overline{a}B}  &  \\
+%  P'\para E[A] \ar@/_1.6pc/@{.}[0,4]|{\WCB} & P'  & &  Q'  & Q'\para E[B] \ar@{.}[d]|-{\rotatebox{-90}{\scriptsize \WCB}}   \\
+% P'\para (m)(E[\overline{m}.0] \para !m.A) \ar@{.}[u]|-{\rotatebox{-90}{\scriptsize \WCB}} & & & & Q'\para (m)(E[\overline{m}.0] \para !m.B) 
+% }
+% \]
+\[ %\nsepvs{.2} 
+\xymatrix@C=20pt{
+  & P \ar@{.}[rr]|-{\WCB}\ar@{->}[d]_{\overline{a}A}  &  & Q \ar@{=>}[d]^{\overline{a}B}  &  \\
+ P'\para E[A] \ar@/_1.6pc/@{.}[0,4]|{\WCB} & P'  & &  Q'  & Q'\para E[B] \ar@{.}[d]|-{\rotatebox{-90}{\scriptsize \WCB}}   \\
+\xxxx{P'\para E[\overline{m}.0] \para !m.A} \ar@{.}[u]|-{\rotatebox{-90}{\scriptsize \WCB}} & & & & \xxxx{Q'\para E[\overline{m}.0] \para !m.B} 
+}
+\]
+Since context \xxx{bisimilarity} $\WCB$ is a congruence, one can cancel the common part of 
+%$P'\para (m)(E[\overline{m}.0] \para !m.A)$ and $Q'\para (m)(E[\overline{m}.0] \para !m.B)$ 
+\xxxx{$P'\para E[\overline{m}.0] \para !m.A$ and $Q'\para E[\overline{m}.0] \para !m.B$ }
+on the bottom, and simply requires that $P'\para !m.A$ and $Q'\para !m.B$ should be related, \xxx{without any loss in discriminating power}. This then leads to the following requirement in the normal bisimulation (assuming $\mathcal{R}$ is a normal bisimulation and $m$ is fresh). %\nsepvs{.3} 
+\[%\nsepvs{.2} 
+\xymatrix{
+ & P \ar@{.}[rr]|-{\mathcal{R}}\ar@{->}[d]_{\overline{a}A}  &  & Q \ar@{=>}[d]^{\overline{a}B}  &   \\
+ P'\para !m.A \ar@/_1.6pc/@{.}[0,4]|{\mathcal{R}} & P'  & &  Q'  & Q'\para !m.B
+}
+\]
+
+Subsequent works attempt to extend the normal bisimulation to variants of higher-order processes. In Sangiorgi's initial work \cite{San92}, the normal bisimulation is also obtained for higher-order processes with parameterization. That characterization, however, is made in the presence of first-order name-passing processes and thus not very convincing in a sense. 
+\xxxx{It is not clear if the characterization remains true in a strictly higher-order setting without name-passing. The intrinsic complexity of context bisimulation in presence of parameterization adds to the uncertainty. }
+In \cite{Xu13}, we revisited this issue and show that in a purely higher-order setting (viz., no name-passing at all), parameterization on processes does not deprive one of the normal bisimulation. Although the idea is inspired by the original work of Sangiorgi, the design and proof approach is more direct. In \cite{LSS09, LSS11}, Lenglet et al. study higher-order processes with passivation (i.e., the process in the output position may evolve), and report a normal bisimulation for a sub-calculus without the restriction operator, but that characterization has somewhat a different flavour, since the higher-order bisimulation \cite{Tho93} rather than the context bisimulation is taken. Though these works carry out insightful research and give meaningful references, it is currently still not clear how to build a simple characterization of context \xxxx{bisimilarity} in presence of parameterization over names, and this raises the following fundamental question: \emph{Does higher-order processes with parameterization on names have the normal \xxxx{bisimilarity}?}
+In the second part of this paper, we move further from \cite{Xu13,San92}, and offer a normal bisimulation for higher-order processes in the setting of parameterization over both names and processes.  
+
+%(\stress{explain the basic idea of normal bisimulation without technical details and then state the results in the field})
+
+%\[
+%\xymatrix{
+%  T \ar@{}[r]|-{\equiv} & G[F[\enc{R}\fosub{b}{x}]] \ar@{.}[rr]|-{?}\ar@{.}[d]|-{?}  &  & H[F[\enc{R'}\fosub{b}{x}]] \ar@{.}[d]|-{?} \ar@{}[r]|-{\equiv}  & T'  \\
+%  T_1 \ar@{}[r]|-{\equiv} & G[\enc{R}\fosub{b}{x}] \ar@{}[rr]|-{ \SCB\, \enc{P_1}\,\mathcal{R}\,\enc{Q_1}\,\SCB}  & &  H[\enc{R'}\fosub{b}{x}] \ar@{}[r]|-{\equiv} & T_2
+%}
+%\]
+
+
+%In ...
+%In ...
+%In ...
+%
+%\stress{Related work: }
+%\begin{itemize}
+%\item \greycolor{\cite{Tho93}}
+%\item \greycolor{\cite{San92, SW01a}}
+%\item \greycolor{\cite{Xu13} (notice maybe ahe full version that includes some discussion concerning Schmitt's work \cite{LSS09, LSS11})}
+%\item more? (to ask ds maybe)
+%\end{itemize}
+
+\psepvs{.2}
+%\paragraph{Contribution}
+\noindent\textbf{Contribution}~ 
+The contribution of this work is as follows. It is worth noting that the all higher-order processes in this work are strictly higher-order, i.e., without name-passing capability.
+\begin{itemize}
+\item %(\bc{Expressiveness.})
+We show that the extension with parameterization on both names and processes allows higher-order processes to interpret first-order processes in a surprisingly concise yet elegant manner. \xxx{The} encoding is of a somewhat dissimilar flavour as compared to known encodings between higher-order and first-order models \cite{San92,Tho93,SW01a,Xu12}, and moreover not possible in absence of parameterization. We give the detailed encoding strategy, and prove that it satisfies a number of desired properties well-known in the field, including full abstraction. 
+\xxx{In the discussion, we exploit the bisimulation up-to context technique for which we also provide proofs.} %, including soundness and completeness.
+%Then in, we explore the encoding of the full $\pi$-calculus using higher-order processes with parameterization on names.
+\xxx{Additionally, we also demonstrate and analyze a variant encoding of first-order processes using only parameterization on names. Though relevant, the strategy of that encoding is still more different, and consequently exhibits quite different properties (somewhat beyond expectation). This actually reveals the characteristics of the interwork between the two kinds of parameterization. }
+%The idea of the encoding in this paper is quite different from our abovementioned work in \cite{XYL15}, where we build an encoding that allows parameterization merely on names (i.e., no parameterization on processes). The soundness of that encoding is not very satisfying, which in a sense defeats some purpose of the encoding, and this actually precipitates the work here. 
+
+The idea of the encodings in this paper is quite different from the abovementioned works in the literature. 
+\xxx{They make novel and tricky use of parameterization to achieve delivering a name, and this method may potentially be useful for relevant work, e.g., axiomatization or equivalence checking. 
+Moreover, the analysis of the encodings turns out to be not so trivial. It took much effort to pinpoint some counterexamples, which then led to the correct approach of establishing full abstraction. Therefore, besides the ideas of the encoding, which are not reported so far to our knowledge, the exploration of the encodings provides some reference of analytical technique %for related works in the literature 
+as well.
+}
+
+\item %(\bc{Normal bisimulation.})
+We establish the normal \xxxx{bisimilarity}, as an effectively simpler characterization of context \xxxx{bisimilarity}, for higher-order processes with both kinds of parameterization. % (we stress that the processes are strictly higher-order, i.e., free of name-passing). 
+This normal \xxxx{bisimilarity} extends those for higher-order processes without parameterization, particularly in the manipulation of abstractions on names. As far as we are concerned, similar characterization has not been reported before.\\
+That the processes are purely higher-order (that is, without name-passing) improves the result in \cite{San92}, and articulates that the characterization based on normal bisimulation is a property independent of first-order name-passing. Moreover, this does not contradict the argument in \cite{Xu13} that there is little hope for normal \xxxx{bisimilarity} to exist in higher-order processes with solely parameterization on names, because here the processes are capable of parameterization on processes as well. % (though still higher-order). 
+The result also reveals that the characterization of normal \xxxx{bisimilarity} is not a brittle method and can potentially be of more extensional use.
+\end{itemize}
+
+
+%\paragraph{Novelty} 
+\paragraph{\xxxx{Summarizing concerning novelty}}
+\xxx{
+We emphasize that the two provided encodings of first-order processes into the higher-order processes with parameterization are newly developed, together with the in-depth analysis (full abstraction or counterexamples). 
+The encodings are completely different from previous ones and provide new ideas of encoding name-passing in the higher-order setting, so is the discussion of the properties which exhibits the intricacy of even such concise encodings (two counterexamples).
+}
+
+\xxx{
+In particular, the approach largely improves on the encoding in \cite{XYL15}. The one in \cite{XYL15} adapts from Thomsen's encoding using relabelling \cite{Tho93}, and has a quite involved strategy and cumbersome analytical procedure. This is far from satisfaction compared with the encoding in the reverse direction (i.e., from higher-order processes to first-order ones). The encodings in this work have a more succinct strategy and relatively more comprehensive analysis (even with some negative results). Therefore, both the encoding and the analysis approach provide novel strategy and tool for handling name-passing in the higher-order paradigm. 
+To this end, as a recourse to the discussion of the encodings, the technique of bisimulation up-to context is proven to be sound, as we know, for the first time in the setting of higher-order processes with parameterization. This technique can be of independent interest for studies about similar higher-order processes. % with parameterization. 
+}
+
+\xxx{
+We also emphasize that the provided characterization of context \xxx{bisimilarity} with normal \xxx{bisimilarity} in presence of name parameterization is a relatively recent work. It goes beyond previous work in the following two respects. 
+One is that it involves name parameterization besides process parameterization. A critical point here is that one has to find a way to communicate a name in the higher-order setting.
+% different from our previous work in \cite{Xu13,YXL17} which only handles process parameterization. 
+In contrast, our previous work in \cite{Xu13,YXL17} only tackles process parameterization and is technically a bit more tractable to cope with. We also stress that having normal bisimulation in presence of only process parameterization (as indicated in \cite{Xu13,YXL17}) does not immediately mean that normal bisimulation exists when name parameterization is also included, because how to send a name using certain gadgets is not directly known and needs careful and novel design.
+}
+
+\xxx{
+The other respect is that the normal characterization is made in a purely higher-order setting. So one does not have name-passing at all, different from Sangiorgi's work of his thesis \cite{San92} in which name-passing is also used as part of the calculus. 
+The normal characterization seems not possible with only name parameterization. Even the combination of name parameterization with process parameterization does not necessarily implies the existence of normal characterization immediately, as the technical manipulation turns out not to be the same as that of the aforementioned works.
+}
+
+\xxx{
+In the meanwhile, as somewhat a spinoff, we have given the proofs for 
+the congruence property of normal bisimilarity in presence of name parameterization, as well as for the bisimulation up-to context techniques in the higher-order setting, both in the general case as said above and on the image of the encoding. %, and also the proof for 
+These proofs also comprise the novel part of this work. 
+}
+
+
+%\paragraph{Paper organization}
+\paragraph{Organization}
+The remainder of this paper is organized as follows. In Section \ref{s:preliminary}, we introduce the calculi, \xxxx{relevant proof technique}, and a notion of encoding used in this paper. In Section \ref{s:encoding}, we present the encoding from first-order processes to higher-order processes with parameterization, and discuss its properties. In Section \ref{s:encoding_variant}, we demonstrate another encoding between the two models, and exploit the different properties. In Section \ref{s:normal}, we define the normal bisimulation for higher-order processes with parameterization, and prove that normal \xxxx{bisimilarity} truly characterizes the context \xxxx{bisimilarity}. Section \ref{s:conclusion} concludes this work and %demonstrates the variant  encoding, before 
+points to some further directions.
+
+
+
+
+
+
+%---------------------------
+% Local Variables:
+% mode: LaTeX
+% TeX-master: "main.tex"
+% End:
